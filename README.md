@@ -9,7 +9,7 @@
 
 ## Getting Started
 
-In order to set up and run the project you will need to have Python 3.7 and Django installed.
+In order to set up and run the project you will need to have Python 3.8 and Django installed.
 
 ### Installing Python
 You can either install python directly on your machine or use a python engine such as [Anaconda](https://www.anaconda.com/products/individual).
