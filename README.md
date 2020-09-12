@@ -4,7 +4,8 @@
 1. User can navigate to data page and view chart
 2. User can navigate to about page
 3. User can view blog page to read about future of the site
-4. Site is built with downloaded CSV file integrated to SQLite database with Django
+4. Charts are built with downloaded CSV file integrated to SQLite database with visualization through seaborn library
+
 ## Getting Started
 
 In order to set up and run the project you will need to have Python 3.7 and Django installed.
