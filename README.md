@@ -1,5 +1,10 @@
 # DataTitans
 
+## Description of Prototype
+1. User can navigate to data page and view chart
+2. User can navigate to about page
+3. User can view blog page to read about future of the site
+
 ## Getting Started
 
 In order to set up and run the project you will need to have Python 3.7 and Django installed.
@@ -15,8 +20,3 @@ It is advised to run Python inside a virtual environment.
 ## Running the Web Server
 1. Inside the datatitans directory, where `manage.py` is, run `python manage.py migrate`. This sets up the database. (Currently SQLite)
 2. Run `python manage.py runserver`
-
-## Description of Prototype
-1. User can navigate to data page and view chart
-2. User can navigate to about page
-3. User can view blog page to read about future of the site
