@@ -5,6 +5,7 @@
 2. User can navigate to about page
 3. User can view blog page to read about future of the site
 4. Charts are built with downloaded CSV file integrated to SQLite database with visualization through seaborn library
+5. Remaining web elements are built with HTML
 
 ## Getting Started
 
