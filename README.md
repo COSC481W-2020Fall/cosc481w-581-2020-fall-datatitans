@@ -4,10 +4,11 @@
 1. From home page, user can navigate to data, about, and blog pages. User can also navigate to each of these pages from one other using a menu bar near top of page
 2. The data page will allow users to choose from a drop down list of countries and chart types
 3. The charts will be line charts showing total cases or total deaths
-4. The about page will show 
+4. The about page will show a brief description of the website as well as short bios of the team members
 5. User can view blog page to read about future of the site. The initial blog post will include specifications for the completed project
 6. Charts are built with downloaded CSV file integrated to SQLite database with visualization through seaborn library
 7. Remaining web elements are built with HTML
+8. The charts and data should be accessible by the latest browsers, i.e Firefox, Chrome, Safari.
 
 ## Getting Started
 
