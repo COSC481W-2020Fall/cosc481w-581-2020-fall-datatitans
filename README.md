@@ -10,6 +10,9 @@
 7. Remaining web elements are built with HTML
 8. The charts and data should be accessible by the latest browsers, i.e Firefox, Chrome, Safari.
 
+## Use Case Diagram
+![](/UseCaseDiagram.png)
+
 ## Getting Started
 
 In order to set up and run the project you will need to have [Python 3.8](https://www.python.org/downloads/) and [Django 3.1.1](https://www.djangoproject.com/download/) or later installed.
