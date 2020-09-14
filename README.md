@@ -11,7 +11,7 @@
 8. The charts and data should be accessible by the latest browsers, i.e Firefox, Chrome, Safari.
 
 ## Use Case Diagram
-![](/images/UseCaseDiagram.png)
+![](/UseCaseDiagram.png)
 
 ## Getting Started
 
