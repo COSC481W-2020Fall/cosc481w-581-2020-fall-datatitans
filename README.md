@@ -2,8 +2,8 @@
 
 ## Description of Prototype
 1. From home page, user can navigate to data, about, and blog pages. User can also navigate to each of these pages from one other using a menu bar near top of page
-2. The data page will allow users to choose from a drop down list of countries and chart types
-3. The charts will be line charts showing total cases or total deaths for all dates in the COVID-19 data
+2. The data page will allow users to choose from a drop down list of countries (USA-default, Canada, Mexico) and chart types
+3. The charts will be line charts showing total cases (default) or total deaths for all dates in the COVID-19 data
 4. The about page will show a brief description of the website as well as short bios of the team members
 5. User can view blog page to read about future of the site. The initial blog post will include specifications for the completed project
 6. Charts are built with downloaded CSV file integrated to SQLite database with visualization through seaborn library
