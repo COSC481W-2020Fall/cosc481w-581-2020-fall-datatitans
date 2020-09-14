@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 mysqlclient = "*"
 Django = "*"
+numpy = "*"
+pandas = "*"
 seaborn = "*"
 
 [requires]
