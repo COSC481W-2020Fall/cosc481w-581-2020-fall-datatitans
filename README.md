@@ -25,6 +25,12 @@ It is advised to run Python inside a virtual environment.
 1. Run `python -m pip install --upgrade pip`
 2. Run `pip install -r requirements.txt`. This will install the required packages.
 
+### Running Migrations
+To ensure that all members' database is up to date and avoid migration errors, run the following command whenever a change has been made to the database. Or to be safer, whenver you pull a new version of the project from github.
+
+1. Run `python manage.py makemigrations`
+2. Run `python manage.py migrate`
+
 ## Running the Web Server
 1. Inside the datatitans directory, where `manage.py` is, run `python manage.py migrate`. This sets up the database. (Currently SQLite)
 2. Run `python manage.py runserver`
