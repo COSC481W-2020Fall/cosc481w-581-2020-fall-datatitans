@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Data Titans</title>
+        <meta charset="UTF-8">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <nav>
+            <h1>Data Titans</h1>
+            <ul>
+                <li>
+                    <a href="{% url 'home' %}">Data</a>
+                </li>
+                <li>
+                    <a href="{% url 'blog' %}">Blog</a>
+                </li>
+                <li>
+                    <a href="{% url 'about' %}">About</a>
+                </li>
+            </ul>
+        </nav>
+
+        {% block content %}
+        {% endblock content %}
+
+        <footer>a footer</footer>
+    </body>
+</html>
