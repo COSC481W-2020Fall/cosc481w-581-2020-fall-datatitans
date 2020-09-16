@@ -1,27 +1,30 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
+
+	<!-- Base HTML for all webpages -->
     <head>
         <title>Data Titans</title>
         <meta charset="UTF-8">
-        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <nav>
-            <h1>Data Titans</h1>
-            <ul>
-                <li>
-                    <a href="{% url 'home' %}">Data</a>
-                </li>
-                <li>
-                    <a href="{% url 'blog' %}">Blog</a>
-                </li>
-                <li>
-                    <a href="{% url 'about' %}">About</a>
-                </li>
-            </ul>
-        </nav>
-
+        <!-- -->
+			<ul class="topnav">
+				<li class="topnav">
+					<a class="topnav" href="{% url 'home' %}">Data</a>
+				</li>
+				<li class="topnav">
+					<a class="topnav" <a href="{% url 'blog' %}">Blog</a>
+				</li>
+				<li class="topnav">
+					<a class="topnav" <a href="{% url 'about' %}">About</a>
+				</li>
+			</ul>
+		
+			<h1>Data Titans</h1>
+			<h2>Our World in Data</h2>
+		
         {% block content %}
         {% endblock content %}
 
