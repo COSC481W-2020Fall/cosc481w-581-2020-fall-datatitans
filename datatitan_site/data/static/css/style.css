@@ -1,0 +1,42 @@
+/* General styles */
+body {
+	background-color:#E5E5E5;
+	font-family:Verdana, Arial, Sans-Serif;
+}
+
+table {}
+
+/* Navigation bar styles */
+ul.topnav {
+	background-color:#000000;
+	list-style-type:none;
+	width:100%;
+	height:50px;
+	margin:0;
+	padding:0;
+	position:fixed;
+	left:0;
+	top:0;
+	overflow:hidden;
+}
+
+li.topnav{
+	float:left;
+}
+
+li.topnav a.topnav{
+	color: #BF0000;
+	display:block;
+	text-align: center;
+	padding: 14px 16px ;
+	text-decoration: none;
+	font-size: 18px;
+}
+
+li.topnav a:hover {
+	background-color: grey;
+}
+
+li.a.active {
+	color: white;
+}
