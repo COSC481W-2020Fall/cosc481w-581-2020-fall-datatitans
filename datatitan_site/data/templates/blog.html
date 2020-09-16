@@ -2,4 +2,12 @@
 
 {% block content %}
     <h2>Blog Page</h2>
+
+    {% for post in posts %}
+        <div>
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.text }}</p>
+            <p>published: {{ post.published_date }}</p>
+        </div>
+    {% endfor %}
 {% endblock content %}
