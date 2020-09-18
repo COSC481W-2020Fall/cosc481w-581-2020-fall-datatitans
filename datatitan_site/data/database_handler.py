@@ -2,10 +2,23 @@ from pathlib import Path
 import pandas as pd
 import sqlite3
 from datatitan_site.settings import DATABASES
+from datetime import date
 
 
 input_file_path = Path(f"{Path(__file__).parent}/input/owid-covid-data.csv")
 # database_path = Path(f"{Path(__file__).parent}/database/test_database.db")
+
+if (
+        not input_file_path.exists()
+        or date.fromtimestamp(input_file_path.stat().st_ctime) < date.today()
+):
+    print(f"File Exists: {input_file_path.exists()}")
+    if input_file_path.exists():
+        print(
+            f"File created on:{date.fromtimestamp(input_file_path.stat().st_ctime).today()}\n"
+            f"Current Date: {date.today()}"
+        )
+
 
 with sqlite3.connect(DATABASES["default"]["NAME"]) as conn:
     read_covid_data_raw = pd.read_csv(input_file_path)
