@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # In[86]:
-import inline as inline
+# import inline as inline
 import matplotlib
 import pandas as pd
 import seaborn as sns
