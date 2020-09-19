@@ -18,7 +18,9 @@ print(df)
 df.describe()
 
 sns.lineplot(data=df['total_deaths'])
+plt.savefig('total_deaths.jpeg')
 
 # This next line doesn't work. We have to cast the "date" field as date and figure out how to
 # show the dates on the x-axis
-sns.lineplot(x = df["date"], y = df["total_deaths"])
+sns.lineplot(data=df, x="date", y = "total_deaths")
+plt.savefig('total_deaths_vs_date.jpeg')
