@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<head>
+    <title>Blog Page</title>
+</head>
+ 
+<body>
+
+	<div class="tableBreak">
+		<table class="tableBody">
+			<tr>
+				<th class="tableHeader1"> Blog Page </th>
+			</tr>
+		</table>
+	</div>
+
     <h2>Blog Page</h2>
 
     {% for post in posts %}
@@ -10,4 +24,5 @@
             <p>published: {{ post.published_date }}</p>
         </div>
     {% endfor %}
+</body>
 {% endblock content %}
