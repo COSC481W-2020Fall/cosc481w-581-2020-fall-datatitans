@@ -11,7 +11,7 @@
 8. The charts and data should be accessible by the latest browsers, i.e Firefox, Chrome, Safari.
 
 ## Use Case Diagram
-![](./datatitan_site/images/UseCaseDiagram.png)
+![](datatitan_site/images/UseCaseDiagram.png)
 
 ## Getting Started
 
@@ -40,7 +40,7 @@ To ensure that all members' database is up to date and avoid migration errors, r
 2. Enter this in the url `127.0.0.1/admin`
 3. Enter the user name and password. ( can be found on the datatitans shared drive folder)
 4. On the admin page click the +Add button next to Posts 
-![](adminPage.png)
+![](datatitan_site/images/adminPage.png)
 5. Add Author, title and text of the blog.
-![](blog.png)
+![](datatitan_site/images/blog.png)
 6. You can save and continue later (do not fill out publish date info or choose a future date), and when ready to publish just click the now and today buttons under the 'Publish date' form item
