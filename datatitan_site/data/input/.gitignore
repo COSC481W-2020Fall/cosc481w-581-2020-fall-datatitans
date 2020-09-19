@@ -1,0 +1,3 @@
+# Everything in this folder is likely to update often, and should be ignored.
+*
+!.gitignore
