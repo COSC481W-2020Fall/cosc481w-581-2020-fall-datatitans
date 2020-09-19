@@ -15,9 +15,10 @@ import matplotlib.pyplot as plt # For showing plots
 df = pd.DataFrame(dataUSA)
 print(df)
 
-df.describe()
+print('Describe dataframe:\n',df.describe())
 
 sns.lineplot(data=df['total_deaths'])
+plt.show()
 plt.savefig('total_deaths.jpeg')
 
 # This next line doesn't work. We have to cast the "date" field as date and figure out how to
