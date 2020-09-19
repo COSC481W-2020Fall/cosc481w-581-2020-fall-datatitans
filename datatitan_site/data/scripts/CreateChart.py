@@ -1,4 +1,5 @@
-import os  # to work with file system eg, relative and absolute paths
+# import os  # to work with file system eg, relative and absolute paths
+from pathlib import Path
 import pandas as pd  # Because pandas are cute and cuddly
 import seaborn as sns  # For plotting
 import matplotlib.pyplot as plt  # For showing plots
@@ -21,14 +22,10 @@ dims = (100, 25)  # dimension variable for plot area
 fig, ax = plt.subplots(figsize=dims)  # set plot area size
 
 # Set paths for data and assign data file to appropriate path
-path = os.getcwd()
-parent = os.path.dirname(path)
-parent2 = os.path.dirname(parent)
-DataDir = parent + "\\input\\"
-ImageDir = parent2 + "\\images\\"
+DataDir = Path(__file__).parent.parent / "input"
+ImageDir = Path(__file__).parent.parent.parent / "images"
 
-file = DataDir + "owid-covid-data.csv"
-df = pd.read_csv(file)  # import csv file to dataframe
+df = pd.read_csv(DataDir / "owid-covid-data.csv")  # import csv file to dataframe
 
 
 # print(df.head())
@@ -54,8 +51,7 @@ def saveChart(country="USA", chart_type="total_deaths"):
     plt.title(country)
     plt.autoscale()  # adjust frame for labels
     plt.xticks(rotation=-45)  # add an angle to x labels
-    output_file = ImageDir + "plot.jpeg"
-    plt.savefig(output_file)
+    plt.savefig(ImageDir / "plot.jpeg")
 
 
 saveChart("MEX", "total_cases")
