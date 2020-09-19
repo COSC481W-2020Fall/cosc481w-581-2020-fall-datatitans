@@ -5,11 +5,6 @@ import pandas as pd  # Because pandas are cute and cuddly
 import seaborn as sns  # For plotting
 import matplotlib.pyplot as plt  # For showing plots
 
-# path = os.getcwd()
-# parent = os.path.dirname(path)
-#
-# print("Current path:", path)
-# print("Parent directory:", parent)
 DataDir = Path(__file__).parent.parent / "data/input"
 ImageDir = Path(__file__).parent.parent / "images"
 

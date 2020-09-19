@@ -22,9 +22,6 @@ dims = (100, 25)  # dimension variable for plot area
 fig, ax = plt.subplots(figsize=dims)  # set plot area size
 
 # Set paths for data and assign data file to appropriate path
-# path = os.getcwd()
-# parent = os.path.dirname(path)
-# parent2 = os.path.dirname(parent)
 DataDir = Path(__file__).parent.parent / "input"
 ImageDir = Path(__file__).parent.parent.parent / "images"
 
