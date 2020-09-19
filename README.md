@@ -37,7 +37,7 @@ To ensure that all members' database is up to date and avoid migration errors, r
 
 ## Adding blog posts
 1. Run web server
-2. Enter this in the url `127.0.0.1/admin`
+2. Navigate to the url: `localhost/admin`
 3. Enter the user name and password. ( can be found on the datatitans shared drive folder)
 4. On the admin page click the +Add button next to Posts 
 ![](datatitan_site/images/adminPage.png)
