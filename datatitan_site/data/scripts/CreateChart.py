@@ -28,8 +28,7 @@ fig, ax = plt.subplots(figsize=dims)  # set plot area size
 DataDir = Path(__file__).parent.parent / "input"
 ImageDir = Path(__file__).parent.parent.parent / "images"
 
-file = DataDir / "owid-covid-data.csv"
-df = pd.read_csv(file)  # import csv file to dataframe
+df = pd.read_csv(DataDir / "owid-covid-data.csv")  # import csv file to dataframe
 
 
 # print(df.head())
@@ -55,8 +54,7 @@ def saveChart(country="USA", chart_type="total_deaths"):
     plt.title(country)
     plt.autoscale()  # adjust frame for labels
     plt.xticks(rotation=-45)  # add an angle to x labels
-    output_file = ImageDir / "plot.jpeg"
-    plt.savefig(output_file)
+    plt.savefig(ImageDir / "plot.jpeg")
 
 
 saveChart("MEX", "total_cases")

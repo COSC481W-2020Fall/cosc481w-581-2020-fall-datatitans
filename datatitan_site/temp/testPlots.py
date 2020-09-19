@@ -29,9 +29,8 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 DataDir = Path(__file__).parent.parent / "data/input"
 ImageDir = Path(__file__).parent.parent / "images"
 print("Data directory:", DataDir)
-f = DataDir / 'owid-covid-data.csv'
 # df = pd.read_csv('owid-covid-data.csv') # import csv file to dataframe
-df = pd.read_csv(f)  # import csv file to dataframe
+df = pd.read_csv(DataDir / "owid-covid-data.csv")  # import csv file to dataframe
 df.head()
 
 # In[87]:
@@ -56,8 +55,7 @@ for ind, label in enumerate(g.get_xticklabels()):  # loop so not every xtick is 
 plt.autoscale()  # adjust frame for labels
 plt.xticks(rotation=-45)  # add an angle to x labels
 # plt.savefig('pltTransparent1.png', transparent=True)
-outputFile = ImageDir / 'plot1.jpeg'
-plt.savefig(outputFile)
+plt.savefig(ImageDir / "plot1.jpeg")
 # response = HttpResponse(content_type="image/jpeg")
 # plt.savefig(response, format="jpeg")
 # return response
@@ -79,8 +77,7 @@ for ind, label in enumerate(graph.get_xticklabels()):  # loop so not every xtick
 plt.autoscale()  # adjust frame for labels
 plt.xticks(rotation=-45)  # add an angle to x labels
 # plt.savefig('pltTransparent.png', transparent=True)
-outputFile = ImageDir / 'plot2.jpeg'
-plt.savefig(outputFile)
+plt.savefig(ImageDir / "plot2.jpeg")
 plt.show()  # show plots
 
 # In[8]:
@@ -92,8 +89,7 @@ sns.set(font_scale=1)  # scale down font size
 sns.barplot(x=df["total_deaths"], y=df["location"])  # big bar graph of full original data frame
 plt.autoscale()
 plt.xticks(rotation=-45)
-outputFile = ImageDir / 'plot3.jpeg'
-plt.savefig(outputFile)
+plt.savefig(ImageDir / "plot3.jpeg")
 
 # In[92]: Total cases from full data
 dims = (100, 25)  # dimension variable for plot area
@@ -110,8 +106,7 @@ for ind, label in enumerate(g.get_xticklabels()):  # loop so not every xtick is 
 plt.autoscale()  # adjust frame for labels
 plt.xticks(rotation=-45)  # add an angle to x labels
 # plt.savefig('pltTransparent1.png', transparent=True)
-outputFile = ImageDir / 'plot4.jpeg'
-plt.savefig(outputFile)
+plt.savefig(ImageDir / "plot4.jpeg")
 # response = HttpResponse(content_type="image/jpeg")
 # plt.savefig(response, format="jpeg")
 # return response
