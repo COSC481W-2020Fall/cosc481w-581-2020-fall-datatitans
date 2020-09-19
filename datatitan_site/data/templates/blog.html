@@ -19,8 +19,8 @@
 
     {% for post in posts %}
         <div>
-            <h3>{{ post.title }}</h3>
-            <p>{{ post.text }}</p>
+            <h3><a href="{% url 'blog_detail' post.id %}">{{ post.title }}</a></h3>
+            <p>{{ post.text|slice:"0:20" }}...</p>
             <p>published: {{ post.published_date }}</p>
         </div>
     {% endfor %}
