@@ -34,3 +34,13 @@ To ensure that all members' database is up to date and avoid migration errors, r
 ## Running the Web Server
 1. Inside the datatitans directory, where `manage.py` is, run `python manage.py migrate`. This sets up the database. (Currently SQLite)
 2. Run `python manage.py runserver`
+
+## Adding blog posts
+1. Run web server
+2. Enter this in the url `127.0.0.1/admin`
+3. Enter the user name and password. ( can be found on the datatitans shared drive folder)
+4. On the admin page click the +Add button next to Posts 
+![](adminPage.png)
+5. Add Author, title and text of the blog.
+![](blog.png)
+6. You can save and continue later (do not fill out publish date info or choose a future date), and when ready to publish just click the now and today buttons under the 'Publish date' form item
