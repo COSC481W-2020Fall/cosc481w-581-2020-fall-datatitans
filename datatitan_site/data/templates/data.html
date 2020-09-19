@@ -15,6 +15,29 @@
 		</table>
 	</div>
 	
-    <h2>Data Page</h2>
+	<!-- Dropdown -->
+    <form method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <label for="inputCountry">Country</label>
+        <select class="custom-select form-control" id="country_code" name="country_code" required>
+            <option selected="selected" value="">Select a Country</option>
+            <option value="USA">USA</option>
+            <option value="CAN">Canada</option>
+        </select>
+        <br>
+        {% csrf_token %}
+        <label for="inputDataType">Data Type</label>
+        <select class="custom-select form-control" id="country_code" name="country_code" required>
+            <option selected="selected" value="">Select a Data Type</option>
+            <option value="TOTAL_CASES">Total Cases</option>
+            <option value="TOTAL_DEATHS">Total Deaths</option>
+        </select>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    <!-- Image placeholder -->
+    <img src="CHART.jpeg" alt="Data Chart">
+    
 </body>
 {% endblock content %}
