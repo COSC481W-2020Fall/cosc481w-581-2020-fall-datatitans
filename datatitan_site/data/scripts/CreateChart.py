@@ -25,7 +25,7 @@ fig, ax = plt.subplots(figsize=dims)    # set plot area size
 path = os.getcwd()
 parent = os.path.dirname(path)
 parent2 = os.path.dirname(parent)
-DataDir = parent + "\sourcedata\\"
+DataDir = parent + "\input\\"
 ImageDir = parent2 + "\images\\"
 
 file = DataDir + 'owid-covid-data.csv'
@@ -53,4 +53,4 @@ def saveChart(country="USA", chart_type="total_deaths"):
     plt.savefig(output_file)
 
 
-saveChart("CAN", "total_cases")
+saveChart("MEX", "total_cases")
