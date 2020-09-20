@@ -17,10 +17,10 @@ class CovidDataRaw(models.Model):
     location = models.CharField(max_length=55, unique_for_date="date", null=True)
     date = models.DateField()
     total_cases = models.IntegerField(null=True)
-    new_cases = models.IntegerField(default=0)
+    new_cases = models.IntegerField(default=0, null=True)
     new_cases_smoothed = models.FloatField(null=True)
     total_deaths = models.IntegerField(null=True)
-    new_deaths = models.IntegerField(default=0)
+    new_deaths = models.IntegerField(default=0, null=True)
     new_deaths_smoothed = models.FloatField(null=True)
     total_cases_per_million = models.FloatField(null=True)
     new_cases_per_million = models.FloatField(null=True)
@@ -28,7 +28,7 @@ class CovidDataRaw(models.Model):
     total_deaths_per_million = models.FloatField(null=True)
     new_deaths_per_million = models.FloatField(null=True)
     new_deaths_smoothed_per_million = models.FloatField(null=True)
-    new_tests = models.IntegerField(default=0)
+    new_tests = models.IntegerField(default=0, null=True)
     total_tests = models.IntegerField(null=True)
     total_tests_per_thousand = models.FloatField(null=True)
     new_tests_per_thousand = models.FloatField(null=True)
@@ -65,17 +65,17 @@ class CovidDataClean(models.Model):
     continent = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="continents")
     location = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="locations")
     date = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="dates")
-    new_cases = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="cases")
+    new_cases = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="cases", default=0)
     total_cases = models.Window(
         expression=models.Sum("new_cases"),
         partition_by=models.F("iso_code")
     )
-    new_deaths = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="deaths")
+    new_deaths = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="deaths", default=0)
     total_deaths = models.Window(
         expression=models.Sum("new_deaths"),
         partition_by=models.F("iso_code")
     )
-    new_tests = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="tests")
+    new_tests = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="tests", default=0)
     total_tests = models.Window(
         expression=models.Sum("new_tests"),
         partition_by=models.F("iso_code")
