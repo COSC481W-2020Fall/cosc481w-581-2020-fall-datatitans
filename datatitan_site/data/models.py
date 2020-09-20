@@ -58,17 +58,29 @@ class CovidDataRaw(models.Model):
 
 
 class CovidDataClean(models.Model):
-    iso_code = models.CharField(max_length=8, unique_for_date='date')
-    continent = models.CharField(max_length=15, unique_for_date='date')
-    location = models.CharField(max_length=55, unique_for_date='date')
-    date = models.DateField()
-    new_cases = models.IntegerField(default=0)
-    total_cases = models.IntegerField()
-    new_deaths = models.IntegerField(default=0)
-    total_deaths = models.IntegerField()
-    new_tests = models.IntegerField(default=0)
-    total_tests = models.IntegerField()
-    # population = models.PositiveIntegerField(default=0)
+    iso_code = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="iso_codes")
+    continent = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="continents")
+    location = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="locations")
+    date = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="dates")
+    new_cases = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="cases")
+    total_cases = models.Window(
+        expression=models.Sum("new_cases"),
+        partition_by=models.F("iso_code")
+    )
+    new_deaths = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="deaths")
+    total_deaths = models.Window(
+        expression=models.Sum("new_deaths"),
+        partition_by=models.F("iso_code")
+    )
+    new_tests = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="tests")
+    total_tests = models.Window(
+        expression=models.Sum("new_tests"),
+        partition_by=models.F("iso_code")
+    )
+
+    class Meta:
+        managed = False
+        # db_table = "COVID_DATA_CLEAN"
 
 
 class Post(models.Model):
