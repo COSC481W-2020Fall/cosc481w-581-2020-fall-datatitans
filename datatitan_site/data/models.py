@@ -33,6 +33,7 @@ class CovidDataRaw(models.Model):
     total_tests_per_thousand = models.FloatField(null=True)
     new_tests_per_thousand = models.FloatField(null=True)
     new_tests_smoothed = models.FloatField(null=True)
+    new_tests_smoothed_per_thousand = models.FloatField(null=True)
     tests_per_case = models.FloatField(null=True)
     positive_rate = models.FloatField(null=True)
     tests_units = models.TextField(null=True)
