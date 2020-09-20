@@ -52,6 +52,10 @@ class CovidDataRaw(models.Model):
     life_expectancy = models.DecimalField(max_digits=5, decimal_places=2)
     human_development_index = models.DecimalField(max_digits=4, decimal_places=3)
 
+    class Meta:
+        # db_table = "COVID_DATA_RAW"
+        ordering = ["iso_code", "date"]
+
 
 class CovidDataClean(models.Model):
     iso_code = models.CharField(max_length=8, unique_for_date='date')
