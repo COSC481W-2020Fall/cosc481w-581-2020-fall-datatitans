@@ -10,8 +10,7 @@ as of the latest download
 4. The "about" page will show a brief description of the website as well as short bios of the team members.
 5. User can view blog page to read about future of the site.
 The initial blog post will include specifications for the completed project.
-6. Charts are built with downloaded CSV file integrated to SQLite database with visualization through seaborn library.
-If csv is updated, website reflects updates.
+6. Charts are built with downloaded CSV file from which panda dataframes are created and visualized through seaborn library.
 7. Remaining web elements are built with HTML.
 8. The charts and data should be accessible by the latest browsers (i.e Firefox, Chrome, Safari)
 
