@@ -20,7 +20,6 @@
         {% csrf_token %}
         <label for="inputChartType">Country</label>
         <select class="custom-select form-control" id="chart_code" name="chart_code" required>
-            <option selected="selected" value="">Select a Chart Type</option>
             <option value="LINE" selected="selected">Line Chart</option>
         </select>
         <br>
@@ -28,7 +27,6 @@
         {% csrf_token %}
         <label for="inputCountry">Country</label>
         <select class="custom-select form-control" id="country_code" name="country_code" required>
-            <option selected="selected" value="">Select a Country</option>
             <option value="USA" selected="selected">USA</option>
             <option value="CAN">Canada</option>
             <option value="MEX">Mexico</option>
@@ -38,7 +36,6 @@
         {% csrf_token %}
         <label for="inputDataType">Data Type</label>
         <select class="custom-select form-control" id="data_code" name="data_code" required>
-            <option selected="selected" value="">Select a Data Type</option>
             <option value="TOTAL_CASES">Total Cases</option>
             <option value="TOTAL_DEATHS" selected="selected">Total Deaths</option>
         </select>
