@@ -15,10 +15,17 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    if False:
-        execute_from_command_line(sys.argv)
+    #print(sys.argv[1])
+    if(sys.argv[1] == "run" ):
+        make_migrate = ['manage', 'makemigrations']
+        migrate = ['manage', 'migrate']
+        runserver = ['manage', 'runserver']
+        execute_from_command_line(make_migrate)
+        execute_from_command_line(migrate)
+        execute_from_command_line(runserver)
     else:
-        print()
+        execute_from_command_line(sys.argv)    
+
 
 if __name__ == '__main__':
     main()
