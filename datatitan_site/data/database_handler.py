@@ -3,7 +3,7 @@ import pandas as pd
 import sqlite3
 from datatitan_site.settings import DATABASES
 from datetime import date
-from .models import CovidDataRaw, CovidDataClean
+from .models import CovidDataRaw, CovidDataClean, Country
 
 
 input_file_path = Path(__file__).parent / "input" / "owid-covid-data.csv"
@@ -67,3 +67,16 @@ def initialize_table():
             """,
             con=conn,
         ).to_sql(CovidDataClean._meta.db_table, con=conn, index=False, if_exists="append")
+        Country.objects.all().delete()
+        pd.read_sql_query(
+            """
+            select iso_code as country_code,
+            location as name,
+            continent,
+            population
+            from data_coviddataraw
+            where iso_code in ('USA', 'CAN', 'MEX')
+            group by iso_code
+            """,
+            con=conn
+        ).to_sql(Country._meta.db_table, con=conn, index=False, if_exists="append")
