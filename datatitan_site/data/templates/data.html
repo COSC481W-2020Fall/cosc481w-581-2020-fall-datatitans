@@ -23,11 +23,12 @@
             <option selected="selected" value="">Select a Country</option>
             <option value="USA">USA</option>
             <option value="CAN">Canada</option>
+            <option value="MEX">Mexico</option>
         </select>
         <br>
         {% csrf_token %}
         <label for="inputDataType">Data Type</label>
-        <select class="custom-select form-control" id="country_code" name="country_code" required>
+        <select class="custom-select form-control" id="data_code" name="data_code" required>
             <option selected="selected" value="">Select a Data Type</option>
             <option value="TOTAL_CASES">Total Cases</option>
             <option value="TOTAL_DEATHS">Total Deaths</option>
