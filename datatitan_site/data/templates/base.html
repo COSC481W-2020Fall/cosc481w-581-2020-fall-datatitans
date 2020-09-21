@@ -8,19 +8,19 @@
         <meta charset="UTF-8">
         <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
     </head>
+    
     <body>
-        <!-- -->
-			<ul class="topnav">
-				<li class="topnav">
-					<a class="topnav" href="{% url 'home' %}">Data</a>
-				</li>
-				<li class="topnav">
-					<a class="topnav" <a href="{% url 'blog' %}">Blog</a>
-				</li>
-				<li class="topnav">
-					<a class="topnav" <a href="{% url 'about' %}">About</a>
-				</li>
-			</ul>
+        <ul class="topnav">
+            <li class="topnav">
+                <a class="topnav" href="{% url 'home' %}">Data</a>
+            </li>
+            <li class="topnav">
+                <a class="topnav" <a href="{% url 'blog' %}">Blog</a>
+            </li>
+            <li class="topnav">
+                <a class="topnav" <a href="{% url 'about' %}">About</a>
+            </li>
+        </ul>
 		
         {% block content %}
         {% endblock content %}
