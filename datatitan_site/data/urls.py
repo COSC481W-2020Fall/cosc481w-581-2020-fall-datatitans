@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views, database_handler
 import urllib.request
+from .models import CovidDataRaw
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -12,4 +13,6 @@ urlpatterns = [
 if database_handler.input_missing_or_outdated():
     urllib.request.urlretrieve(url="https://covid.ourworldindata.org/data/owid-covid-data.csv",
                                filename=database_handler.input_file_path)
-database_handler.initialize_table()
+    database_handler.initialize_table()
+elif not CovidDataRaw.objects.exists():
+    database_handler.initialize_table()
