@@ -6,8 +6,8 @@ from datetime import date
 from .models import CovidDataRaw, CovidDataClean
 
 
-input_file_path = Path(f"{Path(__file__).parent}/input/owid-covid-data.csv")
-# database_path = Path(f"{Path(__file__).parent}/database/test_database.db")
+input_file_path = Path(__file__).parent / "input" / "owid-covid-data.csv"
+# database_path = Path(__file__).parent / "database" / "test_database.db"
 
 
 def input_missing_or_outdated():
