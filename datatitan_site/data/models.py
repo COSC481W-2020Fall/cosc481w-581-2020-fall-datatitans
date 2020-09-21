@@ -96,8 +96,8 @@ class CovidDataClean(models.Model):
         frame=models.WindowFrame(start=7, end=0)
     )
 
-    class Meta:
-        managed = False
+    # class Meta:
+    #     managed = False
         # db_table = "COVID_DATA_CLEAN"
 
 
