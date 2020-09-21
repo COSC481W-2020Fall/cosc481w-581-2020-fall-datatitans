@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <head>
     <title>Data Page</title>
@@ -38,7 +38,7 @@
     </form>
     
     <!-- Image placeholder -->
-    <img src="CHART.jpeg" alt="Data Chart">
+    <img src="{{chart}}" alt="Data Chart">
     
 </body>
 {% endblock content %}

@@ -3,6 +3,7 @@
 import os
 import sys
 
+from temp.PrototypeGraphSetup import gen_images 
 
 def main():
     """Run administrative tasks."""
@@ -16,7 +17,8 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     #print(sys.argv[1])
-    if(sys.argv[1] == "run" ):
+    if(len(sys.argv) > 1 and sys.argv[1] == "run" ):
+        gen_images()
         make_migrate = ['manage', 'makemigrations']
         migrate = ['manage', 'migrate']
         runserver = ['manage', 'runserver']
