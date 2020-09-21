@@ -70,15 +70,30 @@ class CovidDataClean(models.Model):
         expression=models.Sum("new_cases"),
         partition_by=models.F("iso_code")
     )
+    new_cases_smoothed = models.Window(
+        expression=models.Avg("new_cases"),
+        partition_by=models.F("iso_code"),
+        frame=models.WindowFrame(start=7, end=0)
+    )
     new_deaths = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="deaths", default=0)
     total_deaths = models.Window(
         expression=models.Sum("new_deaths"),
         partition_by=models.F("iso_code")
     )
+    new_deaths_smoothed = models.Window(
+        expression=models.Avg("new_deaths"),
+        partition_by=models.F("iso_code"),
+        frame=models.WindowFrame(start=7, end=0)
+    )
     new_tests = models.ForeignKey(CovidDataRaw, on_delete=models.DO_NOTHING, related_name="tests", default=0)
     total_tests = models.Window(
         expression=models.Sum("new_tests"),
         partition_by=models.F("iso_code")
+    )
+    new_tests_smoothed = models.Window(
+        expression=models.Avg("new_tests"),
+        partition_by=models.F("iso_code"),
+        frame=models.WindowFrame(start=7, end=0)
     )
 
     class Meta:
