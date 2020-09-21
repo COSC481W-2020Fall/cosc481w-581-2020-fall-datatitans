@@ -32,14 +32,14 @@ def initialize_table():
                    continent,
                    location,
                    date,
-                   cast(coalesce(new_cases, 0) as integer) as new_cases,
-                   cast(sum(new_cases) over (partition by iso_code rows between unbounded preceding and current row) as integer)
+                   coalesce(new_cases, 0) as new_cases,
+                   sum(coalesce(new_cases, 0)) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_cases,
-                   coalesce(cast(new_deaths as integer), 0) as new_deaths,
-                   sum(new_deaths) over (partition by iso_code rows between unbounded preceding and current row)
+                   coalesce(new_deaths, 0) as new_deaths,
+                   sum(coalesce(new_deaths, 0)) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_deaths,
-                   coalesce(cast(new_tests as integer), 0) as new_tests,
-                   sum(new_tests) over (partition by iso_code rows between unbounded preceding and current row)
+                   coalesce(new_tests, 0) as new_tests,
+                   sum(coalesce(new_tests, 0)) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_tests
             from data_coviddataraw
             where iso_code is not null
@@ -52,17 +52,17 @@ def initialize_table():
                    continent,
                    location,
                    date,
-                   coalesce(cast(new_cases as integer), 0) as new_cases,
-                   cast(sum(new_cases) over (partition by iso_code rows between unbounded preceding and current row) as integer)
+                   coalesce(new_cases, 0) as new_cases,
+                   sum(coalesce(new_cases, 0)) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_cases,
-                   coalesce(cast(new_deaths as integer), 0) as new_deaths,
-                   sum(new_deaths) over (partition by iso_code rows between unbounded preceding and current row)
+                   coalesce(new_deaths, 0) as new_deaths,
+                   sum(coalesce(new_deaths, 0)) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_deaths,
-                   coalesce(cast(new_tests as integer), 0) as new_tests,
-                   sum(new_tests) over (partition by iso_code rows between unbounded preceding and current row)
+                   coalesce(new_tests, 0) as new_tests,
+                   sum(coalesce(new_tests, 0)) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_tests
             from data_coviddataraw
-            where iso_code is not null
+            where iso_code is not null and continent is not null
             order by iso_code, date;
             """,
             con=conn,
