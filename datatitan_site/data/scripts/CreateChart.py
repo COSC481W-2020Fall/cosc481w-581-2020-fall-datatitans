@@ -54,4 +54,4 @@ def saveChart(country="USA", chart_type="total_deaths"):
     plt.savefig(ImageDir / "plot.jpeg")
 
 
-saveChart("MEX", "total_cases")
+saveChart()
