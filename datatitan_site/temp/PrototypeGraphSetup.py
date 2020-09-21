@@ -24,21 +24,23 @@ for Q in cN:
     plt.xlabel('Dates')
     plt.ylabel('Total Deaths')
     fig1 = plt.gcf()
-    plt.show()
     plt.draw()
-    fig1.savefig(ImageDir / Q+'1.jpeg', dpi=1000)
+    fileN = Q+'1.jpeg'
+    fig1.savefig(ImageDir / fileN, dpi=1000)
+    plt.close(fig1)
 
 for W in cN:
     data = dictNA[W]['data']
     df = pd.DataFrame(data)
-    a = sns.lineplot(data=df, x = "date", y ="deaths")
-    plt.title("deaths vs date in "+Q)
+    a = sns.lineplot(data=df, x = "date", y ="new_deaths")
+    plt.title("deaths vs date in "+W)
     plt.xlabel('Dates')
     plt.ylabel('Deaths')
     fig1 = plt.gcf()
-    plt.show()
     plt.draw()
-    fig1.savefig(ImageDir / Q+'2.jpeg', dpi=1000)
+    fileN = W+'2.jpeg'
+    fig1.savefig(ImageDir / fileN, dpi=1000)
+    plt.close(fig1)
 
 # This next line doesn't work. We have to cast the "date" field as date and figure out how to
 # show the dates on the x-axis
