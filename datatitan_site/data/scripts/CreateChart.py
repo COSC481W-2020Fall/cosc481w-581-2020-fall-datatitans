@@ -37,9 +37,7 @@ def saveChart(country="USA", chart_type="total_deaths"):
     # print(country, chartType)
     country_data = df.query("iso_code == @country")
     print(country_data.head())
-    g = sns.lineplot(
-        x=country_data["date"], y=country_data[chart_type]
-    )  # generate line plot
+    g = sns.lineplot(x=country_data["date"], y=country_data[chart_type])  # generate line plot
     for ind, label in enumerate(
         g.get_xticklabels()
     ):  # loop so not every xtick is show,
@@ -54,4 +52,4 @@ def saveChart(country="USA", chart_type="total_deaths"):
     plt.savefig(ImageDir / "plot.jpeg")
 
 
-saveChart("MEX", "total_cases")
+# saveChart("MEX", "total_cases")

@@ -3,8 +3,6 @@
 import os
 import sys
 
-from temp.PrototypeGraphSetup import gen_images 
-
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'datatitan_site.settings')
@@ -18,7 +16,6 @@ def main():
         ) from exc
     #print(sys.argv[1])
     if(len(sys.argv) > 1 and sys.argv[1] == "run" ):
-        gen_images()
         make_migrate = ['manage', 'makemigrations']
         migrate = ['manage', 'migrate']
         runserver = ['manage', 'runserver']
