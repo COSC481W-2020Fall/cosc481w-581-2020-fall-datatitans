@@ -40,15 +40,20 @@
         {% csrf_token %}
         <label for="inputDataType">Data Type</label>
         <select class="custom-select form-control" id="data_code" name="data_code" required>
-            <option value="TOTAL_CASES" selected="selected">Total Cases</option>
-            <option value="TOTAL_DEATHS">Total Deaths</option>
+            {% for data in data_type %}
+                {% if data.1 == selected_data %}
+                    <option value= "{{ data.0 }}" selected>{{ data.1 }}</option>
+                {% else %}
+                    <option value="{{data.0}}">{{ data.1 }}</option>
+                {% endif %}
+            {% endfor %}
         </select>
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     
     <!-- Image placeholder -->
-    <img src="{{chart}}" alt="Data Chart">
+    <img src="{{chart}}" alt="Data Chart" style="width:1500px;height:800px;">
     
 </body>
 {% endblock content %}
