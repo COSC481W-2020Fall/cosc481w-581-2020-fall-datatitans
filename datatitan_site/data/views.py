@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
 from .models import Post
+from pathlib import Path
 
 
 def home(request):
@@ -51,14 +52,16 @@ def home(request):
 
 
 def about(request):
-    return render(request, 'about.html', {})
+    return render(request, "about.html", {})
 
 
 def blog(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blog.html', {'posts': posts})
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by(
+        "published_date"
+    )
+    return render(request, "blog.html", {"posts": posts})
 
 
 def blog_detail(request, blog_id):
     blog_post = Post.objects.get(pk=blog_id)
-    return render(request, 'blog_detail.html', {'post': blog_post})
+    return render(request, "blog_detail.html", {"post": blog_post})
