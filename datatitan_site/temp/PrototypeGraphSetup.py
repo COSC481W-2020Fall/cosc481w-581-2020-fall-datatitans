@@ -44,7 +44,7 @@ def gen_images():
                 label.set_visible(False)
         plt.title("total cases in "+Q)
         plt.xlabel('Dates')
-        plt.ylabel('Total Deaths')
+        plt.ylabel('Total Cases')
         plt.xticks(rotation=-45)  # add an angle to x labels
         fig1 = plt.gcf()
         plt.draw()
