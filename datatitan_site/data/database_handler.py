@@ -36,14 +36,18 @@ def initialize_table():
                    total_deaths,
                    new_deaths,
                    new_deaths_smoothed,
-                   total_cases / cast(population as real) * 1000000 as total_cases_per_million,
-                   new_cases / cast(population as real) * 1000000 as new_cases_per_million,
+                   total_cases / pop_float * 1000000 as total_cases_per_million,
+                   new_cases / pop_float * 1000000 as new_cases_per_million,
+                   new_cases_smoothed / pop_float * 1000000 as new_cases_smoothed_per_million,
+                   total_deaths / pop_float * 1000000 as total_deaths_per_million,
+                   new_deaths / pop_float * 1000000 as new_deaths_per_million,
+                   new_deaths_smoothed / pop_float * 1000000 as new_deaths_smoothed_per_million,
                    new_tests,
                    total_tests,
-                   total_tests / cast(population as real) * 1000 as total_tests_per_thousand,
-                   new_tests / cast(population as real) * 1000 as new_tests_per_thousand,
+                   total_tests / pop_float * 1000 as total_tests_per_thousand,
+                   new_tests / pop_float * 1000 as new_tests_per_thousand,
                    new_tests_smoothed,
-                   new_tests_smoothed / cast(population as real) * 1000 as new_tests_smoothed_per_thousand,
+                   new_tests_smoothed / pop_float * 1000 as new_tests_smoothed_per_thousand,
                    avg(new_tests / new_cases) over (partition by iso_code rows between 6 preceding and current row)
                        as tests_per_case,
                    avg(new_cases / new_tests) over (partition by iso_code rows between 6 preceding and current row)
@@ -73,7 +77,8 @@ def initialize_table():
                            as new_tests_smoothed,
                        tests_units,
                        stringency_index,
-                       population
+                       population,
+                       cast(population as real) as pop_float
                 from (
                     select iso_code,
                            continent,
