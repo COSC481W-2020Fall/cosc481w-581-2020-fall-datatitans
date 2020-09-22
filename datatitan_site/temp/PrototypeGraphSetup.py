@@ -65,7 +65,7 @@ def gen_images():
                 label.set_visible(False)
         plt.title("total deaths in "+W)
         plt.xlabel('Dates')
-        plt.ylabel('Deaths')
+        plt.ylabel('Total Deaths')
         plt.xticks(rotation=-45)  # add an angle to x labels
         fig1 = plt.gcf()
         plt.draw()
