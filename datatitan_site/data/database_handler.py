@@ -30,21 +30,37 @@ def initialize_table():
                    continent,
                    location,
                    date,
-                   coalesce(new_cases, 0) as new_cases,
-                   sum(coalesce(new_cases, 0)) over (partition by iso_code rows between unbounded preceding and current row)
+                   new_cases,
+                   sum(new_cases) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_cases,
-                   coalesce(new_deaths, 0) as new_deaths,
-                   sum(coalesce(new_deaths, 0)) over (partition by iso_code rows between unbounded preceding and current row)
+                   avg(new_cases) over (partition by iso_code rows between 7 preceding and current row)
+                   as new_cases_smoothed,
+                   new_deaths,
+                   sum(new_deaths) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_deaths,
-                   coalesce(new_tests, 0) as new_tests,
-                   sum(coalesce(new_tests, 0)) over (partition by iso_code rows between unbounded preceding and current row)
-                   as total_tests
-            from data_coviddataraw
+                   avg(new_deaths) over (partition by iso_code rows between 7 preceding and current row)
+                   as new_deaths_smoothed,
+                   new_tests,
+                   sum(new_tests) over (partition by iso_code rows between unbounded preceding and current row)
+                   as total_tests,
+                   avg(new_tests) over (partition by iso_code rows between 7 preceding and current row)
+                   as new_tests_smoothed
+            from (
+            select iso_code,
+            continent,
+            location,
+            date,
+            coalesce(new_cases, 0) as new_cases,
+            coalesce(new_deaths, 0) as new_deaths,
+            coalesce(new_tests, 0) as new_tests
+            from data_coviddataraw)
             where iso_code is not null and continent is not null
             order by iso_code, date;
             """,
             con=conn,
-        ).to_sql(CovidDataClean._meta.db_table, con=conn, index=False, if_exists="append")
+        ).to_sql(
+            CovidDataClean._meta.db_table, con=conn, index=False, if_exists="append"
+        )
         Country.objects.all().delete()
         pd.read_sql_query(
             """
@@ -56,5 +72,5 @@ def initialize_table():
             where iso_code in ('USA', 'CAN', 'MEX')
             group by iso_code
             """,
-            con=conn
+            con=conn,
         ).to_sql(Country._meta.db_table, con=conn, index=False, if_exists="append")
