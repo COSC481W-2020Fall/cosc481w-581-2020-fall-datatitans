@@ -6,7 +6,7 @@
 3. Charts will show the selected data for all dates in the COVID-19 data from [Our World in Data](https://ourworldindata.org/) as of the latest download.
 4. The About page will show a brief description of the website (Our Goal) as well as short bios of the team members.
 5. Users can view the Blog page to read about the future of the site. The initial blog post will include specifications for the completed project.
-6. Charts are built with a downloaded CSV file from which panda dataframes are created and visualized through the seaborn library.
+6. Charts are built with a downloaded json file from which panda dataframes are created and visualized through the seaborn library.
 7. Remaining web elements are built with HTML.
 8. The charts and data should be accessible by the latest browsers (i.e Firefox, Chrome, Safari)
 

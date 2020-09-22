@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 import sys
 import urllib.request
+from temp.PrototypeGraphSetup import gen_images
 
 
 class DataConfig(AppConfig):
@@ -17,4 +18,5 @@ class DataConfig(AppConfig):
             initialize_table()
         elif not CovidDataRaw.objects.exists():
             initialize_table()
+        gen_images()
         return True

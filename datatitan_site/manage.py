@@ -3,8 +3,6 @@
 import os
 import sys
 
-from temp.PrototypeGraphSetup import gen_images 
-
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'datatitan_site.settings')
@@ -17,7 +15,6 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     #print(sys.argv[1])
-    gen_images()
     if(len(sys.argv) > 1 and sys.argv[1] == "run" ):
         make_migrate = ['manage', 'makemigrations']
         migrate = ['manage', 'migrate']
