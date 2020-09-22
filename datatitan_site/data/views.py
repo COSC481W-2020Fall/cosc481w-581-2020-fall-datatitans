@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Post
+from .models import Post, Country
 from pathlib import Path
 
 
@@ -18,41 +18,16 @@ def home(request):
 
         country_code = form["country_code"]
         chart_type = form["data_code"]
-        print(country_code, chart_type)
-
-        if chart_type == "TOTAL_CASES":
-            selected_data = "Total Cases"
-        else:
-            selected_data = "Total Deaths"
-
-        if country_code == "USA":
-            if chart_type == "TOTAL_DEATHS":
-                img_url = "static/USA1.jpeg"
-            else:
-                img_url = "static/USA2.jpeg"
-            selected_country = "USA"
-        elif country_code == "MEX":
-            if chart_type == "TOTAL_DEATHS":
-                img_url = "static/MEX1.jpeg"
-            else:
-                img_url = "static/MEX2.jpeg"
-            selected_country = "Mexico"
-        else:
-            if chart_type == "TOTAL_CASES":
-                img_url = "static/CAN1.jpeg"
-            else:
-                img_url = "static/CAN2.jpeg"
-            selected_country = "Canada"
 
         return render(
             request,
             "data.html",
             {
-                "chart": img_url,
+                "chart": Path(f"static/{country_code}{1 if chart_type == 'TOTAL_CASES' else 2}.jpeg"),
                 "countries": countries,
-                "selected_country": selected_country,
+                "selected_country": Country.objects.get(country_code=country_code).name,
                 "data_type": data_type,
-                "selected_data": selected_data,
+                "selected_data": "Total Cases" if chart_type == "TOTAL_CASES" else "Total Deaths",
             },
         )
     else:
