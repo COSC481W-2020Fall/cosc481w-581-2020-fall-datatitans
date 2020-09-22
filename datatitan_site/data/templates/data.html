@@ -27,17 +27,26 @@
         {% csrf_token %}
         <label for="inputCountry">Country</label>
         <select class="custom-select form-control" id="country_code" name="country_code" required>
-            <option value="USA" selected="selected">USA</option>
-            <option value="CAN">Canada</option>
-            <option value="MEX">Mexico</option>
+            {% for country in countries %}
+                {% if country.1 == selected_country %}
+                    <option value= "{{ country.0 }}" selected>{{ country.1 }}</option>
+                {% else %}
+                    <option value="{{country.0}}">{{ country.1 }}</option>
+                {% endif %}
+            {% endfor %}
         </select>
         <br>
         
         {% csrf_token %}
         <label for="inputDataType">Data Type</label>
         <select class="custom-select form-control" id="data_code" name="data_code" required>
-            <option value="TOTAL_CASES" selected="selected">Total Cases</option>
-            <option value="TOTAL_DEATHS">Total Deaths</option>
+            {% for data in data_type %}
+                {% if data.1 == selected_data %}
+                    <option value= "{{ data.0 }}" selected>{{ data.1 }}</option>
+                {% else %}
+                    <option value="{{data.0}}">{{ data.1 }}</option>
+                {% endif %}
+            {% endfor %}
         </select>
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>
