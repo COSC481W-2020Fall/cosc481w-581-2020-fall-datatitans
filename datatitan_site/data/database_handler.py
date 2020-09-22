@@ -33,17 +33,17 @@ def initialize_table():
                    new_cases,
                    sum(new_cases) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_cases,
-                   avg(new_cases) over (partition by iso_code rows between 7 preceding and current row)
+                   avg(new_cases) over (partition by iso_code rows between 6 preceding and current row)
                    as new_cases_smoothed,
                    new_deaths,
                    sum(new_deaths) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_deaths,
-                   avg(new_deaths) over (partition by iso_code rows between 7 preceding and current row)
+                   avg(new_deaths) over (partition by iso_code rows between 6 preceding and current row)
                    as new_deaths_smoothed,
                    new_tests,
                    sum(new_tests) over (partition by iso_code rows between unbounded preceding and current row)
                    as total_tests,
-                   avg(new_tests) over (partition by iso_code rows between 7 preceding and current row)
+                   avg(new_tests) over (partition by iso_code rows between 6 preceding and current row)
                    as new_tests_smoothed
             from (
             select iso_code,
