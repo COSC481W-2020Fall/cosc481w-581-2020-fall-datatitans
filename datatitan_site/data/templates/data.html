@@ -27,9 +27,12 @@
         {% csrf_token %}
         <label for="inputCountry">Country</label>
         <select class="custom-select form-control" id="country_code" name="country_code" required>
-            <option value="USA" selected="selected">USA</option>
-            <option value="CAN">Canada</option>
-            <option value="MEX">Mexico</option>
+            {% for country in countries %}
+                {% if country.1 == selected %}
+                    <option value= "{{ country.0 }}" selected>{{ country.1 }}</option>
+                {% endif%}
+                <option value="{{country.0}}">{{ country.1 }}</option>
+            {% endfor %}
         </select>
         <br>
         
@@ -44,7 +47,7 @@
     </form>
     
     <!-- Image placeholder -->
-    <img src="{{chart}}" alt="Data Chart" style="width:800px;height:500px;">
+    <img src="{{chart}}" alt="Data Chart">
     
 </body>
 {% endblock content %}
