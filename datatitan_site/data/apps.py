@@ -17,3 +17,4 @@ class DataConfig(AppConfig):
             initialize_table()
         elif not CovidDataRaw.objects.exists():
             initialize_table()
+        return True
