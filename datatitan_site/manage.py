@@ -17,8 +17,8 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     #print(sys.argv[1])
+    gen_images()
     if(len(sys.argv) > 1 and sys.argv[1] == "run" ):
-        gen_images()
         make_migrate = ['manage', 'makemigrations']
         migrate = ['manage', 'migrate']
         runserver = ['manage', 'runserver']
