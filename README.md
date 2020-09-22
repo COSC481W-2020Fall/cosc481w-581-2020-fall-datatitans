@@ -1,16 +1,12 @@
 # DataTitans
 
 ## Description of Prototype
-1. From home page, user can navigate to data, about, and blog pages.
-User can also navigate to each of these pages from one other using a menu bar near the top of the page.
-2. The data page will allow users to choose from dropdown lists of countries (USA-default, Canada, Mexico),
-data types (total cases-default, total deaths) and chart types (line)
-3. The charts will show the selected data for all dates in the COVID-19 data from [Our World in Data](https://ourworldindata.org/)
-as of the latest download
-4. The "about" page will show a brief description of the website as well as short bios of the team members.
-5. User can view blog page to read about future of the site.
-The initial blog post will include specifications for the completed project.
-6. Charts are built with downloaded CSV file from which panda dataframes are created and visualized through seaborn library.
+1. The Home page shows the data in the form of charts. From all pages, users can navigate to Data (Home), About, and Blog pages from the menu at the top of the screen.
+2. The Data page will allow users to choose from dropdown lists for Country (USA-default, Canada, Mexico), Data Type (total cases-default, total deaths) and Chart Type (line).
+3. Charts will show the selected data for all dates in the COVID-19 data from [Our World in Data](https://ourworldindata.org/) as of the latest download.
+4. The About page will show a brief description of the website (Our Goal) as well as short bios of the team members.
+5. Users can view the Blog page to read about the future of the site. The initial blog post will include specifications for the completed project.
+6. Charts are built with a downloaded CSV file from which panda dataframes are created and visualized through the seaborn library.
 7. Remaining web elements are built with HTML.
 8. The charts and data should be accessible by the latest browsers (i.e Firefox, Chrome, Safari)
 
