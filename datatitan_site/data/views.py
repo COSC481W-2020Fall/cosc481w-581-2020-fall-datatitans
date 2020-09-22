@@ -18,14 +18,14 @@ def home(request):
         country_code = form['country_code']
         chart_type = form['data_code']
         print(country_code, chart_type)
-        
+
         if(chart_type == 'TOTAL_CASES'):
             selected_data = 'Total Cases'
         else:
             selected_data = 'Total Deaths'    
 
         if(country_code == 'USA'):
-            if(chart_type== 'TOATL_DEATHS'):
+            if(chart_type== 'TOTAL_DEATHS'):
                 img_url = 'static/USA1.jpeg'
             else:
                 img_url = 'static/USA2.jpeg'

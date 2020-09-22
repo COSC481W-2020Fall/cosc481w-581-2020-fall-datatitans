@@ -28,10 +28,11 @@
         <label for="inputCountry">Country</label>
         <select class="custom-select form-control" id="country_code" name="country_code" required>
             {% for country in countries %}
-                {% if country.1 == selected %}
+                {% if country.1 == selected_country %}
                     <option value= "{{ country.0 }}" selected>{{ country.1 }}</option>
-                {% endif%}
-                <option value="{{country.0}}">{{ country.1 }}</option>
+                {% else %}
+                    <option value="{{country.0}}">{{ country.1 }}</option>
+                {% endif %}
             {% endfor %}
         </select>
         <br>
