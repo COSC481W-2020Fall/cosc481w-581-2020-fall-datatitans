@@ -40,7 +40,7 @@ whenever you pull a new version of the project from github.
 
 ## Adding blog posts
 1. Run web server
-2. Navigate to the url: `localhost/admin`
+2. Navigate to the url: `127.0.0.1/admin`
 3. Enter the user name and password (can be found on the datatitans shared drive folder)
 4. On the admin page click the "+Add" button next to Posts 
 ![](datatitan_site/images/adminPage.png)
@@ -48,3 +48,12 @@ whenever you pull a new version of the project from github.
 ![](datatitan_site/images/blog.png)
 6. You can save and continue later (do not fill out publish date info or choose a future date),
 and when ready to publish just click the now and today buttons under the 'Publish date' form item.
+
+## Known Issues
+1. You may need to run the server twice the first time,
+as the tables may not have been fully initialized when the server first starts up.
+2. Accounts and posts are specific to the machine the server is being run on.
+Technically, the covid data is also machine-specific, but the server automatically downloads updates to the data.
+3. At the moment, the only host allowed by the site is `127.0.0.1`.
+Attempting to connect to the server through `localhost` WILL fail.
+We could add `localhost` to the list of allowed hosts, but it isn't currently a priority.
