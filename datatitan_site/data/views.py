@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from .models import Post, Country
 from pathlib import Path
+from .scripts.generate_graphs import gen_graph
 
 
 def home(request):
@@ -10,6 +11,7 @@ def home(request):
     selected_data = "Total Cases"
     countries = [("USA", "USA"), ("CAN", "Canada"), ("MEX", "Mexico")]
     data_type = [("TOTAL_CASES", "Total Cases"), ("TOTAL_DEATHS", "Total Deaths")]
+    category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
 
     if request.method == "POST":
         # Get items from the form
@@ -18,16 +20,17 @@ def home(request):
 
         country_code = form["country_code"]
         chart_type = form["data_code"]
-
         return render(
             request,
             "data.html",
             {
-                "chart": Path(f"static/{country_code}{1 if chart_type == 'TOTAL_CASES' else 2}.jpeg"),
+                "chart": gen_graph(
+                    iso_code=country_code, category=str.lower(chart_type)
+                ),
                 "countries": countries,
                 "selected_country": Country.objects.get(country_code=country_code).name,
                 "data_type": data_type,
-                "selected_data": "Total Cases" if chart_type == "TOTAL_CASES" else "Total Deaths",
+                "selected_data": category_name[str.lower(chart_type)],
             },
         )
     else:
