@@ -34,9 +34,14 @@ whenever you pull a new version of the project from github.
 2. Run `python manage.py migrate`
 
 ## Running the Web Server
+There are two options you can take to run the server, either:
 1. Inside the datatitans directory, where `manage.py` is, run `python manage.py migrate`. This sets up the database.
 (Currently SQLite)
 2. Run `python manage.py runserver`
+
+or
+
+1. run `python manage.py run` this is a custom command that will run the migrations and the server
 
 ## Adding blog posts
 
