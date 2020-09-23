@@ -39,9 +39,15 @@ whenever you pull a new version of the project from github.
 2. Run `python manage.py runserver`
 
 ## Adding blog posts
+
+### Creating an admin user
+1. In the datatitan_site run `python manage.py createsuperuser`
+2. Enter, email, username and password (don't forget them)
+
+### Add blog post
 1. Run web server
 2. Navigate to the url: `localhost/admin`
-3. Enter the user name and password (can be found on the datatitans shared drive folder)
+3. Enter the user name and password
 4. On the admin page click the "+Add" button next to Posts 
 ![](datatitan_site/images/adminPage.png)
 5. Add Author, title and text of the blog.
