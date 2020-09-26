@@ -6,15 +6,15 @@ from ..models import CovidDataClean, Country
 import sqlite3
 from datatitan_site.settings import DATABASES
 
-SMALL_SIZE = 5
+SMALL_SIZE = 8
 SMALLER_SIZE = 3
 MEDIUM_SIZE = 15
 BIGGER_SIZE = 20
 
-plt.rc("font", size=SMALL_SIZE)  # default text sizes
-plt.rc("axes", titlesize=SMALL_SIZE)  # fontsize of the axes title
+plt.rc("font", size=MEDIUM_SIZE)  # default text sizes
+plt.rc("axes", titlesize=MEDIUM_SIZE)  # fontsize of the axes title
 plt.rc("axes", labelsize=MEDIUM_SIZE)  # fontsize of the x and y labels
-plt.rc("xtick", labelsize=SMALLER_SIZE)  # fontsize of the tick labels
+plt.rc("xtick", labelsize=SMALL_SIZE)  # fontsize of the tick labels
 plt.rc("ytick", labelsize=SMALL_SIZE)  # fontsize of the tick labels
 plt.rc("legend", fontsize=BIGGER_SIZE)  # legend fontsize
 plt.rc("figure", titlesize=BIGGER_SIZE)  # fontsize of the figure title
