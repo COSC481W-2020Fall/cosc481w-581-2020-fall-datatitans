@@ -22,10 +22,12 @@ def home(request):
 
     try:
         country_code = form["country_code"]
-        chart_type = form["data_code"]
+        data_category = form["data_code"]
+        chart_type = form["chart_code"]
     except MultiValueDictKeyError:
         country_code = "USA"
-        chart_type = "TOTAL_CASES"
+        data_category = "TOTAL_CASES"
+        chart_type = "LINE"
     return render(
         request,
         "data.html",
