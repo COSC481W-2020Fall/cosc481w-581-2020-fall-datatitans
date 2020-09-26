@@ -10,50 +10,50 @@
 	<div class="tableBreak">
 		<table class="tableBody">
 			<tr>
-				<th class="tableHeader1"> Data Page </th>
+				<th class="tableHeader1">Data Page</th>
 			</tr>
 		</table>
 	</div>
 	
 	<!-- Dropdown -->
-    <form method="POST" enctype="multipart/form-data" >
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="inputChartType">Chart Type</label>
+        <label for="chart_code">Chart Type</label>
         <select class="custom-select form-control" id="chart_code" name="chart_code" required>
             <option value="LINE" selected="selected">Line Chart</option>
         </select>
         <br>
         
         {% csrf_token %}
-        <label for="inputCountry">Country</label>
+        <label for="country_code">Country</label>
         <select class="custom-select form-control" id="country_code" name="country_code" required>
             {% for country in countries %}
                 {% if country.1 == selected_country %}
-                    <option value= "{{ country.0 }}" selected>{{ country.1 }}</option>
+                    <option value="{{ country.0 }}" selected>{{ country.1 }}</option>
                 {% else %}
-                    <option value="{{country.0}}">{{ country.1 }}</option>
+                    <option value="{{ country.0 }}">{{ country.1 }}</option>
                 {% endif %}
             {% endfor %}
         </select>
         <br>
         
         {% csrf_token %}
-        <label for="inputDataType">Data Type</label>
+        <label for="data_code">Data Type</label>
         <select class="custom-select form-control" id="data_code" name="data_code" required>
             {% for data in data_type %}
                 {% if data.1 == selected_data %}
-                    <option value= "{{ data.0 }}" selected>{{ data.1 }}</option>
+                    <option value="{{ data.0 }}" selected>{{ data.1 }}</option>
                 {% else %}
-                    <option value="{{data.0}}">{{ data.1 }}</option>
+                    <option value="{{ data.0 }}">{{ data.1 }}</option>
                 {% endif %}
             {% endfor %}
         </select>
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    
-    <!-- Image placeholder -->
-    <img src="{{chart}}" alt="Data Chart" style="width:1500px;height:800px;">
+
+    <!-- Chart -->
+    {{ chart|safe }}
     
 </body>
 {% endblock content %}
