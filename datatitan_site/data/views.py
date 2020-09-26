@@ -9,11 +9,6 @@ from django.views.decorators.http import require_GET
 
 @require_GET
 def home(request):
-    img_url = "static/USA1.jpeg"
-    selected_country = "USA"
-    selected_data = "Total Cases"
-    countries = [("USA", "USA"), ("CAN", "Canada"), ("MEX", "Mexico")]
-    data_type = [("TOTAL_CASES", "Total Cases"), ("TOTAL_DEATHS", "Total Deaths")]
     category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
 
     # Get items from the form
