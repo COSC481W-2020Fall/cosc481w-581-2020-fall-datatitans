@@ -33,12 +33,12 @@ def home(request):
         "data.html",
         {
             "chart": gen_graph(
-                iso_code=country_code, category=str.lower(chart_type)
+                iso_code=country_code, category=str.lower(data_category)
             ),
             "countries": Country().country_names,
             "selected_country": Country.objects.get(country_code=country_code).name,
-            "data_type": data_type,
-            "selected_data": category_name[str.lower(chart_type)],
+            "data_type": [(str.upper(raw), category_name[raw]) for raw in category_name],
+            "selected_data": category_name[str.lower(data_category)],
         },
     )
 
