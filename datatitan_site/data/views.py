@@ -13,10 +13,10 @@ def home(request):
     data_type = [("TOTAL_CASES", "Total Cases"), ("TOTAL_DEATHS", "Total Deaths")]
     category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
 
-    if request.method == "POST":
+    if request.method == "GET":
         # Get items from the form
         # form = ListForm(request.POST or None)
-        form = request.POST
+        form = request.GET
 
         country_code = form["country_code"]
         chart_type = form["data_code"]
