@@ -1,10 +1,6 @@
-import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
 import mpld3
 from ..models import CovidDataClean, Country
-import sqlite3
-from datatitan_site.settings import DATABASES
 
 SMALL_SIZE = 8
 SMALLER_SIZE = 3
