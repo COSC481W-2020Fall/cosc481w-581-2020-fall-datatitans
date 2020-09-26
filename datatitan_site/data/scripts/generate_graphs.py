@@ -22,15 +22,15 @@ plt.rc("figure", titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 def gen_graph(iso_code: str, category: str, chart_type="line"):
     category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
-    plt.title(category_name[category] + " in " + Country.objects.get(country_code=iso_code).name)
-    with sqlite3.connect(DATABASES["default"]["NAME"]) as conn:
-        df = pd.read_sql(f"""select date, {category} from data_coviddataclean""", con=conn)
-    a = sns.lineplot(data=df, x="date", y=category)
-    for ind, label in enumerate(a.get_xticklabels()):
-        label.set_visible(ind % 10 == 0)
+    plt.title(
+        category_name[category]
+        + " in "
+        + Country.objects.get(country_code=iso_code).name
+    )
+    target_query = CovidDataClean.objects.filter(iso_code__exact=iso_code).order_by("date")
+    plt.plot(target_query.values_list("date"), target_query.values_list(category))
     plt.xlabel("Dates")
-    plt.ylabel(category_name[category])
-    plt.xticks(rotation=-45)
+    plt.ylabel(category_name[category], labelpad=32)
     figure = plt.gcf()
     plt.draw()
     graph_output = mpld3.fig_to_html(figure)
