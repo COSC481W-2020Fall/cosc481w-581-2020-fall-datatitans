@@ -3,6 +3,7 @@ from django.utils import timezone
 from .models import Post, Country
 from pathlib import Path
 from .scripts.generate_graphs import gen_graph
+from django.utils.datastructures import MultiValueDictKeyError
 
 
 def home(request):
@@ -18,8 +19,12 @@ def home(request):
         # form = ListForm(request.POST or None)
         form = request.GET
 
-        country_code = form["country_code"]
-        chart_type = form["data_code"]
+        try:
+            country_code = form["country_code"]
+            chart_type = form["data_code"]
+        except MultiValueDictKeyError:
+            country_code = "USA"
+            chart_type = "TOTAL_CASES"
         return render(
             request,
             "data.html",
