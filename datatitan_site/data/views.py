@@ -35,7 +35,7 @@ def home(request):
             "chart": gen_graph(
                 iso_code=country_code, category=str.lower(chart_type)
             ),
-            "countries": countries,
+            "countries": Country().country_names,
             "selected_country": Country.objects.get(country_code=country_code).name,
             "data_type": data_type,
             "selected_data": category_name[str.lower(chart_type)],

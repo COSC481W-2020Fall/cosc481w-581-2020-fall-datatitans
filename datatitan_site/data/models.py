@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.utils.functional import cached_property
 
 
 # Create your models here.
@@ -9,6 +10,10 @@ class Country(models.Model):
     name = models.CharField(max_length=55)
     continent = models.CharField(max_length=15)
     population = models.IntegerField()
+
+    @cached_property
+    def country_names(self):
+        return list(Country.objects.values_list("country_code", "name"))
 
 
 class CovidDataRaw(models.Model):
