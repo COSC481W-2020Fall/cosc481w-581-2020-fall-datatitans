@@ -3,50 +3,39 @@ from django.utils import timezone
 from .models import Post, Country
 from pathlib import Path
 from .scripts.generate_graphs import gen_graph
+from django.utils.datastructures import MultiValueDictKeyError
+from django.views.decorators.http import require_GET
 
 
+@require_GET
 def home(request):
-    img_url = "static/USA1.jpeg"
-    selected_country = "USA"
-    selected_data = "Total Cases"
-    countries = [("USA", "USA"), ("CAN", "Canada"), ("MEX", "Mexico")]
-    data_type = [("TOTAL_CASES", "Total Cases"), ("TOTAL_DEATHS", "Total Deaths")]
     category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
 
-    if request.method == "POST":
-        # Get items from the form
-        # form = ListForm(request.POST or None)
-        form = request.POST
+    # Get items from the form
+    # form = ListForm(request.POST or None)
+    form = request.GET
 
+    try:
         country_code = form["country_code"]
-        chart_type = form["data_code"]
-        return render(
-            request,
-            "data.html",
-            {
-                "chart": gen_graph(
-                    iso_code=country_code, category=str.lower(chart_type)
-                ),
-                "countries": countries,
-                "selected_country": Country.objects.get(country_code=country_code).name,
-                "data_type": data_type,
-                "selected_data": category_name[str.lower(chart_type)],
-            },
-        )
-    else:
-
-        # chart = seaborn(country_code, chart_type)
-        return render(
-            request,
-            "data.html",
-            {
-                "chart": img_url,
-                "countries": countries,
-                "selected_country": selected_country,
-                "data_type": data_type,
-                "selected_data": selected_data,
-            },
-        )
+        data_category = form["data_code"]
+        chart_type = form["chart_code"]
+    except MultiValueDictKeyError:
+        country_code = "USA"
+        data_category = "TOTAL_CASES"
+        chart_type = "LINE"
+    return render(
+        request,
+        "data.html",
+        {
+            "chart": gen_graph(
+                iso_code=country_code, category=str.lower(data_category)
+            ),
+            "countries": Country().country_names,
+            "selected_country": Country.objects.get(country_code=country_code).name,
+            "data_type": [(str.upper(raw), category_name[raw]) for raw in category_name],
+            "selected_data": category_name[str.lower(data_category)],
+        },
+    )
 
 
 def about(request):

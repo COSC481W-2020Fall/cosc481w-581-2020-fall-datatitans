@@ -26,7 +26,7 @@ def gen_graph(iso_code: str, category: str, chart_type="line"):
     target_query = CovidDataClean.objects.filter(iso_code__exact=iso_code).order_by("date")
     plt.plot(target_query.values_list("date"), target_query.values_list(category))
     plt.xlabel("Dates")
-    plt.ylabel(category_name[category], labelpad=32)
+    plt.ylabel(category_name[category])
     figure = plt.gcf()
     plt.draw()
     graph_output = mpld3.fig_to_html(figure)

@@ -16,15 +16,13 @@
 	</div>
 	
 	<!-- Dropdown -->
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+    <form method="GET" enctype="multipart/form-data">
         <label for="chart_code">Chart Type</label>
         <select class="custom-select form-control" id="chart_code" name="chart_code" required>
             <option value="LINE" selected="selected">Line Chart</option>
         </select>
         <br>
-        
-        {% csrf_token %}
+
         <label for="country_code">Country</label>
         <select class="custom-select form-control" id="country_code" name="country_code" required>
             {% for country in countries %}
@@ -36,8 +34,7 @@
             {% endfor %}
         </select>
         <br>
-        
-        {% csrf_token %}
+
         <label for="data_code">Data Type</label>
         <select class="custom-select form-control" id="data_code" name="data_code" required>
             {% for data in data_type %}
