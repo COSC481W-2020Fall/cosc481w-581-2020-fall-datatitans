@@ -1,0 +1,11 @@
+Possible Requirements for Final Project
+* Additional countries (all?)
+* Interactive charts
+* More chart types: including radio buttons for selection
+* Interactive (clickable) map
+* Ability to drill down by region or city
+* Multiple countries on one chart
+* Country selection check boxes
+* AWS hosting
+* Clean up html (eg, remove placeholder footers)
+* News aggregator for relevant articles

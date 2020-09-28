@@ -68,7 +68,11 @@ Does: Fred looks up statistics every morning before his wife goes for work
 and reads a more detailed article later in the afternoon.
 
 
+## Problem Scenario
 
+1. To obtain quick, accurate, up-to-date COVID data for Michigan and the Ypsilanti area with an easy-to-use visual representation.
+2. Currently, Fred doesn't have a single location to find all of the information he is looking for. As a result, he spends quite a bit of time browsing several other sites, eg, Michigan COVID dashboard, Twitter, Google, and news media.
+3. Ideally, our site provides access to global, national, and even local data. It also has visual, clickable links to enable Fred to drill down for more specific results. Lastly, it will have an aggregator for relevant articles and other news sources.
 
 ## Getting Started
 
