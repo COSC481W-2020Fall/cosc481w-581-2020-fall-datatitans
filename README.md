@@ -44,6 +44,11 @@ Feels: Remorse for people who lost their businesses and jobs. (Himself being one
 Does: Fred looks up statistics every morning before his wife goes for work and reads a more detailed article later in the afternoon
 
 
+## Problem Scenario
+
+1. To obtain quick, accurate, up-to-date COVID data for Michigan and the Ypsilanti area
+2. Browsing several other sites, eg, Michigan COVID dashboard, Twitter, Google, and news media
+3. To provide functionality to enable clickable drill-down for specific regions and cities
 
 
 ## Getting Started
