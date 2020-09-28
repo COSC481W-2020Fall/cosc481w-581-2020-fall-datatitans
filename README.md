@@ -1,12 +1,17 @@
 # DataTitans
 
 ## Description of Prototype
-1. The Home page shows the data in the form of charts. From all pages, users can navigate to Data (Home), About, and Blog pages from the menu at the top of the screen.
-2. The Data page will allow users to choose from dropdown lists for Country (USA-default, Canada, Mexico), Data Type (total cases-default, total deaths) and Chart Type (line).
-3. Charts will show the selected data for all dates in the COVID-19 data from [Our World in Data](https://ourworldindata.org/) as of the latest download.
-4. The About page will show a brief description of the website (Our Goal) as well as short bios of the team members.
-5. Users can view the Blog page to read about the future of the site. The initial blog post will include specifications for the completed project.
-6. Charts are built with a downloaded json file from which panda dataframes are created and visualized through the seaborn library.
+1. The Home page shows the data in the form of charts. From all pages, users can navigate to Data (Home), About,
+and Blog pages from the menu at the top of the screen.
+2. The Data page will allow users to choose from dropdown lists for Country (USA-default, Canada, Mexico),
+Data Type (total cases-default, total deaths) and Chart Type (line).
+3. Charts will show the selected data for all dates in the COVID-19 data from
+[Our World in Data](https://ourworldindata.org/) as of the latest download.
+4. The "About" page will show a brief description of the website (Our Goal) as well as short bios of the team members.
+5. Users can view the Blog page to read about the future of the site.
+The initial blog post will include specifications for the completed project.
+6. Charts are built with a downloaded json file from which panda dataframes are created
+and visualized through the seaborn library.
 7. Remaining web elements are built with HTML.
 8. The charts and data should be accessible by the latest browsers (i.e Firefox, Chrome, Safari)
 
@@ -25,23 +30,42 @@
 5. Are daily updates of the pandemic critical to your work?
 
 
-Fred has lived in Ypsilanti Michigan his whole life. He lives with his wife, 3 year old daughter and pet dog Dino. Every weekend he would either spend the day with his family at the park or with his friends at a local restaurant having debates about current events. Once the pandemic caused a lockdown, Fred found himself spending a lot more time at home. With the exception of taking the dog for walks and getting emergency groceries, a lot of his time is now spent in the living room, also known as the makeshift preschool, with his daughter.
+Fred has lived in Ypsilanti Michigan his whole life.
+He lives with his wife, 3 year old daughter and pet dog Dino.
+Every weekend he would either spend the day with his family at the park or with his friends at a local restaurant
+having debates about current events.
+Once the pandemic caused a lockdown, Fred found himself spending a lot more time at home.
+With the exception of taking the dog for walks and getting emergency groceries,
+a lot of his time is now spent in the living room, also known as the makeshift preschool, with his daughter.
 
-Fred’s wife works as a general physician, and while she does not directly interact with covid patients, she gets a glimpse of the front lines daily and tells her husband about it after work. Their daughter had just started preschool before the pandemic arrived but now learns from home from her dad. She is quite happy about this.
+Fred’s wife works as a general physician, and while she does not directly interact with covid patients,
+she gets a glimpse of the front lines daily and tells her husband about it after work.
+Their daughter had just started preschool before the pandemic arrived but now learns from home from her dad.
+She is quite happy about this.
 
-Even though Fred lost his job, he is not immediately worried about money to sustain his family. He and his wife have a backup saving account for just such an occasion, although he is worried about how long the pandemic will last, and is constantly following the trends.
+Even though Fred lost his job, he is not immediately worried about money to sustain his family.
+He and his wife have a backup saving account for just such an occasion,
+although he is worried about how long the pandemic will last, and is constantly following the trends.
 
-A lot of Fred’s social activities have turned into virtual ones and he has relied on webex to facilitate them. Current events are still the topic that he and his friends debate on since the lockdown has been almost exclusively about COVID. His friends argue that they should go out and meet up more to help avoid more devastating news, like their favourite restaurant closing down. He tries to argue against it using articles he reads in the paper and announcements on the television but is usually dismissed because “those articles are serving a political agenda” some of his friends would say.
+A lot of Fred’s social activities have turned into virtual ones, and he has relied on webex to facilitate them.
+Current events are still the topic that he and his friends debate on
+since the lockdown has been almost exclusively about COVID.
+His friends argue that they should go out and meet up more to help avoid more devastating news,
+like their favourite restaurant closing down.
+He tries to argue against it using articles he reads in the paper and announcements on the television
+but is usually dismissed because “those articles are serving a political agenda” some of his friends would say.
 
 
 
 Thinks: If he had other sources of data that were unbiased and visual, he would win all the debates with his friends.
 
-Sees: He sees the negative effects that the quarantine has had when he takes his dog for walks, he however also knows the far worse consequences if the safety measures were ignored
+Sees: He sees the negative effects that the quarantine has had when he takes his dog for walks,
+he however also knows the far worse consequences if the safety measures were ignored.
 
 Feels: Remorse for people who lost their businesses and jobs. (Himself being one of them)
 
-Does: Fred looks up statistics every morning before his wife goes for work and reads a more detailed article later in the afternoon
+Does: Fred looks up statistics every morning before his wife goes for work
+and reads a more detailed article later in the afternoon.
 
 
 
