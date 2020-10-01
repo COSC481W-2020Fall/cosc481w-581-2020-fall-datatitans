@@ -64,6 +64,7 @@ class CovidDataRaw(models.Model):
         indexes = [models.Index(fields=["iso_code", "date"])]
         ordering = ["iso_code", "date"]
         unique_together = ["iso_code", "date"]
+        managed = False
 
 
 class CovidDataClean(models.Model):
