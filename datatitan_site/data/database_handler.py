@@ -28,12 +28,10 @@ def input_missing_or_outdated():
 
 def initialize_table():
     with sqlite3.connect(DATABASES["default"]["NAME"]) as conn:
-        CovidDataRaw.objects.all().delete()
         read_covid_data_raw = pd.read_csv(input_file_path)
         read_covid_data_raw.to_sql(
-            CovidDataRaw._meta.db_table, conn, index=False, if_exists="append"
+            CovidDataRaw._meta.db_table, conn, index=False, if_exists="replace"
         )
-        # CovidDataClean.objects.all().delete()
         # %%
         window = {"partition_by": F("iso_code"), "order_by": [F("date")]}
         past_week = RowRange(start=-6, end=0)
