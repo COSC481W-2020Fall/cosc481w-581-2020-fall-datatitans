@@ -106,17 +106,30 @@ def initialize_table():
             con=conn,
         ).to_sql(
             CovidDataClean._meta.db_table, con=conn, index=False, if_exists="append"
+        CovidDataClean.objects.bulk_create([CovidDataClean(**row) for row in clean_data], ignore_conflicts=True)
+        # Country.objects.all().delete()
+        # pd.read_sql_query(
+        #     """
+        #     select iso_code as country_code,
+        #     location as name,
+        #     continent,
+        #     population
+        #     from data_coviddataraw
+        #     where iso_code in ('USA', 'CAN', 'MEX')
+        #     group by iso_code
+        #     """,
+        #     con=conn,
+        # ).to_sql(Country._meta.db_table, con=conn, index=False, if_exists="append")
+        countries = (
+            CovidDataRaw.objects.values(
+                "continent",
+                "population",
+                country_code=F("iso_code"),
+                name=F("location"),
+            )
+            .order_by("iso_code")
+            .filter(iso_code__in=("USA", "CAN", "MEX"))
         )
-        Country.objects.all().delete()
-        pd.read_sql_query(
-            """
-            select iso_code as country_code,
-            location as name,
-            continent,
-            population
-            from data_coviddataraw
-            where iso_code in ('USA', 'CAN', 'MEX')
-            group by iso_code
-            """,
-            con=conn,
-        ).to_sql(Country._meta.db_table, con=conn, index=False, if_exists="append")
+        Country.objects.bulk_create(
+            [Country(**c) for c in countries.distinct()], ignore_conflicts=True
+        )
