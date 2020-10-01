@@ -23,10 +23,23 @@
         </select>
         <br>
 
-        <label for="country_code">Country</label>
-        <select class="custom-select form-control" id="country_code" name="country_code" required>
+        <label for="country_code1">Country</label>
+        <select class="custom-select form-control" id="country_code1" name="country_code1" required>
             {% for country in countries %}
-                {% if country.1 == selected_country %}
+                {% if country.1 == selected_country1 %}
+                    <option value="{{ country.0 }}" selected>{{ country.1 }}</option>
+                {% else %}
+                    <option value="{{ country.0 }}">{{ country.1 }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="country_code2">Country</label>
+        <select class="custom-select form-control" id="country_code2" name="country_code2" required>
+            <option value="none">None</option>
+            {% for country in countries2 %}
+                {% if country.1 == selected_country2 %}
                     <option value="{{ country.0 }}" selected>{{ country.1 }}</option>
                 {% else %}
                     <option value="{{ country.0 }}">{{ country.1 }}</option>

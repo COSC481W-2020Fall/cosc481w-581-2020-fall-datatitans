@@ -18,26 +18,75 @@ plt.rc("figure", titlesize=BIGGER_SIZE)  # fontsize of the figure title
 dims = (8, 4)  # dimension variable for plot area
 
 
-def gen_graph(iso_code: str, category: str, chart_type="line"):
+def gen_graph(iso_code1: str, iso_code2: str, category: str, chart_type="line"):
     category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
     plt.subplots(figsize=dims)
-    plt.title(
-        category_name[category]
-        + " in "
-        + Country.objects.get(country_code=iso_code).name
-    )
-    target_query = CovidDataClean.objects.filter(iso_code__exact=iso_code).order_by("date")
-    plt.plot(target_query.values_list("date"), target_query.values_list(category), label=iso_code)
-    plt.legend(shadow=True, fancybox=True, loc=2, prop={'size': 10})
-    plt.xlabel("Dates")
 
-    if iso_code == "USA" and category == "total_cases":
-        plt.ylabel(category_name[category], labelpad=36)
+    if iso_code2 == "none" or iso_code1 == iso_code2:
+        plt.title(
+            category_name[category]
+            + " in "
+            + Country.objects.get(country_code=iso_code1).name
+        )
+        target_query = CovidDataClean.objects.filter(iso_code__exact=iso_code1).order_by("date")
+        plt.plot(target_query.values_list("date"), target_query.values_list(category), label=iso_code1)
+        plt.legend(shadow=True, fancybox=True, loc=2, prop={'size': 10})
+        plt.xlabel("Dates")
+
+        if iso_code1 == "USA" and category == "total_cases":
+            plt.ylabel(category_name[category], labelpad=36)
+        else:
+            plt.ylabel(category_name[category])
+
+        figure = plt.gcf()
+        #plt.draw()
+        graph_output = mpld3.fig_to_html(figure)
+        plt.close(figure)
+        return graph_output
+    elif iso_code2 is not "none":
+        plt.title(
+            category_name[category]
+            + " in "
+            + Country.objects.get(country_code=iso_code1).name
+            + " & "
+            + Country.objects.get(country_code=iso_code2).name
+        )
+        target_query = CovidDataClean.objects.filter(iso_code__exact=iso_code1).order_by("date")
+        plt.plot(target_query.values_list("date"), target_query.values_list(category), label=iso_code1)
+        target_query = CovidDataClean.objects.filter(iso_code__exact=iso_code2).order_by("date")
+        plt.plot(target_query.values_list("date"), target_query.values_list(category), label=iso_code2)
+
+        plt.legend(shadow=True, fancybox=True, loc=2, prop={'size': 10})
+        plt.xlabel("Dates")
+
+        if iso_code1 == "USA" and category == "total_cases":
+            plt.ylabel(category_name[category], labelpad=36)
+        else:
+            plt.ylabel(category_name[category])
+
+        figure = plt.gcf()
+        # plt.draw()
+        graph_output = mpld3.fig_to_html(figure)
+        plt.close(figure)
+        return graph_output
     else:
-        plt.ylabel(category_name[category])
+        plt.title(
+            category_name[category]
+            + " in "
+            + Country.objects.get(country_code=iso_code1).name
+        )
+        target_query = CovidDataClean.objects.filter(iso_code__exact=iso_code1).order_by("date")
+        plt.plot(target_query.values_list("date"), target_query.values_list(category), label=iso_code1)
+        plt.legend(shadow=True, fancybox=True, loc=2, prop={'size': 10})
+        plt.xlabel("Dates")
 
-    figure = plt.gcf()
-    #plt.draw()
-    graph_output = mpld3.fig_to_html(figure)
-    plt.close(figure)
-    return graph_output
+        if iso_code1 == "USA" and category == "total_cases":
+            plt.ylabel(category_name[category], labelpad=36)
+        else:
+            plt.ylabel(category_name[category])
+
+        figure = plt.gcf()
+        # plt.draw()
+        graph_output = mpld3.fig_to_html(figure)
+        plt.close(figure)
+        return graph_output
