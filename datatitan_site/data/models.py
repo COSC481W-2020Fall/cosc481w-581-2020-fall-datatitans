@@ -97,6 +97,8 @@ class CovidDataClean(models.Model):
 
     class Meta:
         indexes = [models.Index(fields=["iso_code", "date"])]
+        ordering = ["iso_code", "date"]
+        unique_together = ["iso_code", "date"]
     #   managed = False
     #   db_table = "COVID_DATA_CLEAN"
 
