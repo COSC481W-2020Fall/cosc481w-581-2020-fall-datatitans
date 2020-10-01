@@ -15,6 +15,7 @@ pandas = "*"
 matplotlib = "*"
 seaborn = "*"
 mpld3 = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "3.8"
