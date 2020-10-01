@@ -1,9 +1,18 @@
+import sqlite3
+from datetime import date
 from pathlib import Path
 import pandas as pd
-import sqlite3
+from django.db.models import (
+    Avg,
+    Sum,
+    RowRange,
+    Window,
+    F,
+    FloatField,
+)
+from django.db.models.functions import Coalesce, Cast
 from datatitan_site.settings import DATABASES
-from datetime import date
-from .models import CovidDataRaw, CovidDataClean, Country
+from data.models import CovidDataRaw, CovidDataClean, Country
 
 
 input_file_path = Path(__file__).parent / "input" / "owid-covid-data.csv"
