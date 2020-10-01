@@ -1,3 +1,4 @@
+# %%
 import sqlite3
 from datetime import date
 from pathlib import Path
@@ -14,7 +15,7 @@ from django.db.models.functions import Coalesce, Cast
 from datatitan_site.settings import DATABASES
 from data.models import CovidDataRaw, CovidDataClean, Country
 
-
+# %%
 input_file_path = Path(__file__).parent / "input" / "owid-covid-data.csv"
 # database_path = Path(__file__).parent / "database" / "test_database.db"
 
@@ -33,7 +34,7 @@ def initialize_table():
             CovidDataRaw._meta.db_table, conn, index=False, if_exists="append"
         )
         # CovidDataClean.objects.all().delete()
-        # In[1]:
+        # %%
         window = {"partition_by": F("iso_code"), "order_by": [F("date")]}
         past_week = RowRange(start=-6, end=0)
         clean_data = (
@@ -113,6 +114,7 @@ def initialize_table():
                 population=F("population"),
             )
         )
+        # %%
         # pd.read_sql_query(
         #     """
         #     select iso_code,
@@ -187,7 +189,10 @@ def initialize_table():
         # ).to_sql(
         #     CovidDataClean._meta.db_table, con=conn, index=False, if_exists="append"
         # )
-        CovidDataClean.objects.bulk_create([CovidDataClean(**row) for row in clean_data], ignore_conflicts=True)
+        # %%
+        CovidDataClean.objects.bulk_create(
+            [CovidDataClean(**row) for row in clean_data], ignore_conflicts=True
+        )
         # Country.objects.all().delete()
         # pd.read_sql_query(
         #     """
