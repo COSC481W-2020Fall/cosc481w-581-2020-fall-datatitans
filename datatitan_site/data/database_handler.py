@@ -24,12 +24,15 @@ engine = create_engine(
     f'sqlite:///{DATABASES["default"]["NAME"].relative_to(BASE_DIR)}'
 )
 
+
+# %%
 def input_missing_or_outdated():
     return (not input_file_path.exists()) or date.fromtimestamp(
         input_file_path.stat().st_ctime
     ) < date.today()
 
 
+# %%
 def initialize_table():
     with engine.connect() as conn:
         read_covid_data_raw = pd.read_csv(input_file_path)
