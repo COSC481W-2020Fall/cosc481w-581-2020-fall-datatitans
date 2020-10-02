@@ -41,19 +41,21 @@ def initialize_table():
     past_week = RowRange(start=-6, end=0)
     clean_data = (
         CovidDataRaw.objects.exclude(iso_code__isnull=True)
-        .values("iso_code", "continent", "location", "date",)
+        .values("iso_code", "continent", "location", "date")
+        .annotate(
+            new_cases=Coalesce(F("new_cases"), 0),
+            new_deaths=Coalesce(F("new_deaths"), 0),
+            new_tests=Coalesce(F("new_tests"), 0),
+        )
         .annotate(
             total_cases=Window(expression=Sum(F("new_cases")), **window),
-            new_cases=Coalesce(F("new_cases"), 0),
             new_cases_smoothed=Window(
                 expression=Avg(F("new_cases")), frame=past_week, **window
             ),
-            new_deaths=Coalesce(F("new_deaths"), 0),
             total_deaths=Window(expression=Sum(F("new_deaths")), **window),
             new_deaths_smoothed=Window(
                 expression=Avg(F("new_deaths")), frame=past_week, **window
             ),
-            new_tests=Coalesce(F("new_tests"), 0),
             total_tests=Window(expression=Sum(F("new_tests")), **window),
             new_tests_smoothed=Window(
                 expression=Avg(F("new_tests")), frame=past_week, **window
