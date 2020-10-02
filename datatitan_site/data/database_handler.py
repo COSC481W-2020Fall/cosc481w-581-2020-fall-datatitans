@@ -31,11 +31,11 @@ def input_missing_or_outdated():
 
 
 def initialize_table():
-    conn = create_engine(f'sqlite:///{DATABASES["default"]["NAME"].relative_to(BASE_DIR)}')
-    read_covid_data_raw = pd.read_csv(input_file_path)
-    read_covid_data_raw.to_sql(
-        CovidDataRaw._meta.db_table, conn, index=False, if_exists="replace"
-    )
+    with engine.connect() as conn:
+        read_covid_data_raw = pd.read_csv(input_file_path)
+        read_covid_data_raw.round(decimals=3).to_sql(
+            CovidDataRaw._meta.db_table, conn, index=False, if_exists="replace"
+        )
     # %%
     window = {"partition_by": F("iso_code"), "order_by": [F("date")]}
     past_week = RowRange(start=-6, end=0)
