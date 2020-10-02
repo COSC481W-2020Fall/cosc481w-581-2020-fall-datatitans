@@ -16,11 +16,13 @@ def home(request):
     form = request.GET
 
     try:
-        country_code = form["country_code"]
+        country_code1 = form["country_code1"]
+        country_code2 = form["country_code2"]
         data_category = form["data_code"]
         chart_type = form["chart_code"]
     except MultiValueDictKeyError:
-        country_code = "USA"
+        country_code1 = "USA"
+        country_code2 = "none"
         data_category = "TOTAL_CASES"
         chart_type = "LINE"
     return render(
@@ -28,10 +30,14 @@ def home(request):
         "data.html",
         {
             "chart": gen_graph(
-                iso_code=country_code, category=str.lower(data_category)
+                iso_code1=country_code1, iso_code2=country_code2, category=str.lower(data_category)
             ),
             "countries": Country().country_names,
-            "selected_country": Country.objects.get(country_code=country_code).name,
+            "countries2": Country().country_names,
+            #"selected_country1": Country.objects.get(country_code=country_code1).name,
+            #"selected_country2": Country.objects.get(country_code=country_code2).name,
+            "selected_country1": country_code1,
+            "selected_country2": country_code2,
             "data_type": [(str.upper(raw), category_name[raw]) for raw in category_name],
             "selected_data": category_name[str.lower(data_category)],
         },
