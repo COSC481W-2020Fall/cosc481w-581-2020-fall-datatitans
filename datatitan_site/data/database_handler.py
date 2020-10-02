@@ -206,14 +206,12 @@ def initialize_table():
     # ).to_sql(Country._meta.db_table, con=conn, index=False, if_exists="append")
     countries = (
         CovidDataRaw.objects.values(
-            "continent",
-            "population",
-            country_code=F("iso_code"),
-            name=F("location"),
+            "continent", "population", country_code=F("iso_code"), name=F("location"),
         )
         .order_by("iso_code")
         .filter(iso_code__in=("USA", "CAN", "MEX"))
     )
+    Country.objects.all().delete()
     Country.objects.bulk_create(
         [Country(**c) for c in countries.distinct()], ignore_conflicts=True
     )
