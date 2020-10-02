@@ -3,15 +3,8 @@ from sqlalchemy import create_engine
 from datetime import date
 from pathlib import Path
 import pandas as pd
-from django.db.models import (
-    Avg,
-    Sum,
-    RowRange,
-    Window,
-    F,
-    FloatField,
-)
-from django.db.models.functions import Coalesce, Cast
+from django.db.models import Avg, Sum, RowRange, Window, F, FloatField, CharField
+from django.db.models.functions import Coalesce, Cast, Concat
 from datatitan_site.settings import DATABASES, BASE_DIR
 from data.models import CovidDataRaw, CovidDataClean, Country
 
@@ -113,6 +106,7 @@ def initialize_table():
             tests_units=F("tests_units"),
             stringency_index=F("stringency_index"),
             population=F("population"),
+            data_key=Concat(Cast(F("date"), CharField()), F("iso_code")),
         )
     )
     # %%
