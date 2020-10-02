@@ -19,6 +19,10 @@ from data.models import CovidDataRaw, CovidDataClean, Country
 input_file_path = Path(__file__).parent / "input" / "owid-covid-data.csv"
 # database_path = Path(__file__).parent / "database" / "test_database.db"
 
+# %%
+engine = create_engine(
+    f'sqlite:///{DATABASES["default"]["NAME"].relative_to(BASE_DIR)}'
+)
 
 def input_missing_or_outdated():
     return (not input_file_path.exists()) or date.fromtimestamp(
