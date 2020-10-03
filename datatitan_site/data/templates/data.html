@@ -4,17 +4,17 @@
  
 
 
-	<div class="container row content">
+	<div class="container row content" style="margin:50px;margin-top:10%">
 		 <!-- Dropdown -->
-         <div class="col-md-3">
+         <div class="col-md-3 card" style="padding:30px">
             <form method="GET" enctype="multipart/form-data">
                 <label for="chart_code">Chart Type</label>
                 <select class="custom-select form-control" id="chart_code" name="chart_code" required>
                     <option value="LINE" selected="selected">Line Chart</option>
                 </select>
-                <br>
+                <br><br>
         
-                <label for="country_code1">Country</label>
+                <label for="country_code1">Country 1</label>
                 <select class="custom-select form-control" id="country_code1" name="country_code1" required>
                     {% for country in countries %}
                         {% if country.1 == selected_country1 %}
@@ -24,9 +24,9 @@
                         {% endif %}
                     {% endfor %}
                 </select>
-                <br>
+                <br><br>
         
-                <label for="country_code2">Country</label>
+                <label for="country_code2">Country 2</label>
                 <select class="custom-select form-control" id="country_code2" name="country_code2" required>
                     <option value="none">None</option>
                     {% for country in countries2 %}
@@ -37,7 +37,7 @@
                         {% endif %}
                     {% endfor %}
                 </select>
-                <br>
+                <br><br>
         
                 <label for="data_code">Data Type</label>
                 <select class="custom-select form-control" id="data_code" name="data_code" required>
@@ -49,14 +49,14 @@
                         {% endif %}
                     {% endfor %}
                 </select>
-                <br>
+                <br><br>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
         
     
         <!-- Chart -->
-        <div class="col-md-6">
+        <div class="col-md-9 card" style="padding:30px;margin-left:0px">
             {{ chart|safe }}
     
         </div>
