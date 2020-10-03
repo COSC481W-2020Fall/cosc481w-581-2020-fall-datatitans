@@ -11,6 +11,7 @@ a:visited {}
 img{}
 
 
+
 /* Table styles */
 table, td, th {
 	border:2px solid black;
@@ -64,7 +65,6 @@ ul.topnav {
 	height:50px;
 	margin:0;
 	padding:0;
-	position:fixed;
 	left:0;
 	top:0;
 	overflow:hidden;
