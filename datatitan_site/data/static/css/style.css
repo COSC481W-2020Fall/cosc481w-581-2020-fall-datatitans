@@ -59,7 +59,7 @@ div.tableBreak {
 
 /* Navigation bar styles */
 ul.topnav {
-	background-color:#000000;
+	background-color:#FFFFFF;
 	list-style-type:none;
 	width:100%;
 	height:50px;
@@ -68,15 +68,16 @@ ul.topnav {
 	left:0;
 	top:0;
 	overflow:hidden;
+	padding-inline-end: 32px;
 	
 }
 
 li.topnav{
-	float:left;
+	float:right;
 }
 
 li.topnav a.topnav{
-	color: #BF0000;
+	color: #000000;
 	display:block;
 	text-align: center;
 	padding: 14px 16px ;
@@ -90,4 +91,8 @@ li.topnav a:hover {
 
 li.a.active {
 	color: white;
+}
+
+h3.nav-title{
+	padding-inline-start: 32px;
 }
