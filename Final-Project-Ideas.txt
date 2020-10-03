@@ -8,4 +8,4 @@ Possible Requirements for Final Project
 * Country selection check boxes
 * AWS hosting
 * Clean up html (eg, remove placeholder footers)
-* News aggregator for relevant articles
+* News aggregator for relevant articles (via this link? https://feed.mikle.com/support/google-news-rss/)
