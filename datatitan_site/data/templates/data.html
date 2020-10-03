@@ -1,69 +1,68 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<head>
-    <title>Data Page</title>
-</head>
  
-<body>
 
-	<div class="tableBreak">
-		<table class="tableBody">
-			<tr>
-				<th class="tableHeader1">Data Page</th>
-			</tr>
-		</table>
+
+	<div class="container row content">
+		 <!-- Dropdown -->
+         <div class="col-md-3">
+            <form method="GET" enctype="multipart/form-data">
+                <label for="chart_code">Chart Type</label>
+                <select class="custom-select form-control" id="chart_code" name="chart_code" required>
+                    <option value="LINE" selected="selected">Line Chart</option>
+                </select>
+                <br>
+        
+                <label for="country_code1">Country</label>
+                <select class="custom-select form-control" id="country_code1" name="country_code1" required>
+                    {% for country in countries %}
+                        {% if country.1 == selected_country1 %}
+                            <option value="{{ country.0 }}" selected>{{ country.1 }}</option>
+                        {% else %}
+                            <option value="{{ country.0 }}">{{ country.1 }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <br>
+        
+                <label for="country_code2">Country</label>
+                <select class="custom-select form-control" id="country_code2" name="country_code2" required>
+                    <option value="none">None</option>
+                    {% for country in countries2 %}
+                        {% if country.1 == selected_country2 %}
+                            <option value="{{ country.0 }}" selected>{{ country.1 }}</option>
+                        {% else %}
+                            <option value="{{ country.0 }}">{{ country.1 }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <br>
+        
+                <label for="data_code">Data Type</label>
+                <select class="custom-select form-control" id="data_code" name="data_code" required>
+                    {% for data in data_type %}
+                        {% if data.1 == selected_data %}
+                            <option value="{{ data.0 }}" selected>{{ data.1 }}</option>
+                        {% else %}
+                            <option value="{{ data.0 }}">{{ data.1 }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        
+    
+        <!-- Chart -->
+        <div class="col-md-6">
+            {{ chart|safe }}
+    
+        </div>
 	</div>
 	
-	<!-- Dropdown -->
-    <form method="GET" enctype="multipart/form-data">
-        <label for="chart_code">Chart Type</label>
-        <select class="custom-select form-control" id="chart_code" name="chart_code" required>
-            <option value="LINE" selected="selected">Line Chart</option>
-        </select>
-        <br>
-
-        <label for="country_code1">Country</label>
-        <select class="custom-select form-control" id="country_code1" name="country_code1" required>
-            {% for country in countries %}
-                {% if country.1 == selected_country1 %}
-                    <option value="{{ country.0 }}" selected>{{ country.1 }}</option>
-                {% else %}
-                    <option value="{{ country.0 }}">{{ country.1 }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        <br>
-
-        <label for="country_code2">Country</label>
-        <select class="custom-select form-control" id="country_code2" name="country_code2" required>
-            <option value="none">None</option>
-            {% for country in countries2 %}
-                {% if country.1 == selected_country2 %}
-                    <option value="{{ country.0 }}" selected>{{ country.1 }}</option>
-                {% else %}
-                    <option value="{{ country.0 }}">{{ country.1 }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        <br>
-
-        <label for="data_code">Data Type</label>
-        <select class="custom-select form-control" id="data_code" name="data_code" required>
-            {% for data in data_type %}
-                {% if data.1 == selected_data %}
-                    <option value="{{ data.0 }}" selected>{{ data.1 }}</option>
-                {% else %}
-                    <option value="{{ data.0 }}">{{ data.1 }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-    <!-- Chart -->
-    {{ chart|safe }}
+   
     
-</body>
+
 {% endblock content %}
