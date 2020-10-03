@@ -21,7 +21,8 @@ and visualized through the seaborn library.
 ## Persona
 
 ### Fred: The debating enthusiast
-![](datatitan_site/images/fred_flintstone.jpg)
+<img src="datatitan_site/images/fred_flintstone.jpg" width="300">
+
 ### Screening Questions
 1. What do you think about the pandemic?
 2. Where do you live?
