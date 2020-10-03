@@ -16,28 +16,27 @@ def home(request):
     form = request.GET
 
     try:
-        country_code1 = form["country_code1"]
-        country_code2 = form["country_code2"]
+        countries = [form[f"country_code{num+1}"] for num in range(2)]
         data_category = form["data_code"]
         chart_type = form["chart_code"]
     except MultiValueDictKeyError:
-        country_code1 = "USA"
-        country_code2 = "none"
+        countries = ["USA", "none"]
         data_category = "TOTAL_CASES"
         chart_type = "LINE"
+    countries = list(dict.fromkeys(countries))
+    countries = [country for country in countries if country != "none"]
+    countries = list(filter(None, countries))
     return render(
         request,
         "data.html",
         {
             "chart": gen_graph(
-                iso_code1=country_code1, iso_code2=country_code2, category=str.lower(data_category)
+                *countries, category=str.lower(data_category)
             ),
             "countries": Country().country_names,
             "countries2": Country().country_names,
-            #"selected_country1": Country.objects.get(country_code=country_code1).name,
-            #"selected_country2": Country.objects.get(country_code=country_code2).name,
-            "selected_country1": country_code1,
-            "selected_country2": country_code2,
+            "selected_country1": Country.objects.get(country_code=countries[0]).name,
+            "selected_country2": Country.objects.get(country_code=countries[1]).name if len(countries) > 1 else "none",
             "data_type": [(str.upper(raw), category_name[raw]) for raw in category_name],
             "selected_data": category_name[str.lower(data_category)],
         },
