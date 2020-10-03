@@ -61,8 +61,10 @@ class CovidDataRaw(models.Model):
 
     class Meta:
         # db_table = "COVID_DATA_RAW"
+        indexes = [models.Index(fields=["iso_code", "date"])]
         ordering = ["iso_code", "date"]
         unique_together = ["iso_code", "date"]
+        managed = False
 
 
 class CovidDataClean(models.Model):
@@ -93,10 +95,14 @@ class CovidDataClean(models.Model):
     tests_units = models.TextField(null=True)
     stringency_index = models.DecimalField(max_digits=5, decimal_places=2)
     population = models.IntegerField()
+    data_key = models.CharField(primary_key=True, max_length=20)
 
-    # class Meta:
-    #     managed = False
-        # db_table = "COVID_DATA_CLEAN"
+    class Meta:
+        indexes = [models.Index(fields=["iso_code", "date"])]
+        ordering = ["iso_code", "date"]
+        unique_together = ["iso_code", "date"]
+    #   managed = False
+    #   db_table = "COVID_DATA_CLEAN"
 
 
 class Post(models.Model):
