@@ -8,9 +8,14 @@ body {
 
 a:link {}
 a:visited {}
-img{}
+img{
+	
+	object-fit: cover;
+}
 
-
+.content-div {
+	margin-top: 36px;
+}
 
 /* Table styles */
 table, td, th {
@@ -95,4 +100,10 @@ li.a.active {
 
 h3.nav-title{
 	padding-inline-start: 32px;
+}
+
+/* Blog styling */
+/*Blog container */
+.blog-container{
+	background-blend-mode: luminosity ;
 }
