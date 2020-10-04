@@ -6,24 +6,23 @@
     <head>
         <title>Data Titans</title>
         <meta charset="UTF-8">
-        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        
         <script src="https://kit.fontawesome.com/72030bdf4d.js" crossorigin="anonymous"></script>
+        <link href="../static/css/style.css" rel="stylesheet" type="text/css">
     </head>
     
     <body>
         <div class="row" >
-        <h3 class="col-md-3 nav-title">Data Titans</h3>
-        <ul class="topnav col-md-9">
+        <ul class="col-md-12 topnav">
+            <li class="topnav"><h3 class="topnav">Data Titans</h3></li>
             <li class="topnav">
-                <a class="topnav" href="{% url 'about' %}"><i class="far fa-lightbulb"></i>About us</a>
+                <a class="topnav" href="{% url 'home' %}"><i class="far fa-chart-bar"></i>Data</a>
             </li>
             <li class="topnav">
                 <a class="topnav" href="{% url 'blog' %}"><i class="far fa-newspaper"></i>Blog</a>
             </li>
             <li class="topnav">
-                <a class="topnav" href="{% url 'home' %}"><i class="far fa-chart-bar"></i>Data</a>
+                <a class="topnav" href="{% url 'about' %}"><i class="far fa-lightbulb"></i>About us</a>
             </li>
         </ul>
         </div>
