@@ -3,6 +3,7 @@
 import os
 import sys
 
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'datatitan_site.settings')
@@ -14,8 +15,7 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    #print(sys.argv[1])
-    if(len(sys.argv) > 1 and sys.argv[1] == "run" ):
+    if len(sys.argv) > 1 and sys.argv[1] == "run":
         make_migrate = ['manage', 'makemigrations']
         migrate = ['manage', 'migrate']
         runserver = ['manage', 'runserver']
@@ -23,7 +23,7 @@ def main():
         execute_from_command_line(migrate)
         execute_from_command_line(runserver)
     else:
-        execute_from_command_line(sys.argv)    
+        execute_from_command_line(sys.argv)
 
 
 if __name__ == '__main__':
