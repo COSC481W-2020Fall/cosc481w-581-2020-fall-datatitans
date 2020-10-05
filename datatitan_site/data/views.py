@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Post, Country
-from .scripts.generate_graphs import gen_graph
+from data.models import Post, Country
+from data.scripts.generate_graphs import gen_graph
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.http import require_GET
 

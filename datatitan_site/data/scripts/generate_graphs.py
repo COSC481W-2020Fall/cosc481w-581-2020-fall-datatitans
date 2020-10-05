@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import mpld3
-from ..models import CovidDataClean, Country
+from data.models import CovidDataClean, Country
 
 SMALL_SIZE = 10
 SMALLER_SIZE = 3

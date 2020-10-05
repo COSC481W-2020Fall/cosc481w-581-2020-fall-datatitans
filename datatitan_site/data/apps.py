@@ -9,8 +9,8 @@ class DataConfig(AppConfig):
     def ready(self):
         if 'runserver' not in sys.argv:
             return True
-        from .database_handler import input_missing_or_outdated, input_file_path, initialize_table
-        from .models import CovidDataRaw
+        from data.database_handler import input_missing_or_outdated, input_file_path, initialize_table
+        from data.models import CovidDataRaw
         if input_missing_or_outdated():
             urllib.request.urlretrieve(url="https://covid.ourworldindata.org/data/owid-covid-data.csv",
                                        filename=input_file_path)
