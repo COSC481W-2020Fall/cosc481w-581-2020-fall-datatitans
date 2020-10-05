@@ -13,8 +13,9 @@
     
     <body>
         <div class="row" >
-        <ul class="col-md-12 topnav">
-            <li class="topnav"><h3 class="topnav">Data Titans</h3></li>
+        <!-- <h3 class="col-md-3 nav-title">Data Titans</h3> -->
+        <ul class="topnav col-md-12">
+            <a href="{% url 'home' %}"><img src="../static/img/logo.png" alt="Site Logo" class="nav-logo"></a>
             <li class="topnav">
                 <a class="topnav" href="{% url 'home' %}"><i class="far fa-chart-bar"></i>Data</a>
             </li>

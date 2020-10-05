@@ -1,6 +1,6 @@
 /* General styles */
 body {
-	background-color: #E5E5E5;
+	background-color: #E9F6FF;
 	font-family: Verdana, Arial, sans-serif;
 	margin-bottom: 30px;
 }
@@ -11,6 +11,11 @@ a:visited {}
 img{
 	
 	object-fit: cover;
+}
+
+img.nav-logo{
+	max-width:200px;
+	margin-left: 36px;
 }
 
 .content-div {
