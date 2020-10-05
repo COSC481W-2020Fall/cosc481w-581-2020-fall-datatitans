@@ -1,3 +1,8 @@
+# generate_graphs.py uses the gen_graph function to create an image of a chart based on country codes (iso), category, and chart_type.
+# At this point, chart type is not needed as line chart is the only option
+# It can take a limitless number of country inputs
+# the gen_graph function is called from the views file.
+
 import matplotlib.pyplot as plt
 import mpld3
 from data.models import CovidDataClean, Country
