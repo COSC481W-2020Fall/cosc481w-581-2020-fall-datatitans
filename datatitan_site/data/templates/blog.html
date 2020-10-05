@@ -1,28 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<head>
-    <title>Blog Page</title>
-</head>
- 
-<body>
-
-	<div class="tableBreak">
-		<table class="tableBody">
-			<tr>
-				<th class="tableHeader1">Blog Page</th>
-			</tr>
-		</table>
-	</div>
-
-    <h2>Blog Page</h2>
-
-    {% for post in posts %}
-        <div>
-            <h3><a href="{% url 'blog_detail' post.id %}">{{ post.title }}</a></h3>
-            <p>{{ post.text|slice:"0:20" }}...</p>
-            <p>published: {{ post.published_date }}</p>
+    <div class=" content-div row">
+        <div class=col-md-2></div>
+        <div class="blog-container col-md-8 shadow p-3 mb-5 bg-white rounded">
+            <h2>Blog Page</h2>
+    
+            {% for post in posts %}
+            <div class="row shadow p-3 mb-5 bg-white rounded">
+                <div class="col-md-2" >
+                    <img src="../static/img/fred_flintstone.jpg" alt="Blog Image" class="img-thumbnail">
+                </div>
+                <div class="col-md-8">
+                    <h3><a href="{% url 'blog_detail' post.id %}">{{ post.title }}</a></h3>
+                    <p>{{ post.text|slice:"0:20" }}...</p>
+                    <p>published: {{ post.published_date }}</p>
+                </div>
+            </div>
+                
+            {% endfor %}
         </div>
-    {% endfor %}
-</body>
+        <div class=col-md-2></div>
+        
+    </div>
+    
 {% endblock content %}

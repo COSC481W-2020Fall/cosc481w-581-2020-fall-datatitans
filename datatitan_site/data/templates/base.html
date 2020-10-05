@@ -6,21 +6,28 @@
     <head>
         <title>Data Titans</title>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+        <script src="https://kit.fontawesome.com/72030bdf4d.js" crossorigin="anonymous"></script>
     </head>
     
     <body>
-        <ul class="topnav">
+        <div class="row" >
+        <!-- <h3 class="col-md-3 nav-title">Data Titans</h3> -->
+        <ul class="topnav col-md-12">
+            <a href="{% url 'home' %}"><img src="../static/img/logo.png" alt="Site Logo" class="nav-logo"></a>
             <li class="topnav">
-                <a class="topnav" href="{% url 'home' %}">Data</a>
+                <a class="topnav" href="{% url 'about' %}"><i class="far fa-lightbulb"></i>About us</a>
             </li>
             <li class="topnav">
-                <a class="topnav" href="{% url 'blog' %}">Blog</a>
+                <a class="topnav" href="{% url 'blog' %}"><i class="far fa-newspaper"></i>Blog</a>
             </li>
             <li class="topnav">
-                <a class="topnav" href="{% url 'about' %}">About</a>
+                <a class="topnav" href="{% url 'home' %}"><i class="far fa-chart-bar"></i>Data</a>
             </li>
         </ul>
+        </div>
+        
 		
         {% block content %}
         {% endblock content %}
