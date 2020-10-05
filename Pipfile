@@ -8,7 +8,6 @@ pytest = "*"
 coverage = "*"
 
 [packages]
-mysqlclient = "*"
 Django = "*"
 numpy = "*"
 pandas = "*"
