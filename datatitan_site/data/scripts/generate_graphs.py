@@ -18,13 +18,14 @@ plt.rc("figure", titlesize=BIGGER_SIZE)  # fontsize of the figure title
 dims = (8, 4)  # dimension variable for plot area
 
 
-def gen_graph(*iso_codes, category: str, chart_type="line"):
+def gen_graph(*iso_codes, category: str, chart_type="line") -> str:
     """Creates a graph that tracks a data category over time for an arbitrary number of countries.
 
     :param iso_codes: ISO codes of countries to create graphs for
     :param category: The category of data to track (currently supported categories: total_cases, total_deaths)
     :param chart_type: The type of graph to generate (currently supported graphs: line)
     :return: HTML string representing the generated graph
+    :rtype: str
     """
     category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
     plt.subplots(figsize=dims)
