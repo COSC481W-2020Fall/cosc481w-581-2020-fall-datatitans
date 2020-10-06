@@ -1,5 +1,5 @@
 FROM python:latest
-LABEL maintainer="estanei@emich.edu"
+LABEL maintainer="estanevi@emich.edu"
 WORKDIR /app/DataTitans
 COPY requirements.txt .
 RUN pip install -r requirements.txt
