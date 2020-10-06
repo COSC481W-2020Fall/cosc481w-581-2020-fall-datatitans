@@ -1,3 +1,5 @@
+# The "model" in django MVC architecture which sets up the database.
+
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
