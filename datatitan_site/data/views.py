@@ -40,7 +40,7 @@ def home(request):
                 (str.upper(raw), category_name[raw]) for raw in category_name
             ],
             "selected_data": category_name[str.lower(data_category)],
-            "country_selector": ChartSelector()
+            "country_selector": ChartSelector(selected_country_codes=countries)
         },
     )
 
