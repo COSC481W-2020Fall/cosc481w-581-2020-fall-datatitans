@@ -27,6 +27,8 @@ def gen_graph(*iso_codes, category: str, chart_type="line") -> str:
     :return: HTML string representing the generated graph
     :rtype: str
     """
+    if len(iso_codes) == 0:
+        return ""
     category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
     plt.subplots(figsize=dims)
 
