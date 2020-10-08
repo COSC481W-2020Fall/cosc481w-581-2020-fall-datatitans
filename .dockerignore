@@ -392,3 +392,4 @@ fabric.properties
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,django,pydev,visualstudiocode,eclipse
 
 datatitan_site/data/input
+datatitan_site/db.sqlite3
