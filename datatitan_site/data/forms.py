@@ -6,6 +6,7 @@ class CountrySelect(forms.CheckboxSelectMultiple):
     def __init__(self, *args, **kwargs):
         self.selected_countries = None
         super(CountrySelect, self).__init__(*args, **kwargs)
+        self.attrs["class"] = "custom-checkbox"
 
     def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
         option = super().create_option(name, value, label, selected, index, subindex, attrs)

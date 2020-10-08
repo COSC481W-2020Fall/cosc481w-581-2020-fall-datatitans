@@ -115,6 +115,6 @@ h3.nav-title {
 
 ul#id_country_code{
 	max-height: 100px;
-	overflow: scroll;
+	overflow-y: scroll;
 	list-style: none;
 }
