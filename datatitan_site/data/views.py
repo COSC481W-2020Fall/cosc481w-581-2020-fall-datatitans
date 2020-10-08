@@ -4,6 +4,7 @@ from data.models import Post, Country
 from data.scripts.generate_graphs import gen_graph
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.http import require_GET
+from data.forms import ChartSelector
 
 
 @require_GET
@@ -14,7 +15,7 @@ def home(request):
     form = request.GET
 
     try:
-        countries = [form[f"country_code{num + 1}"] for num in range(2)]
+        countries = form.getlist("country_code", default=[])
         data_category = form["data_code"]
         chart_type = form["chart_code"]
     except MultiValueDictKeyError:
@@ -39,6 +40,7 @@ def home(request):
                 (str.upper(raw), category_name[raw]) for raw in category_name
             ],
             "selected_data": category_name[str.lower(data_category)],
+            "country_selector": ChartSelector()
         },
     )
 
