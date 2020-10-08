@@ -29,10 +29,10 @@ def home(request):
         request,
         "data.html",
         {
-            "chart": gen_graph(*countries, category=str.lower(data_category)),
+            "chart": gen_graph(*countries, category=str.lower(data_category)) if len(countries) > 0 else None,
             "countries": Country().country_names,
             "countries2": Country().country_names,
-            "selected_country1": Country.objects.get(country_code=countries[0]).name,
+            "selected_country1": Country.objects.get(country_code=countries[0]).name if len(countries) > 0 else None,
             "selected_country2": Country.objects.get(country_code=countries[1]).name
             if len(countries) > 1
             else "none",
