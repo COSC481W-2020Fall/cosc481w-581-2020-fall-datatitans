@@ -112,3 +112,9 @@ h3.nav-title {
 .blog-container{
 	background-blend-mode: luminosity ;
 }
+
+ul#id_country_code{
+	max-height: 100px;
+	overflow: scroll;
+	list-style: none;
+}
