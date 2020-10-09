@@ -13,26 +13,7 @@
                 <!-- Dropdown -->
                 <div class="col-md-3 card" style="padding:15px">
                     <form method="GET" enctype="multipart/form-data">
-<!--                        <label for="chart_code">Chart Type</label>-->
-<!--                        <select class="custom-select form-control" id="chart_code" name="chart_code" required>-->
-<!--                            <option value="LINE" selected="selected">Line Chart</option>-->
-<!--                        </select>-->
-<!--                        <br><br>-->
-<!--                        <div>-->
                             {{country_selector}}
-<!--                        </div>-->
-
-                
-<!--                        <label for="data_code">Data Type</label>-->
-<!--                        <select class="custom-select form-control" id="data_code" name="data_code" required>-->
-<!--                            {% for data in data_type %}-->
-<!--                                {% if data.1 == selected_data %}-->
-<!--                                    <option value="{{ data.0 }}" selected>{{ data.1 }}</option>-->
-<!--                                {% else %}-->
-<!--                                    <option value="{{ data.0 }}">{{ data.1 }}</option>-->
-<!--                                {% endif %}-->
-<!--                            {% endfor %}-->
-<!--                        </select>-->
                         <br><br>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
