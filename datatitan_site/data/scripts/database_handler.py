@@ -11,8 +11,7 @@ from datatitan_site.settings import DATABASES, BASE_DIR
 from data.models import CovidDataRaw, CovidDataClean, Country
 
 # %%
-input_file_path = Path(__file__).parent / "input" / "owid-covid-data.csv"
-# database_path = Path(__file__).parent / "database" / "test_database.db"
+input_file_path = Path(__file__).parent.parent / "input" / "owid-covid-data.csv"
 
 # %%
 engine = create_engine(
