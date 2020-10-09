@@ -21,14 +21,19 @@ engine = create_engine(
 
 
 # %%
-def input_missing_or_outdated():
+def input_missing_or_outdated() -> bool:
+    """Check to see if the input file is missing or outdated
+
+    :returns: True if input file does not exist, or was not created today.
+    """
     return (not input_file_path.exists()) or date.fromtimestamp(
         input_file_path.stat().st_ctime
     ) < date.today()
 
 
 # %%
-def initialize_table():
+def initialize_table() -> None:
+    """Replace the raw covid data table with a fresh copy, then clean up the data, and generate a table of countries."""
     with engine.connect() as conn:
         read_covid_data_raw = pd.read_csv(input_file_path)
         read_covid_data_raw.round(decimals=3).to_sql(

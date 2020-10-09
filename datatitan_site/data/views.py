@@ -2,25 +2,22 @@
 
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Post, Country
-from pathlib import Path
-from .scripts.generate_graphs import gen_graph
+from data.models import Post, Country
+from data.scripts.generate_graphs import gen_graph
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.http import require_GET
+from data.forms import ChartSelector
 
 
 @require_GET
 def home(request):
-    category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
-
     # Get items from the form
-    # form = ListForm(request.POST or None)
     form = request.GET
 
     try:
-        countries = [form[f"country_code{num+1}"] for num in range(2)]
-        data_category = form["data_code"]
-        chart_type = form["chart_code"]
+        countries = form.getlist("country_code", default=[])
+        data_category = form["data_type"]
+        chart_type = form["chart_type"]
     except MultiValueDictKeyError:
         countries = ["USA", "none"]
         data_category = "TOTAL_CASES"
@@ -32,15 +29,12 @@ def home(request):
         request,
         "data.html",
         {
-            "chart": gen_graph(
-                *countries, category=str.lower(data_category)
+            "chart": gen_graph(*countries, category=str.lower(data_category)),
+            "country_selector": ChartSelector(
+                selected_country_codes=countries,
+                selected_data_type=data_category,
+                selected_chart_type=chart_type,
             ),
-            "countries": Country().country_names,
-            "countries2": Country().country_names,
-            "selected_country1": Country.objects.get(country_code=countries[0]).name,
-            "selected_country2": Country.objects.get(country_code=countries[1]).name if len(countries) > 1 else "none",
-            "data_type": [(str.upper(raw), category_name[raw]) for raw in category_name],
-            "selected_data": category_name[str.lower(data_category)],
         },
     )
 

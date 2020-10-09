@@ -1,8 +1,8 @@
 /* General styles */
 body {
-	background-color:#E9F6FF;
-	font-family:Verdana, Arial, Sans-Serif;
-	margin-bottom:30px;
+	background-color: #E9F6FF;
+	font-family: Verdana, Arial, sans-serif;
+	margin-bottom: 30px;
 }
 
 
@@ -24,17 +24,16 @@ img.nav-logo{
 
 /* Table styles */
 table, td, th {
-	border:2px solid black;
-	border-collapse:collapse;
-	border-color:#400000;
-	color:#bf0000;
+	border: 2px solid #400000;
+	border-collapse: collapse;
+	color: #BF0000;
 }
 
 td, ul, li {
-	font-size:14px;
-	font-family:Verdana, Arial, Sans-Serif;
-	color:#400000;
-	text-align:left;
+	font-size: 14px;
+	font-family: Verdana, Arial, sans-serif;
+	color: #400000;
+	text-align: left;
 }
 
 th, td {
@@ -42,53 +41,54 @@ th, td {
 }
 
 th.tableHeader1 {
-	font-family:Arial, Verdana, Times, Sans-Serif;
-	font-size:30px;
-	width:80%
+	font-family: Arial, Verdana, Times, sans-serif;
+	font-size: 30px;
+	width: 80%
 }
 
 th.tableHeader2 {
-	font-family:Arial, Verdana, Times, Sans-Serif;
-	text-align:center;
-	width:12%;
-	font-style:italic;
-	font-size:25px;
+	font-family: Arial, Verdana, Times, sans-serif;
+	text-align: center;
+	width: 12%;
+	font-style: italic;
+	font-size: 25px;
 }
 
 table.tableBody {
-	margin:auto;
-	background-color:#bebebe;
-	width:90%
+	margin: auto;
+	background-color: #BEBEBE;
+	width: 90%
 }
 
 div.tableBreak {
-	margin-bottom:30px;
-	margin-top:125px;
+	margin-bottom: 30px;
+	margin-top: 125px;
 }
 
 
 /* Navigation bar styles */
 ul.topnav {
-	background-color:#FFFFFF;
-	list-style-type:none;
-	width:100%;
-	height:50px;
-	margin:0;
-	padding:0;
-	left:0;
-	top:0;
-	overflow:hidden;
+	background-color: #000000;
+	color: #BF0000;
+	list-style-type: none;
+	width: 100%;
+	height: 50px;
+	margin: 0;
+	padding: 0;
+	left: 0;
+	top: 0;
+	overflow: hidden;
 	padding-inline-end: 32px;
-	
 }
 
-li.topnav{
-	float:right;
+li.topnav {
+	color: #BF0000;
+	float: left;
 }
 
-li.topnav a.topnav{
-	color: #000000;
-	display:block;
+li.topnav a.topnav, li.topnav h3.topnav {
+	color: inherit;
+	display: block;
 	text-align: center;
 	padding: 14px 16px ;
 	text-decoration: none;
@@ -103,7 +103,7 @@ li.a.active {
 	color: white;
 }
 
-h3.nav-title{
+h3.nav-title {
 	padding-inline-start: 32px;
 }
 
@@ -111,4 +111,10 @@ h3.nav-title{
 /*Blog container */
 .blog-container{
 	background-blend-mode: luminosity ;
+}
+
+ul#id_country_code{
+	max-height: 100px;
+	overflow-y: scroll;
+	list-style: none;
 }

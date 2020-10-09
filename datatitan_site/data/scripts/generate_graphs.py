@@ -1,11 +1,6 @@
-# generate_graphs.py uses the gen_graph function to create an image of a chart based on country codes (iso), category, and chart_type.
-# At this point, chart type is not needed as line chart is the only option
-# It can take a limitless number of country inputs
-# the gen_graph function is called from the views file.
-
 import matplotlib.pyplot as plt
 import mpld3
-from ..models import CovidDataClean, Country
+from data.models import CovidDataClean, Country
 
 SMALL_SIZE = 10
 SMALLER_SIZE = 3
@@ -23,7 +18,17 @@ plt.rc("figure", titlesize=BIGGER_SIZE)  # fontsize of the figure title
 dims = (8, 4)  # dimension variable for plot area
 
 
-def gen_graph(*iso_codes, category: str, chart_type="line"):
+def gen_graph(*iso_codes, category: str, chart_type="line") -> str:
+    """Creates a graph that tracks a data category over time for an arbitrary number of countries.
+
+    :param iso_codes: ISO codes of countries to create graphs for
+    :param category: The category of data to track (currently supported categories: total_cases, total_deaths)
+    :param chart_type: The type of graph to generate (currently supported graphs: line)
+    :return: HTML string representing the generated graph
+    :rtype: str
+    """
+    if len(iso_codes) == 0:
+        return ""
     category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
     plt.subplots(figsize=dims)
 
