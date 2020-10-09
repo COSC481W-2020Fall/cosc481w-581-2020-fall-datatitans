@@ -1,3 +1,5 @@
+# The "view" in django mvc architecture which integrates with html to display data
+
 from django.shortcuts import render
 from django.utils import timezone
 from data.models import Post, Country
