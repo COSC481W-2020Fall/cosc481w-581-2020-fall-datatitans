@@ -9,15 +9,13 @@ from data.forms import ChartSelector
 
 @require_GET
 def home(request):
-    category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
-
     # Get items from the form
     form = request.GET
 
     try:
         countries = form.getlist("country_code", default=[])
-        data_category = form["data_code"]
-        chart_type = form["chart_code"]
+        data_category = form["data_type"]
+        chart_type = form["chart_type"]
     except MultiValueDictKeyError:
         countries = ["USA", "none"]
         data_category = "TOTAL_CASES"
@@ -30,17 +28,11 @@ def home(request):
         "data.html",
         {
             "chart": gen_graph(*countries, category=str.lower(data_category)),
-            "countries": Country().country_names,
-            "countries2": Country().country_names,
-            "selected_country1": Country.objects.get(country_code=countries[0]).name if len(countries) > 0 else None,
-            "selected_country2": Country.objects.get(country_code=countries[1]).name
-            if len(countries) > 1
-            else "none",
-            "data_type": [
-                (str.upper(raw), category_name[raw]) for raw in category_name
-            ],
-            "selected_data": category_name[str.lower(data_category)],
-            "country_selector": ChartSelector(selected_country_codes=countries)
+            "country_selector": ChartSelector(
+                selected_country_codes=countries,
+                selected_data_type=data_category,
+                selected_chart_type=chart_type,
+            ),
         },
     )
 
