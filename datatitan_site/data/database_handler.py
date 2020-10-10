@@ -35,7 +35,14 @@ def input_missing_or_outdated() -> bool:
 def initialize_table() -> None:
     """Replace the raw covid data table with a fresh copy, then clean up the data, and generate a table of countries."""
     with engine.connect() as conn:
-        read_covid_data_raw = pd.read_csv(input_file_path)
+        read_covid_data_raw = pd.read_csv(
+            input_file_path,
+            dtype={
+                "iso_code": "string",
+                "continent": "string",
+                "tests_units": "string",
+            },
+        )
         read_covid_data_raw.round(decimals=3).to_sql(
             CovidDataRaw._meta.db_table, conn, index=False, if_exists="replace"
         )
