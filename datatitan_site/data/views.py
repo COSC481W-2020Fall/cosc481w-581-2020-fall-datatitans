@@ -29,7 +29,7 @@ def home(request):
         request,
         "data.html",
         {
-            "chart": gen_graph(*countries, category=str.lower(data_category)),
+            "chart": gen_graph(*countries, category=str.lower(data_category), chart_type=chart_type),
             "country_selector": ChartSelector(
                 selected_country_codes=countries,
                 selected_data_type=data_category,
