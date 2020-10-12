@@ -52,17 +52,24 @@ class CovidDataRaw(models.Model):
     aged_70_older = models.DecimalField(max_digits=6, decimal_places=3, null=True)
     gdp_per_capita = models.DecimalField(max_digits=9, decimal_places=3, null=True)
     extreme_poverty = models.DecimalField(max_digits=4, decimal_places=1, null=True)
-    cardiovasc_death_rate = models.DecimalField(max_digits=7, decimal_places=3, null=True)
+    cardiovasc_death_rate = models.DecimalField(
+        max_digits=7, decimal_places=3, null=True
+    )
     diabetes_prevalence = models.DecimalField(max_digits=5, decimal_places=2, null=True)
     female_smokers = models.DecimalField(max_digits=6, decimal_places=3, null=True)
     male_smokers = models.DecimalField(max_digits=6, decimal_places=3, null=True)
-    handwashing_facilities = models.DecimalField(max_digits=6, decimal_places=3, null=True)
-    hospital_beds_per_thousand = models.DecimalField(max_digits=6, decimal_places=3, null=True)
+    handwashing_facilities = models.DecimalField(
+        max_digits=6, decimal_places=3, null=True
+    )
+    hospital_beds_per_thousand = models.DecimalField(
+        max_digits=6, decimal_places=3, null=True
+    )
     life_expectancy = models.DecimalField(max_digits=5, decimal_places=2, null=True)
-    human_development_index = models.DecimalField(max_digits=4, decimal_places=3, null=True)
+    human_development_index = models.DecimalField(
+        max_digits=4, decimal_places=3, null=True
+    )
 
     class Meta:
-        # db_table = "COVID_DATA_RAW"
         indexes = [models.Index(fields=["iso_code", "date"])]
         ordering = ["iso_code", "date"]
         unique_together = ["iso_code", "date"]
@@ -103,8 +110,30 @@ class CovidDataClean(models.Model):
         indexes = [models.Index(fields=["iso_code", "date"])]
         ordering = ["iso_code", "date"]
         unique_together = ["iso_code", "date"]
-    #   managed = False
-    #   db_table = "COVID_DATA_CLEAN"
+
+
+class Months(models.Model):
+    month = models.DateField(primary_key=True)
+
+    class Meta:
+        indexes = [models.Index(fields=["month"])]
+        ordering = ["month"]
+
+
+class CovidDataMonthly(models.Model):
+    iso_code = models.CharField(max_length=8, unique_for_month="month")
+    continent = models.CharField(max_length=15, unique_for_month="month")
+    location = models.CharField(max_length=55, unique_for_month="month")
+    month = models.ForeignKey(Months, on_delete=models.DO_NOTHING)
+    new_cases = models.IntegerField()
+    new_deaths = models.IntegerField()
+    new_tests = models.IntegerField()
+    data_key = models.CharField(primary_key=True, max_length=20)
+
+    class Meta:
+        indexes = [models.Index(fields=["iso_code", "month"])]
+        ordering = ["iso_code", "month"]
+        unique_together = ["iso_code", "month"]
 
 
 class Post(models.Model):
