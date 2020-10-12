@@ -53,8 +53,12 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
                 label=code,
             )
     elif chart_type == "BAR":
+        # This was an absolute nightmare to figure out
         months = CovidDataClean.objects.filter(date__year="2020").dates("date", "month")
-        offset_y = np.zeros(months.count())
+        offset_y = np.zeros(
+            months.count()
+        )  # A numpy array that will be used to store the offsets for each bar graph
+        # TODO: Find a more graceful way to set the correct category
         new_category = f"{category.replace('total', 'new')}__sum"
         for code in iso_codes:
             target_query = (

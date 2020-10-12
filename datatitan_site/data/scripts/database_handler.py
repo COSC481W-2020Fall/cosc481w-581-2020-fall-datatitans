@@ -126,6 +126,7 @@ def initialize_table() -> None:
     CovidDataClean.objects.bulk_create(
         [CovidDataClean(**row) for row in clean_data], ignore_conflicts=True
     )
+    # %%
     countries = (
         CovidDataRaw.objects.values(
             "continent", "population", country_code=F("iso_code"), name=F("location"),
