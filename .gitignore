@@ -222,6 +222,8 @@ local.properties
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/**/aws.xml
+.idea/**/inspectionProfiles
 
 # Generated files
 .idea/**/contentModel.xml
