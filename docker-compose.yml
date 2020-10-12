@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  datatitan_site:
+    build: ./
+    ports:
+    - "8000:8000"
+  memcached:
+    image: library/memcached:latest
+  db:
+    image: library/mysql:latest
+    restart: always
+
+
+volumes:
+  db-data:
+
+networks:
+  overlay:
