@@ -15,6 +15,7 @@ matplotlib = "*"
 seaborn = "*"
 mpld3 = "*"
 sqlalchemy = "*"
+python-memcached = "*"
 
 [requires]
 python_version = "3.8"

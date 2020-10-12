@@ -95,7 +95,7 @@ class CovidDataClean(models.Model):
     tests_per_case = models.FloatField(null=True)
     positive_rate = models.FloatField(null=True)
     tests_units = models.TextField(null=True)
-    stringency_index = models.DecimalField(max_digits=5, decimal_places=2)
+    stringency_index = models.DecimalField(max_digits=5, decimal_places=2, null=True)
     population = models.IntegerField()
     data_key = models.CharField(primary_key=True, max_length=20)
 

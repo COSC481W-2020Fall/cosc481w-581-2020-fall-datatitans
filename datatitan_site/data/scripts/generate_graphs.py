@@ -1,6 +1,10 @@
 import matplotlib.pyplot as plt
 import mpld3
 from data.models import CovidDataClean, Country
+from django.core.cache import cache
+from django.db.models import F, Sum
+from django.db.models.functions import TruncMonth
+import numpy as np
 
 SMALL_SIZE = 10
 SMALLER_SIZE = 3
@@ -18,7 +22,7 @@ plt.rc("figure", titlesize=BIGGER_SIZE)  # fontsize of the figure title
 dims = (8, 4)  # dimension variable for plot area
 
 
-def gen_graph(*iso_codes, category: str, chart_type="line") -> str:
+def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
     """Creates a graph that tracks a data category over time for an arbitrary number of countries.
 
     :param iso_codes: ISO codes of countries to create graphs for
@@ -37,10 +41,41 @@ def gen_graph(*iso_codes, category: str, chart_type="line") -> str:
         + " in "
         + ", ".join(Country.objects.get(country_code=code).name for code in iso_codes)
     )
-    for code in iso_codes:
-        target_query = CovidDataClean.objects.filter(iso_code__exact=code).order_by("date")
-        plt.plot(target_query.values_list("date"), target_query.values_list(category), label=code)
-    plt.legend(shadow=True, fancybox=True, loc=2, prop={'size': 10})
+    if chart_type == "LINE":
+        # Fairly simple implementation; I just have to pass the
+        for code in iso_codes:
+            target_query = CovidDataClean.objects.filter(iso_code__exact=code).order_by(
+                "date"
+            )
+            plt.plot(
+                target_query.values_list("date"),
+                target_query.values_list(category),
+                label=code,
+            )
+    elif chart_type == "BAR":
+        # This was an absolute nightmare to figure out
+        months = CovidDataClean.objects.filter(date__year="2020").dates("date", "month")
+        offset_y = np.zeros(
+            months.count()
+        )  # A numpy array that will be used to store the offsets for each bar graph
+        # TODO: Find a more graceful way to set the correct category
+        new_category = f"{category.replace('total', 'new')}__sum"
+        for code in iso_codes:
+            target_query = (
+                CovidDataClean.objects.filter(iso_code__exact=code, date__year="2020")
+                .values(month=TruncMonth(F("date")))
+                .annotate(Sum(F(category.replace("total", "new"))))
+                .order_by("month")
+            )
+            plt.bar(
+                list(target_query.values_list("month", flat=True)),
+                target_query.values_list(new_category, flat=True),
+                bottom=offset_y,
+                label=code,
+                width=10,
+            )
+            offset_y += target_query.values_list(new_category, flat=True)
+    plt.legend(shadow=True, fancybox=True, loc=2, prop={"size": 10})
     plt.xlabel("Dates")
     plt.ylabel(category_name[category])
 
