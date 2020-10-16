@@ -93,6 +93,6 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
 
     figure = plt.gcf()
     plt.draw()
-    graph_output = mpld3.fig_to_html(figure)
+    graph_output = mpld3.fig_to_html(figure, figid="graph")
     plt.close(figure)
     return graph_output
