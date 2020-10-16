@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load cache %}
 {% block content %}
  
 
@@ -21,12 +20,10 @@
                 </div>
             
 
-                {% cache 300 graph request.GET %}
                 <!-- Chart -->
                 <div class="col-md-9 card" style="padding:15px;margin-left:0;">
                     {{ chart|safe }}
                 </div>
-                {% endcache %}
             </div>
         </div>
 	</div>
