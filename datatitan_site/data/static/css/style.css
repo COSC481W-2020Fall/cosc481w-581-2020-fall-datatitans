@@ -110,11 +110,28 @@ h3.nav-title {
 /* Blog styling */
 /*Blog container */
 .blog-container{
-	background-blend-mode: luminosity ;
+	background-blend-mode: luminosity;
 }
 
 ul#id_country_code{
 	max-height: 100px;
 	overflow-y: scroll;
 	list-style: none;
+}
+
+#country_select_form{
+	display: flex;
+	flex-direction: column;
+}
+
+#country_select_form>button{
+	margin-top: 32px;
+}
+
+#country_select_form>select{
+	margin-bottom: 16px;
+}
+
+.custom-checkbox>ul{
+	line-height: 16px;
 }
