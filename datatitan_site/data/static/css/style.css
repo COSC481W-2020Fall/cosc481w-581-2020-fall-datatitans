@@ -116,8 +116,10 @@ h3.nav-title {
 ul#id_country_code{
 	max-height: 200px;
 	min-height: 100px;
+	min-width: 250px;
 	overflow-y: scroll;
 	list-style: none;
+	padding: 0;
 }
 
 div#graph_container{
