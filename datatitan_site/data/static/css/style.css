@@ -120,6 +120,10 @@ ul#id_country_code{
 	list-style: none;
 }
 
+div#graph_container{
+	min-width: fit-content;
+}
+
 #country_select_form{
 	display: flex;
 	flex-direction: column;
