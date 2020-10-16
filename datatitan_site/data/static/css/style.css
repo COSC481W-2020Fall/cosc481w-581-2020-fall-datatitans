@@ -142,3 +142,36 @@ div#graph_container{
 .custom-checkbox>ul{
 	line-height: 16px;
 }
+
+@media screen and (max-width: 1410px){
+	#data{
+		flex-direction: column;
+	}
+
+	#data>div{
+		max-width: unset;
+		min-width: 832px;
+		width: inherit;
+	}
+
+	#country_select_form{
+		display: grid;
+		grid-gap: 16px;
+	}
+
+	#country_select_form>label{
+		grid-row: 1;
+	}
+
+	#country_select_form>select, #country_select_form>ul{
+		grid-row: 2;
+	}
+
+	#country_select_form>button{
+		grid-area: 3 / 1 / 4 / 4;
+	}
+
+	#data>div{
+		min-width: fit-content;
+	}
+}
