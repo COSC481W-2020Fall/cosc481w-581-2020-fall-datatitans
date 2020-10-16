@@ -128,7 +128,7 @@ ul#id_country_code{
 	margin-top: 32px;
 }
 
-#country_select_form>select{
+#country_select_form>select, #country_select_form>ul{
 	margin-bottom: 16px;
 }
 
