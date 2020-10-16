@@ -7,7 +7,7 @@ from pathlib import Path
 import pandas as pd
 from django.db.models import Avg, Sum, RowRange, Window, F, FloatField, CharField
 from django.db.models.functions import Coalesce, Cast, Concat, TruncMonth
-from datatitan_site.settings import DATABASES, BASE_DIR
+from datatitan_site.settings import DATABASES
 from data.models import CovidDataRaw, CovidDataClean, Country, Months, CovidDataMonthly
 
 # %%
@@ -15,7 +15,7 @@ input_file_path = Path(__file__).parent.parent / "input" / "owid-covid-data.csv"
 
 # %%
 engine = create_engine(
-    f'sqlite:///{DATABASES["default"]["NAME"].relative_to(BASE_DIR)}'
+    f'sqlite:///{DATABASES["default"]["NAME"]}'
 )
 
 
