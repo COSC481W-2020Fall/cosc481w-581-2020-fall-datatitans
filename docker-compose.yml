@@ -15,4 +15,8 @@ volumes:
   db-data:
 
 networks:
-  overlay:
+  frontend:
+    driver:
+
+  backend:
+    driver:
