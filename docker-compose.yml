@@ -9,7 +9,12 @@ services:
       - backend
 
   memcached:
-    image: library/memcached:latest
+    image: memcached:latest
+    ports:
+      - "11211"
+    networks:
+      - backend
+
   db:
     image: library/mysql:latest
     restart: always
