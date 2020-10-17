@@ -7,6 +7,8 @@ services:
     networks:
       - frontend
       - backend
+    secrets:
+      - postgres_password
 
   memcached:
     image: memcached:latest
@@ -16,8 +18,19 @@ services:
       - backend
 
   db:
-    image: library/mysql:latest
+    image: postgres:latest
     restart: always
+    environment:
+      POSTGRES_USER: DataTitans
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets:
+      - postgres_password
+    volumes:
+    - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    ports:
+    - "5432"
 
 
 volumes:
