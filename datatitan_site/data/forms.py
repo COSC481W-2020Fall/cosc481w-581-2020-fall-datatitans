@@ -1,5 +1,6 @@
 from django import forms
 from data.models import Country
+from django.core.cache import cache
 
 
 class CountrySelect(forms.CheckboxSelectMultiple):
@@ -40,7 +41,12 @@ class ChartSelector(forms.Form):
         choices=(("LINE", "Line Chart"), ("BAR", "Bar Graph")), widget=MemorizedSelect
     )
     country_code = forms.ModelMultipleChoiceField(
-        Country.objects.all(), widget=CountrySelect
+        (
+            cache.get_or_set("countries", Country.objects.all())
+            if not (countries := cache.get("countries"))
+            else countries
+        ),
+        widget=CountrySelect,
     )
     data_type = forms.ChoiceField(
         choices=(("TOTAL_CASES", "Total Cases"), ("TOTAL_DEATHS", "Total Deaths")),
