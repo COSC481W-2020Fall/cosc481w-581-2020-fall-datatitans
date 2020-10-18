@@ -89,7 +89,11 @@ You can either install python directly on your machine or use a python engine su
 It is advised to run Python inside a virtual environment.
 
 ### Installing Django
-1. Run `python -m pip install --upgrade pip`
+1a. Run `python -m pip install --upgrade pip`
+OR
+1b. pipenv install
+(** NOTE: pipenv is preferred)
+
 2. Run `pip install -r requirements.txt`. This will install the required packages.
 
 ### Running Migrations
