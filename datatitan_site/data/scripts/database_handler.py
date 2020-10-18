@@ -14,6 +14,7 @@ from data.models import CovidDataRaw, CovidDataClean, Country, Months, CovidData
 input_file_path = Path(__file__).parent.parent / "input" / "owid-covid-data.csv"
 
 # %%
+postgres_db = DATABASES["postgres"]
 engine = create_engine(
     f'sqlite:///{DATABASES["default"]["NAME"]}'
 )

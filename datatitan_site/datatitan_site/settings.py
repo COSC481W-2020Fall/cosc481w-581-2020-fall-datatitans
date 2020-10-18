@@ -74,12 +74,21 @@ WSGI_APPLICATION = 'datatitan_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+with Path('/run/secrets/postgres_password').open('r') as file:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        },
+        'postgres': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'DataTitans',
+            'HOST': 'db',
+            'USER': 'DataTitans',
+            'PASSWORD': file.read(),
+            'PORT': '5432'
+        }
     }
-}
 
 
 # Password validation
