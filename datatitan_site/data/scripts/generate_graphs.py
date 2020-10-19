@@ -74,7 +74,14 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
         )  # A numpy array that will be used to store the offsets for each bar graph
         # TODO: Find a more graceful way to set the correct category
         for code in iso_codes:
-            valid_months = CovidDataMonthly.objects.filter(iso_code=code).dates(
+            if not (country_results := cache.get(f"monthly_results{code}")):
+                country_results = cache.get_or_set(
+                    f"monthly_results_{code}",
+                    CovidDataMonthly.objects.prefetch_related("month").filter(
+                        iso_code=code
+                    ),
+                )
+            valid_months = country_results.filter(iso_code=code).dates(
                 "month", "month"
             )  # The list of months this country has data for
             if not (current_country := cache.get(f"country_{code}")):
