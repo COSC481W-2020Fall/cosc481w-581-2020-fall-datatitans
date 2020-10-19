@@ -179,6 +179,27 @@ To run server in the background:
 
 Type "exit" to quit
 
+## Runnning Django in the background on AWS
+
+1. Login in to AWS Server
+
+### Activate virtual environment
+
+1. cd into `site` directory
+2. Run `source django/bin/activate`
+
+### Run server in background
+
+1. cd into datatitan_site directory
+2. run `screen`. This creates a new terminal screen. 
+3. run `python manage.py runserver 0.0.0.0:8000`
+4. type `Ctrl + a` then `Ctrl + d` if on Windows. `Cmd + a` then `Cmd + d` on Mac. Running this will detach the screen from your terminal sesssion so it can continue to run even when you disconnect from the server.
+5. (optional) to do all this in 1 step, run `screen -d -m python manage.py runserver 0.0.0.0:8000`
+
+### Stopping the server
+
+1. run `screen -r`. This will re-attach the screen the server is running on
+2. close the server as normal, `Ctrl + c`
 
 ## Known Issues
 1. You may need to run the server twice the first time,
