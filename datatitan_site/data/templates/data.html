@@ -1,32 +1,28 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load cache %}
 {% block content %}
  
 
  
-    <div class=" content-div row">
+    <div class="content-div row">
         <div class="col-md-1"></div>
         <div class="blog-container col-md-10 shadow p-3 mb-5 bg-white rounded">
             <h2>Data Page</h2>
-            <div class="container row content">
+            <div class="container row content" id="data">
         
                 <!-- Dropdown -->
                 <div class="col-md-3 card" style="padding:15px">
-                    <form method="GET" enctype="multipart/form-data">
+                    <form method="GET" enctype="multipart/form-data" id="country_select_form">
                             {{country_selector}}
-                        <br><br>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             
 
-                {% cache 300 graph request.GET %}
                 <!-- Chart -->
-                <div class="col-md-9 card" style="padding:15px;margin-left:0;">
+                <div class="col-md-9 card" style="padding:15px;margin-left:0;" id="graph_container">
                     {{ chart|safe }}
                 </div>
-                {% endcache %}
             </div>
         </div>
 	</div>

@@ -6,16 +6,16 @@ from datetime import date
 from pathlib import Path
 import pandas as pd
 from django.db.models import Avg, Sum, RowRange, Window, F, FloatField, CharField
-from django.db.models.functions import Coalesce, Cast, Concat
-from datatitan_site.settings import DATABASES, BASE_DIR
-from data.models import CovidDataRaw, CovidDataClean, Country
+from django.db.models.functions import Coalesce, Cast, Concat, TruncMonth
+from datatitan_site.settings import DATABASES
+from data.models import CovidDataRaw, CovidDataClean, Country, Months, CovidDataMonthly
 
 # %%
 input_file_path = Path(__file__).parent.parent / "input" / "owid-covid-data.csv"
 
 # %%
 engine = create_engine(
-    f'sqlite:///{DATABASES["default"]["NAME"].relative_to(BASE_DIR)}'
+    f'sqlite:///{DATABASES["default"]["NAME"]}'
 )
 
 
@@ -130,11 +130,44 @@ def initialize_table() -> None:
     countries = (
         CovidDataRaw.objects.values(
             "continent", "population", country_code=F("iso_code"), name=F("location"),
-        )
-        .order_by("iso_code")
-        .filter(iso_code__in=("USA", "CAN", "MEX"))
+        ).order_by("iso_code")
+        # .filter(iso_code__in=("USA", "CAN", "MEX"))
     )
     Country.objects.all().delete()
     Country.objects.bulk_create(
         [Country(**c) for c in countries.distinct()], ignore_conflicts=True
+    )
+    # %%
+    Months.objects.bulk_create(
+        [
+            Months(month=month)
+            for month in CovidDataClean.objects.dates("date", "month")
+        ],
+        ignore_conflicts=True,
+    )
+    # %%
+    monthly_data = CovidDataClean.objects.values(
+        "iso_code", "continent", "location", month=TruncMonth(F("date"))
+    ).annotate(
+        new_cases=Window(
+            Sum(F("new_cases")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
+        ),
+        new_deaths=Window(
+            Sum(F("new_deaths")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
+        ),
+        new_tests=Window(
+            Sum(F("new_tests")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
+        ),
+        data_key=Concat(Cast(TruncMonth(F("date")), CharField()), F("iso_code")),
+    ).order_by("iso_code", "month").distinct()
+    # %%
+    CovidDataMonthly.objects.bulk_create(
+        [
+            CovidDataMonthly(
+                month=Months.objects.get(month=row["month"]),
+                **{k: v for k, v in row.items() if k != "month"},
+            )
+            for row in monthly_data
+        ],
+        ignore_conflicts=True,
     )

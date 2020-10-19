@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
 import mpld3
-from data.models import CovidDataClean, Country
+from data.models import CovidDataClean, Country, Months, CovidDataMonthly
 from django.core.cache import cache
-from django.db.models import F, Sum
-from django.db.models.functions import TruncMonth
 import numpy as np
 
 SMALL_SIZE = 10
@@ -54,33 +52,47 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
             )
     elif chart_type == "BAR":
         # This was an absolute nightmare to figure out
-        months = CovidDataClean.objects.filter(date__year="2020").dates("date", "month")
+        months = Months.objects.filter(month__year="2020")
         offset_y = np.zeros(
             months.count()
         )  # A numpy array that will be used to store the offsets for each bar graph
         # TODO: Find a more graceful way to set the correct category
         new_category = f"{category.replace('total', 'new')}__sum"
         for code in iso_codes:
-            target_query = (
-                CovidDataClean.objects.filter(iso_code__exact=code, date__year="2020")
-                .values(month=TruncMonth(F("date")))
-                .annotate(Sum(F(category.replace("total", "new"))))
-                .order_by("month")
+            valid_months = CovidDataMonthly.objects.filter(iso_code=code).dates(
+                "month", "month"
             )
+            current_country = Country.objects.get(country_code=code)
+            target_query = [
+                CovidDataMonthly.objects.values().get(month=month, iso_code=code)
+                if Months.objects.get(month=month).month in valid_months
+                else {
+                    "iso_code": code,
+                    "continent": current_country.continent,
+                    "location": current_country.name,
+                    "month_id": month,
+                    "new_cases": 0,
+                    "new_deaths": 0,
+                    "new_tests": 0,
+                    "data_key": f"{month}{code}",
+                }
+                for month in months.values_list(flat=True)
+            ]
+            target_list = [item[category.replace("total", "new")] for item in target_query]
             plt.bar(
-                list(target_query.values_list("month", flat=True)),
-                target_query.values_list(new_category, flat=True),
+                list(months.values_list(flat=True)),
+                target_list,
                 bottom=offset_y,
                 label=code,
                 width=10,
             )
-            offset_y += target_query.values_list(new_category, flat=True)
+            offset_y += target_list
     plt.legend(shadow=True, fancybox=True, loc=2, prop={"size": 10})
     plt.xlabel("Dates")
     plt.ylabel(category_name[category])
 
     figure = plt.gcf()
     plt.draw()
-    graph_output = mpld3.fig_to_html(figure)
+    graph_output = mpld3.fig_to_html(figure, figid="graph")
     plt.close(figure)
     return graph_output

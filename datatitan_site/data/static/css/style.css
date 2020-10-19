@@ -110,11 +110,68 @@ h3.nav-title {
 /* Blog styling */
 /*Blog container */
 .blog-container{
-	background-blend-mode: luminosity ;
+	background-blend-mode: luminosity;
 }
 
 ul#id_country_code{
-	max-height: 100px;
+	max-height: 200px;
+	min-height: 100px;
+	min-width: 250px;
 	overflow-y: scroll;
 	list-style: none;
+	padding: 0;
+}
+
+div#graph_container{
+	min-width: fit-content;
+}
+
+#country_select_form{
+	display: flex;
+	flex-direction: column;
+}
+
+#country_select_form>button{
+	margin-top: 32px;
+}
+
+#country_select_form>select, #country_select_form>ul{
+	margin-bottom: 16px;
+}
+
+.custom-checkbox>ul{
+	line-height: 16px;
+}
+
+@media screen and (max-width: 1410px){
+	#data{
+		flex-direction: column;
+	}
+
+	#data>div{
+		max-width: unset;
+		min-width: 832px;
+		width: inherit;
+	}
+
+	#country_select_form{
+		display: grid;
+		grid-gap: 16px;
+	}
+
+	#country_select_form>label{
+		grid-row: 1;
+	}
+
+	#country_select_form>select, #country_select_form>ul{
+		grid-row: 2;
+	}
+
+	#country_select_form>button{
+		grid-area: 3 / 1 / 4 / 4;
+	}
+
+	#data>div{
+		min-width: fit-content;
+	}
 }
