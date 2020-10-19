@@ -34,13 +34,14 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
     category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
     plt.subplots(figsize=dims)
 
+    selected_countries = Country.objects.filter(country_code__in=iso_codes)
+
     plt.title(
         category_name[category]
         + " in "
         + ", ".join(
             cache.get_or_set(
-                f"country_name_{code}",
-                Country.objects.get(country_code=code).name,
+                f"country_name_{code}", selected_countries.get(country_code=code).name
             )
             if not (country_name := cache.get(f"country_name_{code}"))
             else country_name
