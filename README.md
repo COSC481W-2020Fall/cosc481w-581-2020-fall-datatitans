@@ -89,7 +89,11 @@ You can either install python directly on your machine or use a python engine su
 It is advised to run Python inside a virtual environment.
 
 ### Installing Django
-1. Run `python -m pip install --upgrade pip`
+1a. Run `python -m pip install --upgrade pip`
+OR
+1b. pipenv install
+(** NOTE: pipenv is preferred)
+
 2. Run `pip install -r requirements.txt`. This will install the required packages.
 
 ### Running Migrations
@@ -126,6 +130,76 @@ or
 ![](datatitan_site/images/blog.png)
 6. You can save and continue later (do not fill out publish date info or choose a future date),
 and when ready to publish just click the now and today buttons under the 'Publish date' form item.
+
+## Accessing AWS server via PuTTY SSH 
+
+These instructions detail how to access our AWS server via PuTTY. 
+
+Notes: 
+•	Currently, the user information is for Chisulo’s account. If others are going to be working with AWS, we will need to create our own IAM accounts. 
+
+•	For now, we will continue to do all project edits through GitHub. So we only need to access the AWS server to upload working releases. 
+
+### Instructions:
+
+If you do not have PuTTY installed, you can download it here: 
+https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html 
+
+Before starting PuTTY, download the authentication key here: 
+https://drive.google.com/file/d/1JcfkE_vzwfANi76w5tOlJ-426tpZrVQG/view?usp=sharing 
+
+Open PuTTY, you will see the Configuration screen.
+Image 1:
+<img src="datatitan_site/images/PuTTY1.png" width="400">
+Per Image 1, with Session selected in the Category column on the left:
+•	For Host Name, enter:
+  o	 ec2-54-174-95-142.compute-1.amazonaws.com
+•	Port: enter 22 if it’s not defaulted
+•	Connection type: choose the SSH radio button
+
+Image 2: 
+<img src="datatitan_site/images/PuTTY2.png" width="400">
+Per Image 2, select Auth in the Category column and:
+•	Confirm that the boxes are checked as shown
+•	Browse for the key you downloaded above and confirm the path is showing
+
+Image 3:
+<img src="datatitan_site/images/PuTTY3.png" width="400">
+Per Image 3, choose Connection from the Category menu:
+•	Enter 60 in the Seconds between keepalives field
+
+Image 4:
+<img src="datatitan_site/images/PuTTY4.png" width="400">
+Per Image 4, after clicking on Session again:
+•	Type in a session name (in Saved Sessions window): DT2 used in example
+•	Click on the Open button
+This should open a terminal window. At the login prompt, type: ec2-user
+No password is required.
+To run server in the background:
+
+Type "exit" to quit
+
+## Runnning Django in the background on AWS
+
+1. Login in to AWS Server
+
+### Activate virtual environment
+
+1. cd into `site` directory
+2. Run `source django/bin/activate`
+
+### Run server in background
+
+1. cd into datatitan_site directory
+2. run `screen`. This creates a new terminal screen. 
+3. run `python manage.py runserver 0.0.0.0:8000`
+4. type `Ctrl + a` then `Ctrl + d` if on Windows. `Cmd + a` then `Cmd + d` on Mac. Running this will detach the screen from your terminal sesssion so it can continue to run even when you disconnect from the server.
+5. (optional) to do all this in 1 step, run `screen -d -m python manage.py runserver 0.0.0.0:8000`
+
+### Stopping the server
+
+1. run `screen -r`. This will re-attach the screen the server is running on
+2. close the server as normal, `Ctrl + c`
 
 ## Known Issues
 1. You may need to run the server twice the first time,
