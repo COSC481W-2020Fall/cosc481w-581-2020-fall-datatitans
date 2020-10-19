@@ -84,16 +84,13 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
             valid_months = country_results.filter(iso_code=code).dates(
                 "month", "month"
             )  # The list of months this country has data for
-            if not (current_country := cache.get(f"country_{code}")):
-                current_country = Country.objects.get(country_code=code)
-            if not (target_query := cache.get(f"query{code}{category}{chart_type}")):
+            current_country = selected_countries.get(country_code=code)
+            if not (target_query := cache.get(f"query_{code}_{category}_{chart_type}")):
                 target_query = cache.get_or_set(
-                    f"query{code}{category}{chart_type}",
+                    f"query_{code}_{category}_{chart_type}",
                     [
-                        CovidDataMonthly.objects.values().get(
-                            month=month, iso_code=code
-                        )
-                        if Months.objects.get(month=month).month in valid_months
+                        country_results.values().get(month=month)
+                        if months.get(month=month).month in valid_months
                         else {
                             "iso_code": code,
                             "continent": current_country.continent,
