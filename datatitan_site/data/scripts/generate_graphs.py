@@ -41,7 +41,6 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
             cache.get_or_set(
                 f"country_name_{code}",
                 Country.objects.get(country_code=code).name,
-                60 * 10,
             )
             if not (country_name := cache.get(f"country_name_{code}"))
             else country_name
@@ -57,7 +56,6 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
                     CovidDataClean.objects.filter(iso_code__exact=code).order_by(
                         "date"
                     ),
-                    60 * 5,
                 )
             plt.plot(
                 target_query.values_list("date"),
@@ -68,13 +66,12 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
         # This was an absolute nightmare to figure out
         if not (months := cache.get("months")):
             months = cache.get_or_set(
-                "months", Months.objects.filter(month__gte="2020-01-01"), 60 * 10
+                "months", Months.objects.filter(month__gte="2020-01-01")
             )
         offset_y = np.zeros(
             months.count()
         )  # A numpy array that will be used to store the offsets for each bar graph
         # TODO: Find a more graceful way to set the correct category
-        new_category = f"{category.replace('total', 'new')}__sum"
         for code in iso_codes:
             valid_months = CovidDataMonthly.objects.filter(iso_code=code).dates(
                 "month", "month"
@@ -101,7 +98,6 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
                         }
                         for month in months.values_list(flat=True)
                     ],
-                    60 * 5,
                 )
             target_list = [
                 item[category.replace("total", "new")] for item in target_query
