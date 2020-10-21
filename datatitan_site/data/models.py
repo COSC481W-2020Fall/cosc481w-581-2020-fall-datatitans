@@ -68,12 +68,12 @@ class CovidDataRaw(models.Model):
     human_development_index = models.DecimalField(
         max_digits=4, decimal_places=3, null=True
     )
+    data_key = models.CharField(primary_key=True, max_length=20)
 
     class Meta:
         indexes = [models.Index(fields=["iso_code", "date"])]
         ordering = ["iso_code", "date"]
         unique_together = ["iso_code", "date"]
-        managed = False
 
 
 class CovidDataClean(models.Model):
