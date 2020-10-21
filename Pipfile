@@ -16,6 +16,7 @@ seaborn = "*"
 mpld3 = "*"
 sqlalchemy = "*"
 python-memcached = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.8"
