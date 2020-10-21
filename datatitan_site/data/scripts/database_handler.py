@@ -157,20 +157,26 @@ def initialize_table() -> None:
         ignore_conflicts=True,
     )
     # %%
-    monthly_data = CovidDataClean.objects.values(
-        "iso_code", "continent", "location", month=TruncMonth(F("date"))
-    ).annotate(
-        new_cases=Window(
-            Sum(F("new_cases")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
-        ),
-        new_deaths=Window(
-            Sum(F("new_deaths")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
-        ),
-        new_tests=Window(
-            Sum(F("new_tests")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
-        ),
-        data_key=Concat(Cast(TruncMonth(F("date")), CharField()), F("iso_code")),
-    ).order_by("iso_code", "month").distinct()
+    monthly_data = (
+        CovidDataClean.objects.values(
+            "iso_code", "continent", "location", month=TruncMonth(F("date"))
+        )
+        .annotate(
+            new_cases=Window(
+                Sum(F("new_cases")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
+            ),
+            new_deaths=Window(
+                Sum(F("new_deaths")),
+                partition_by=[F("iso_code"), TruncMonth(F("date"))],
+            ),
+            new_tests=Window(
+                Sum(F("new_tests")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
+            ),
+            data_key=Concat(Cast(TruncMonth(F("date")), CharField()), F("iso_code")),
+        )
+        .order_by("iso_code", "month")
+        .distinct()
+    )
     # %%
     CovidDataMonthly.objects.bulk_create(
         [
