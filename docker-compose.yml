@@ -40,7 +40,7 @@ volumes:
 
 secrets:
   postgres_password:
-    external: true
+    file: cred/postgres_password.txt
 
 networks:
   frontend:
