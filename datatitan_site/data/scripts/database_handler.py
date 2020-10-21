@@ -1,23 +1,15 @@
 #
 
 # %%
-from sqlalchemy import create_engine
 from datetime import date
 from pathlib import Path
 import pandas as pd
 from django.db.models import Avg, Sum, RowRange, Window, F, FloatField, CharField
 from django.db.models.functions import Coalesce, Cast, Concat, TruncMonth
-from datatitan_site.settings import DATABASES
 from data.models import CovidDataRaw, CovidDataClean, Country, Months, CovidDataMonthly
 
 # %%
 input_file_path = Path(__file__).parent.parent / "input" / "owid-covid-data.csv"
-
-# %%
-postgres_db = DATABASES["postgres"]
-engine = create_engine(
-    f'sqlite:///{DATABASES["default"]["NAME"]}'
-)
 
 
 # %%
@@ -34,18 +26,29 @@ def input_missing_or_outdated() -> bool:
 # %%
 def initialize_table() -> None:
     """Replace the raw covid data table with a fresh copy, then clean up the data, and generate a table of countries."""
-    with engine.connect() as conn:
-        read_covid_data_raw = pd.read_csv(
-            input_file_path,
-            dtype={
-                "iso_code": "string",
-                "continent": "string",
-                "tests_units": "string",
-            },
+    read_covid_data_raw = (
+        pd.read_csv(input_file_path,)
+        .round(decimals=3)
+        .round(
+            decimals={
+                "stringency_index": 2,
+                "median_age": 1,
+                "extreme_poverty": 1,
+                "diabetes_prevalence": 2,
+                "life_expectancy": 2,
+            }
         )
-        read_covid_data_raw.round(decimals=3).to_sql(
-            CovidDataRaw._meta.db_table, conn, index=False, if_exists="replace"
-        )
+    )
+    read_covid_data_raw: pd.DataFrame = read_covid_data_raw.where(
+        read_covid_data_raw.notnull(), None
+    )
+    read_covid_data_raw["data_key"] = read_covid_data_raw.apply(
+        lambda row: f"{str(row.date)}{str(row.iso_code)}", axis=1
+    )
+    CovidDataRaw.objects.bulk_create(
+        [CovidDataRaw(**row) for row in read_covid_data_raw.to_dict("records")],
+        ignore_conflicts=True,
+    )
     # %%
     window = {"partition_by": F("iso_code"), "order_by": [F("date")]}
     past_week = RowRange(start=-6, end=0)
@@ -147,20 +150,26 @@ def initialize_table() -> None:
         ignore_conflicts=True,
     )
     # %%
-    monthly_data = CovidDataClean.objects.values(
-        "iso_code", "continent", "location", month=TruncMonth(F("date"))
-    ).annotate(
-        new_cases=Window(
-            Sum(F("new_cases")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
-        ),
-        new_deaths=Window(
-            Sum(F("new_deaths")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
-        ),
-        new_tests=Window(
-            Sum(F("new_tests")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
-        ),
-        data_key=Concat(Cast(TruncMonth(F("date")), CharField()), F("iso_code")),
-    ).order_by("iso_code", "month").distinct()
+    monthly_data = (
+        CovidDataClean.objects.values(
+            "iso_code", "continent", "location", month=TruncMonth(F("date"))
+        )
+        .annotate(
+            new_cases=Window(
+                Sum(F("new_cases")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
+            ),
+            new_deaths=Window(
+                Sum(F("new_deaths")),
+                partition_by=[F("iso_code"), TruncMonth(F("date"))],
+            ),
+            new_tests=Window(
+                Sum(F("new_tests")), partition_by=[F("iso_code"), TruncMonth(F("date"))]
+            ),
+            data_key=Concat(Cast(TruncMonth(F("date")), CharField()), F("iso_code")),
+        )
+        .order_by("iso_code", "month")
+        .distinct()
+    )
     # %%
     CovidDataMonthly.objects.bulk_create(
         [
