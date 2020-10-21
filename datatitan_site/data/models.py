@@ -46,7 +46,7 @@ class CovidDataRaw(models.Model):
     tests_units = models.TextField(null=True)
     stringency_index = models.DecimalField(max_digits=5, decimal_places=2, null=True)
     population = models.PositiveBigIntegerField(null=True)
-    population_density = models.DecimalField(max_digits=7, decimal_places=3, null=True)
+    population_density = models.DecimalField(max_digits=8, decimal_places=3, null=True)
     median_age = models.DecimalField(max_digits=4, decimal_places=1, null=True)
     aged_65_older = models.DecimalField(max_digits=6, decimal_places=3, null=True)
     aged_70_older = models.DecimalField(max_digits=6, decimal_places=3, null=True)
