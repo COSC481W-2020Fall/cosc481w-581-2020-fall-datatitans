@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,22 +75,29 @@ WSGI_APPLICATION = 'datatitan_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-with Path('/run/secrets/postgres_password').open('r') as file:
+POSTGRES_USER = os.getenv("POSTGRES_USER")
+POSTGRES_PASSWORD_FILE = os.getenv("POSTGRES_PASSWORD_FILE")
+
+if POSTGRES_PASSWORD_FILE:
+    # Only attempt to access the postgres daemon if you think you're running in a docker container
+    with Path(POSTGRES_PASSWORD_FILE).open('r') as file:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'DataTitans',
+                'HOST': 'db',
+                'USER': POSTGRES_USER if POSTGRES_USER else 'DataTitans',
+                'PASSWORD': file.read(),
+                'PORT': '5432'
+            }
+        }
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        },
-        'postgres': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'DataTitans',
-            'HOST': 'db',
-            'USER': 'DataTitans',
-            'PASSWORD': file.read(),
-            'PORT': '5432'
+            'NAME': BASE_DIR / 'db.sqlite3'
         }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
