@@ -11,6 +11,9 @@ services:
       - postgres_password
     depends_on:
       - db
+    environment:
+      POSTGRES_USER: DataTitans
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
 
   memcached:
     image: memcached:latest
