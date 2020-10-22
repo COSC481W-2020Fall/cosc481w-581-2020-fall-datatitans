@@ -5,7 +5,7 @@ from django.core.cache import cache
 
 class CountrySelect(forms.CheckboxSelectMultiple):
     def __init__(self, *args, **kwargs):
-        self.selected_countries = None
+        self.selected_countries = []
         super(CountrySelect, self).__init__(*args, **kwargs)
         self.attrs["class"] = "custom-checkbox"
 
@@ -54,7 +54,7 @@ class ChartSelector(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        selected_countries = kwargs.pop("selected_country_codes", None)
+        selected_countries = kwargs.pop("selected_country_codes", [])
         selected_data_type = kwargs.pop("selected_data_type", None)
         selected_chart_type = kwargs.pop("selected_chart_type", None)
         super(ChartSelector, self).__init__(*args, **kwargs)
