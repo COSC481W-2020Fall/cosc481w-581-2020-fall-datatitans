@@ -154,9 +154,14 @@ div#graph_container{
 		width: inherit;
 	}
 
-	#country_select_form{
-		display: grid;
-		grid-gap: 16px;
+	#selection_container{
+		display: flex;
+		/*grid-gap: 16px;*/
+		flex-direction: row;
+	}
+
+	#selection_container>p{
+		width: available;
 	}
 
 	#country_select_form>label{
