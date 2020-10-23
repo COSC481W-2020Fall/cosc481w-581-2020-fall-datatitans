@@ -35,7 +35,7 @@ def home(request):
                 selected_country_codes=countries,
                 selected_data_type=data_category,
                 selected_chart_type=chart_type,
-            ),
+            ).as_p(),
         },
     )
 
