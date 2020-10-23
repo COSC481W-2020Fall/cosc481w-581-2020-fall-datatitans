@@ -137,7 +137,7 @@ def initialize_table() -> None:
         ).order_by("iso_code")
         # .filter(iso_code__in=("USA", "CAN", "MEX"))
     )
-    Country.objects.all().delete()
+    # Country.objects.all().delete()
     Country.objects.bulk_create(
         [Country(**c) for c in countries.distinct()], ignore_conflicts=True
     )
