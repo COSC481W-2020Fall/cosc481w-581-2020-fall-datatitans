@@ -52,7 +52,6 @@ services:
       - postgres_password
     volumes:
     - db-data:/var/lib/postgresql/data
-    - ./postgres:/docker-entrypoint-initdb.d
     networks:
       - backend
     ports:
