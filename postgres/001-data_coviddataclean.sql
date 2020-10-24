@@ -19,7 +19,8 @@ create materialized view data_coviddataclean as
        dc.total_tests,
        dc.total_tests / dc.population * 1000::numeric            AS total_tests_per_thousand,
        dc.new_tests / dc.population * 1000::numeric              AS new_tests_per_thousand,
-       dc.population
+       dc.population,
+       concat(cast(dc.date as text), dc.iso_code) as data_key
 FROM (SELECT data_coviddataraw.iso_code,
              data_coviddataraw.continent,
              data_coviddataraw.location,

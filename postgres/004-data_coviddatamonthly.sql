@@ -8,7 +8,8 @@ create materialized view data_coviddatamonthly as
                 sum(data_coviddataclean.new_deaths) OVER (PARTITION BY data_coviddataclean.iso_code, (date(
                         date_trunc('month'::text, data_coviddataclean.date::timestamp with time zone)))) AS new_deaths,
                 sum(data_coviddataclean.new_tests) OVER (PARTITION BY data_coviddataclean.iso_code, (date(
-                        date_trunc('month'::text, data_coviddataclean.date::timestamp with time zone)))) AS new_tests
+                        date_trunc('month'::text, data_coviddataclean.date::timestamp with time zone)))) AS new_tests,
+	            concat(date(date_trunc('month'::text, data_coviddataclean.date::timestamp with time zone))::text, data_coviddataclean.iso_code) AS data_key
 FROM data_coviddataclean
 ORDER BY data_coviddataclean.iso_code,
          (date(date_trunc('month'::text, data_coviddataclean.date::timestamp with time zone)));

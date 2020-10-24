@@ -17,6 +17,9 @@ class Country(models.Model):
     def country_names(self):
         return list(Country.objects.values_list("country_code", "name"))
 
+    class Meta:
+        managed = False
+
 
 class CovidDataRaw(models.Model):
     iso_code = models.CharField(max_length=8, unique_for_date="date", null=True)
@@ -68,12 +71,13 @@ class CovidDataRaw(models.Model):
     human_development_index = models.DecimalField(
         max_digits=4, decimal_places=3, null=True
     )
-    data_key = models.CharField(primary_key=True, max_length=20)
+    # data_key = models.CharField(primary_key=True, max_length=20)
 
     class Meta:
         indexes = [models.Index(fields=["iso_code", "date"])]
         ordering = ["iso_code", "date"]
         unique_together = ["iso_code", "date"]
+        managed = False
 
 
 class CovidDataClean(models.Model):
@@ -97,12 +101,12 @@ class CovidDataClean(models.Model):
     total_tests = models.IntegerField()
     total_tests_per_thousand = models.FloatField()
     new_tests_per_thousand = models.FloatField()
-    new_tests_smoothed = models.FloatField()
-    new_tests_smoothed_per_thousand = models.FloatField()
-    tests_per_case = models.FloatField(null=True)
-    positive_rate = models.FloatField(null=True)
-    tests_units = models.TextField(null=True)
-    stringency_index = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    # new_tests_smoothed = models.FloatField()
+    # new_tests_smoothed_per_thousand = models.FloatField()
+    # tests_per_case = models.FloatField(null=True)
+    # positive_rate = models.FloatField(null=True)
+    # tests_units = models.TextField(null=True)
+    # stringency_index = models.DecimalField(max_digits=5, decimal_places=2, null=True)
     population = models.IntegerField()
     data_key = models.CharField(primary_key=True, max_length=20)
 
@@ -110,6 +114,7 @@ class CovidDataClean(models.Model):
         indexes = [models.Index(fields=["iso_code", "date"])]
         ordering = ["iso_code", "date"]
         unique_together = ["iso_code", "date"]
+        managed = False
 
 
 class Months(models.Model):
@@ -118,13 +123,14 @@ class Months(models.Model):
     class Meta:
         indexes = [models.Index(fields=["month"])]
         ordering = ["month"]
+        managed = False
 
 
 class CovidDataMonthly(models.Model):
     iso_code = models.CharField(max_length=8, unique_for_month="month")
     continent = models.CharField(max_length=15, unique_for_month="month")
     location = models.CharField(max_length=55, unique_for_month="month")
-    month = models.ForeignKey(Months, on_delete=models.DO_NOTHING)
+    month = models.DateField()
     new_cases = models.IntegerField()
     new_deaths = models.IntegerField()
     new_tests = models.IntegerField()
@@ -134,6 +140,7 @@ class CovidDataMonthly(models.Model):
         indexes = [models.Index(fields=["iso_code", "month"])]
         ordering = ["iso_code", "month"]
         unique_together = ["iso_code", "month"]
+        managed = False
 
 
 class Post(models.Model):
