@@ -148,9 +148,8 @@ https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 Before starting PuTTY, download the authentication key here: 
 https://drive.google.com/file/d/1JcfkE_vzwfANi76w5tOlJ-426tpZrVQG/view?usp=sharing 
 
-Open PuTTY, you will see the Configuration screen.
-Image 1:
-<img src="datatitan_site/images/PuTTY1.png" width="400">
+Open PuTTY, you will see the Configuration screen:
+<br><img src="datatitan_site/images/PuTTY1.png" width="400">
 Per Image 1, with Session selected in the Category column on the left:
 •	For Host Name, enter:
   o	 ec2-54-174-95-142.compute-1.amazonaws.com
