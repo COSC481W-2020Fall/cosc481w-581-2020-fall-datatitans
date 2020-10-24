@@ -19,6 +19,8 @@ services:
     environment:
       POSTGRES_USER: DataTitans
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    volumes:
+    - ./datatitan_site/data/input:/app/DataTitans/datatitan_site/data/input
 
   datatitan_init:
     build: ./
