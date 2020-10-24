@@ -11,9 +11,24 @@ services:
       - postgres_password
     depends_on:
       - db
+      - datatitan_init
+      - memcached
     environment:
       POSTGRES_USER: DataTitans
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+
+  datatitan_init:
+    build: ./
+    networks:
+      - backend
+    secrets:
+      - postgres_password
+    depends_on:
+      - db
+    environment:
+      POSTGRES_USER: DataTitans
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    command: pipenv run python manage.py migrate
 
   memcached:
     image: memcached:latest
