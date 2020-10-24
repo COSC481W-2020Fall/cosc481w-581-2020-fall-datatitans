@@ -77,7 +77,7 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
             if not (country_results := cache.get(f"monthly_results{code}")):
                 country_results = cache.get_or_set(
                     f"monthly_results_{code}",
-                    CovidDataMonthly.objects.prefetch_related("month").filter(
+                    CovidDataMonthly.objects.filter(
                         iso_code=code
                     ),
                 )
@@ -95,7 +95,7 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
                             "iso_code": code,
                             "continent": current_country.continent,
                             "location": current_country.name,
-                            "month_id": month,
+                            "month": month,
                             "new_cases": 0,
                             "new_deaths": 0,
                             "new_tests": 0,
@@ -105,7 +105,7 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
                     ],
                 )
             target_list = [
-                item[category.replace("total", "new")] for item in target_query
+                float(item[category.replace("total", "new")]) for item in target_query
             ]
             plt.bar(
                 list(months.values_list(flat=True)),
