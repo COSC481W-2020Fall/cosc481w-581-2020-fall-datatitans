@@ -158,7 +158,7 @@ Per Image 1, with Session selected in the Category column on the left:
 2. Port: enter 22 if it’s not defaulted
 3. Connection type: choose the SSH radio button
 
-
+<br>
 Image 2: 
 <br><img src="datatitan_site/images/PuTTY2.png" width="400">
 
@@ -167,7 +167,7 @@ Per Image 2, select Auth in the Category column and:
 1. Confirm that the boxes are checked as shown
 2. Browse for the key you downloaded above and confirm the path is showing
 
-
+<br>
 Image 3:
 <br><img src="datatitan_site/images/PuTTY3.png" width="400">
 
@@ -175,7 +175,7 @@ Image 3:
 Per Image 3, choose Connection from the Category menu:
 1. Enter 60 in the Seconds between keepalives field
 
-
+<br>
 Image 4:
 <br><img src="datatitan_site/images/PuTTY4.png" width="400">
 
