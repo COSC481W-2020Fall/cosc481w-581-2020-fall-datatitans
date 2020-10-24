@@ -32,7 +32,7 @@ services:
     environment:
       POSTGRES_USER: DataTitans
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-    command: pipenv run python manage.py migrate
+    command: ["wait-for-it", "db:5432", "--strict", "--", "pipenv", "run", "python", "manage.py", "migrate"]
     restart: on-failure
 
   memcached:
