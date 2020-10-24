@@ -8,14 +8,14 @@ from django.utils.functional import cached_property
 
 # Create your models here.
 class Country(models.Model):
-    country_code = models.CharField(max_length=3, primary_key=True)
+    iso_code = models.CharField(max_length=3, primary_key=True)
     name = models.CharField(max_length=55)
     continent = models.CharField(max_length=15)
     population = models.IntegerField()
 
     @cached_property
     def country_names(self):
-        return list(Country.objects.values_list("country_code", "name"))
+        return list(Country.objects.values_list("iso_code", "name"))
 
     class Meta:
         managed = False

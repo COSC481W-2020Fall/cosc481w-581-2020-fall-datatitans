@@ -136,7 +136,7 @@ def initialize_table() -> None:
     # # %%
     # countries = (
     #     CovidDataRaw.objects.values(
-    #         "continent", "population", country_code=F("iso_code"), name=F("location"),
+    #         "continent", "population", iso_code=F("iso_code"), name=F("location"),
     #     ).order_by("iso_code")
     #     # .filter(iso_code__in=("USA", "CAN", "MEX"))
     # )

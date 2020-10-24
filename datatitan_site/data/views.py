@@ -16,7 +16,7 @@ def home(request):
     # Get items from the form
     form = ChartSelector(request.GET)
     if form.is_valid():
-        countries = form.cleaned_data["country_code"].values_list("country_code", flat=True)
+        countries = form.cleaned_data["iso_code"].values_list("iso_code", flat=True)
         data_category = form.cleaned_data["data_type"]
         chart_type = form.cleaned_data["chart_type"]
     else:
@@ -32,7 +32,7 @@ def home(request):
         {
             "chart": gen_graph(*countries, category=str.lower(data_category), chart_type=chart_type),
             "country_selector": ChartSelector(
-                selected_country_codes=countries,
+                selected_iso_codes=countries,
                 selected_data_type=data_category,
                 selected_chart_type=chart_type,
             ).as_p(),

@@ -113,7 +113,7 @@ h3.nav-title {
 	background-blend-mode: luminosity;
 }
 
-ul#id_country_code{
+ul#id_iso_code{
 	max-height: 200px;
 	min-height: 100px;
 	overflow-y: scroll;

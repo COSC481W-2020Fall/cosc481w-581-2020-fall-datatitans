@@ -25,7 +25,7 @@
                         function countrySearch() {
                             let input, countryList;
                             input = document.getElementById("country_search").value.toLowerCase();
-                            countryList = document.getElementById("id_country_code");
+                            countryList = document.getElementById("id_iso_code");
                             const countries = countryList.getElementsByTagName("li");
                             const filter = RegExp("^" + input);
                             for (let country of countries) {
@@ -40,11 +40,13 @@
                             search_box.id = "country_search";
                             search_box.addEventListener("keyup", countrySearch);
                             search_box.placeholder = "Search Countries...";
-                            const countryCodeList = document.getElementById("id_country_code");
+                            const countryCodeList = document.getElementById("id_iso_code");
                             const container = countryCodeList.previousSibling;
                             container.appendChild(search_box);
                             container.appendChild(countryCodeList);
                             container.nextSibling.remove()
+                            let clear_button = document.createElement("button");
+                            clear_button.className = "btn"
                         }
                     </script>
                 </div>

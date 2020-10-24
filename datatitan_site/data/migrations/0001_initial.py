@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Country',
             fields=[
-                ('country_code', models.CharField(max_length=3, primary_key=True, serialize=False)),
+                ('iso_code', models.CharField(max_length=3, primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=55)),
                 ('continent', models.CharField(max_length=15)),
                 ('population', models.IntegerField()),
