@@ -19,8 +19,8 @@ class DatabaseTestCase(TestCase):
         }
         self.raw_data = (
             self.raw_data.round(decimals=3)
-            .round(decimals=decimals)
-            .where(self.raw_data.notnull(), None)
+                .round(decimals=decimals)
+                .where(self.raw_data.notnull(), None)
         )
         initialize_table()
 
