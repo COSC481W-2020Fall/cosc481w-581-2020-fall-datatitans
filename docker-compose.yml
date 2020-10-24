@@ -10,9 +10,12 @@ services:
     secrets:
       - postgres_password
     depends_on:
-      - db
-      - datatitan_init
-      - memcached
+      db:
+        condition: service_healthy
+      datatitan_init:
+        condition: service_started
+      memcached:
+        condition: service_started
     environment:
       POSTGRES_USER: DataTitans
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
@@ -24,11 +27,13 @@ services:
     secrets:
       - postgres_password
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       POSTGRES_USER: DataTitans
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     command: pipenv run python manage.py migrate
+    restart: on-failure
 
   memcached:
     image: memcached:latest
@@ -52,6 +57,11 @@ services:
       - backend
     ports:
     - "5432"
+    healthcheck:
+      test: pg_isready -U DataTitans
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 
 volumes:
