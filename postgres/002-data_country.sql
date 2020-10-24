@@ -1,4 +1,4 @@
-create materialized view data_countries as
+create materialized view data_country as
 	SELECT DISTINCT ON (data_coviddataclean.iso_code) data_coviddataclean.iso_code AS country_code,
                                                   data_coviddataclean.location AS name,
                                                   data_coviddataclean.continent,
@@ -6,5 +6,5 @@ create materialized view data_countries as
 FROM data_coviddataclean
 ORDER BY data_coviddataclean.iso_code;
 
-alter materialized view data_countries owner to "DataTitans";
+alter materialized view data_country owner to "DataTitans";
 
