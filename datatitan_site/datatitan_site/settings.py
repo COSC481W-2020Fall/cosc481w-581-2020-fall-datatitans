@@ -92,12 +92,17 @@ if POSTGRES_PASSWORD_FILE:
             }
         }
 else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3'
+    with (BASE_DIR.parent / "cred" / "postgres_password.txt").open("r") as file:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'DataTitans',
+                'HOST': 'localhost',
+                'USER': 'DataTitans',
+                'PASSWORD': file.read(),
+                'PORT': '5432'
+            }
         }
-    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
