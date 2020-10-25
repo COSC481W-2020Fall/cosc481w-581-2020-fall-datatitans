@@ -17,6 +17,7 @@ mpld3 = "*"
 sqlalchemy = "*"
 python-memcached = "*"
 psycopg2 = "*"
+backoff = "*"
 
 [requires]
 python_version = "3.8"
