@@ -16,11 +16,11 @@ class ChartTest(unittest.TestCase):
         self.nocodes = ()
         self.none = ()
         self.line = ("LINE")
+        self.bar = ("BAR")
         
     def tearDown(self):
-        # print("tearDown called...")
-        self.a = ()
-        self.str1 = ()
+        self.line = ()
+        self.bar = ()
     
     def test_no_chart(self):
         result = gen_no_chart(*self.nocodes, category=str(""))
@@ -30,15 +30,15 @@ class ChartTest(unittest.TestCase):
 
     def test_line_chart(self):
         # No function to call in forms.py, other than init
-        result = gen_line_chart(*self.nocodes, category=str("LINE"))
+        result = gen_line_chart(*self.nocodes, category=str(self.line))
         # Assert
-        self.assertEqual(result, "LINE")
+        self.assertEqual(result, self.line)
 
     def test_bar_chart(self):
         # No function to call in forms.py, other than init
-        result = gen_bar_chart(*self.nocodes, category=str("BAR"))
+        result = gen_bar_chart(*self.nocodes, category=str(self.bar))
         # Assert
-        self.assertEqual(result, "BAR")
+        self.assertEqual(result, self.bar)
 
 
     
