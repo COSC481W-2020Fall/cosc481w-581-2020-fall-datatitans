@@ -45,10 +45,22 @@ class DatabaseTestCase(TestCase):
         self.assertEqual(result, "", "Test failed: graph has been generated.")
 
 
+class BlogTestCase(TestCase):
+    def setUp(self) -> None:
+        """Generates a blog post from a call to a Lorem Ipsum API"""
+        self.blog_post = {
+            "author": "Marcus Tullius Cicero",
+            "title": "Lorem Ipsum",
+            "text": urllib.request.urlopen(
+                url="https://loripsum.net/api/3/medium/plaintext"
+            )
+            .read()
+            .decode("UTF-8"),
+        }
+        self.test_post = Post(**self.blog_post)
+        self.test_post.save()
 
-
-
-    if result.length > 0:
-        print("Test passed, graph has been generated.")
-    else:
-        print("Test failed, graph has not been generated.")
+    def test_blog(self) -> None:
+        """Verifies that the contents of the blog post match what was generated"""
+        for key, val in self.blog_post.items():
+            self.assertEqual(val, self.test_post.__getattribute__(key))
