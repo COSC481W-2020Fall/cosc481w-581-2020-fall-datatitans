@@ -32,16 +32,20 @@ class DatabaseTestCase(TestCase):
                 f"Expected number of rows: {len(self.raw_data)}; Actual number of rows: {CovidDataRaw.objects.count()}"
             )
 
+    def test_graph(self) -> None:
+        """Verify that the graph generator outputs a graph"""
+        result = gen_graph("USA", category="total_deaths", chart_type="LINE")
+        self.assertIs(type(result), str, "Test failed: output is not a string.")
+        self.assertNotEqual(result, "", "Test failed: graph was not generated.")
 
-class GenGraphTest(TestCase):
-    def setUP(self):
-        self.code=("USA")
-        self.graph=("LINE")
-        self.type=("TOTAL_DEATHS")
+    def test_graph_without_codes(self) -> None:
+        result = gen_graph(*[], category="total_cases", chart_type="LINE")
+        self.assertIs(type(result), str, "Test failed: output is not a string.")
+        self.assertEqual(result, "", "Test failed: graph has been generated.")
 
-    def test_graph(self):
-        result = gen_graph(code, type, graph)
-        self.assertEqual(result, "")
+
+
+
 
     if result.length > 0:
         print("Test passed, graph has been generated.")
