@@ -1,5 +1,6 @@
 from django.test import TestCase
 from data.models import CovidDataClean, CovidDataRaw
+from data.scripts.generate_graphs import gen_graph
 import pandas as pd
 from data.scripts.database_handler import input_file_path, initialize_table
 
@@ -29,3 +30,19 @@ class DatabaseTestCase(TestCase):
             raise AssertionError(
                 f"Expected number of rows: {len(self.raw_data)}; Actual number of rows: {CovidDataRaw.objects.count()}"
             )
+
+
+class GenGraphTest(TestCase):
+    def setUP(self):
+        self.code=("USA")
+        self.graph=("LINE")
+        self.type=("TOTAL_DEATHS")
+
+    def test_graph(self):
+        result = gen_graph(code, type, graph)
+        self.assertEqual(result, "")
+
+    if result.length > 0:
+        print("Test passed, graph has been generated.")
+    else:
+        print("Test failed, graph has not been generated.")
