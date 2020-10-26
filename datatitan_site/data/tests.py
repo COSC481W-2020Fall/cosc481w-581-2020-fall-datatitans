@@ -21,12 +21,13 @@ class DatabaseTestCase(TestCase):
         }
         self.raw_data = (
             self.raw_data.round(decimals=3)
-                .round(decimals=decimals)
-                .where(self.raw_data.notnull(), None)
+            .round(decimals=decimals)
+            .where(self.raw_data.notnull(), None)
         )
         initialize_table()
 
-    def test_upload(self):
+    def test_upload(self) -> None:
+        """Verify that the number of entries in the database match the data pulled from the csv file"""
         if CovidDataRaw.objects.count() != len(self.raw_data):
             raise AssertionError(
                 f"Expected number of rows: {len(self.raw_data)}; Actual number of rows: {CovidDataRaw.objects.count()}"
