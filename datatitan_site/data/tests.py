@@ -1,8 +1,9 @@
 from django.test import TestCase
-from data.models import CovidDataClean, CovidDataRaw
+from data.models import CovidDataRaw, Post
 from data.scripts.generate_graphs import gen_graph
 import pandas as pd
 from data.scripts.database_handler import input_file_path, initialize_table
+import urllib.request
 
 
 # Create your tests here.
