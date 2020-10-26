@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import mpld3
 from data.models import CovidDataClean, Country, Months, CovidDataMonthly
@@ -58,6 +60,8 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
                         "date"
                     ),
                 )
+            if code == "USA":  # quick fix for USA total cases padding issue on Y axis
+                plt.ylabel(category_name[category], labelpad=36)
             plt.plot(
                 target_query.values_list("date"),
                 target_query.values_list(category),

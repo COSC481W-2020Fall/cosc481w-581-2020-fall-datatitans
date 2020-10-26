@@ -12,13 +12,17 @@
         
                 <!-- Dropdown -->
                 <div class="col-md-3 card" style="padding:15px">
-                    <form method="GET" enctype="multipart/form-data" id="country_select_form">
+                    <form method="GET" enctype="multipart/form-data" id="country_select_form"
+                     name="country_select_form">
                         <div id="selection_container">
                             {{country_selector}}
                         </div>
+                        <button type="reset" class="btn btn-primary">Uncheck all</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     <script>
+                        // Call check box limit function.
+                        checkLimit(document.country_select_form.country_code, 5)
                         /** Narrows down countries to only those that match the search.
                          *
                          */
@@ -48,6 +52,28 @@
                             let clear_button = document.createElement("button");
                             clear_button.className = "btn"
                         }
+
+                        // Limit the number of countries that can be selected.
+                        function checkLimit(checkgroup, limit) {
+                            var checkgroup = checkgroup;
+                            var limit = limit;
+                            for (var i=0; i<checkgroup.length; i++){
+                                checkgroup[i].onclick=function(){
+                                    var checkedcount = 0;
+                                    for (var i=0; i<checkgroup.length; i++)
+                                        checkedcount+=(checkgroup[i].checked)? 1 :0;
+                                    if (checkedcount>limit){
+                                        alert("Select only 5 countries.");
+                                        this.checked=false;
+                                    }
+                                }
+                            }
+                        }
+
+                        function clearCheckboxes() {
+                            $('input[type="checkbox"]:checked').prop('checked',false);
+                        }
+                        $(':button').on('click', clearCheckboxes);
                     </script>
                 </div>
             
