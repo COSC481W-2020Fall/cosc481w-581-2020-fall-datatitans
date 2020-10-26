@@ -14,14 +14,13 @@ from django.views.decorators.cache import cache_page
 @cache_page(60 * 10)
 def home(request):
     # Get items from the form
-    form = request.GET
-
-    try:
-        countries = form.getlist("country_code", default=[])
-        data_category = form["data_type"]
-        chart_type = form["chart_type"]
-    except MultiValueDictKeyError:
-        countries = ["USA", "none"]
+    form = ChartSelector(request.GET)
+    if form.is_valid():
+        countries = form.cleaned_data["country_code"].values_list("country_code", flat=True)
+        data_category = form.cleaned_data["data_type"]
+        chart_type = form.cleaned_data["chart_type"]
+    else:
+        countries = []
         data_category = "TOTAL_CASES"
         chart_type = "LINE"
     countries = list(dict.fromkeys(countries))
@@ -36,7 +35,7 @@ def home(request):
                 selected_country_codes=countries,
                 selected_data_type=data_category,
                 selected_chart_type=chart_type,
-            ),
+            ).as_p(),
         },
     )
 

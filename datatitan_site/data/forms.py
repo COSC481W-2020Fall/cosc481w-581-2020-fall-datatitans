@@ -1,10 +1,11 @@
 from django import forms
 from data.models import Country
+from django.core.cache import cache
 
 
 class CountrySelect(forms.CheckboxSelectMultiple):
     def __init__(self, *args, **kwargs):
-        self.selected_countries = None
+        self.selected_countries = []
         super(CountrySelect, self).__init__(*args, **kwargs)
         self.attrs["class"] = "custom-checkbox"
 
@@ -40,7 +41,12 @@ class ChartSelector(forms.Form):
         choices=(("LINE", "Line Chart"), ("BAR", "Bar Graph")), widget=MemorizedSelect
     )
     country_code = forms.ModelMultipleChoiceField(
-        Country.objects.all(), widget=CountrySelect
+        (
+            cache.get_or_set("countries", Country.objects.all())
+            if not (countries := cache.get("countries"))
+            else countries
+        ),
+        widget=CountrySelect,
     )
     data_type = forms.ChoiceField(
         choices=(("TOTAL_CASES", "Total Cases"), ("TOTAL_DEATHS", "Total Deaths")),
@@ -48,7 +54,7 @@ class ChartSelector(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        selected_countries = kwargs.pop("selected_country_codes", None)
+        selected_countries = kwargs.pop("selected_country_codes", [])
         selected_data_type = kwargs.pop("selected_data_type", None)
         selected_chart_type = kwargs.pop("selected_chart_type", None)
         super(ChartSelector, self).__init__(*args, **kwargs)

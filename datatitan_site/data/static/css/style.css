@@ -116,7 +116,6 @@ h3.nav-title {
 ul#id_country_code{
 	max-height: 200px;
 	min-height: 100px;
-	min-width: 250px;
 	overflow-y: scroll;
 	list-style: none;
 	padding: 0;
@@ -143,6 +142,11 @@ div#graph_container{
 	line-height: 16px;
 }
 
+#selection_container>p>input{
+	display: block;
+	width: 100%;
+}
+
 @media screen and (max-width: 1410px){
 	#data{
 		flex-direction: column;
@@ -154,9 +158,14 @@ div#graph_container{
 		width: inherit;
 	}
 
-	#country_select_form{
-		display: grid;
-		grid-gap: 16px;
+	#selection_container{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+	}
+
+	#selection_container>p{
+		width: available;
 	}
 
 	#country_select_form>label{

@@ -13,9 +13,40 @@
                 <!-- Dropdown -->
                 <div class="col-md-3 card" style="padding:15px">
                     <form method="GET" enctype="multipart/form-data" id="country_select_form">
+                        <div id="selection_container">
                             {{country_selector}}
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+                    <script>
+                        /** Narrows down countries to only those that match the search.
+                         *
+                         */
+                        function countrySearch() {
+                            let input, countryList;
+                            input = document.getElementById("country_search").value.toLowerCase();
+                            countryList = document.getElementById("id_country_code");
+                            const countries = countryList.getElementsByTagName("li");
+                            const filter = RegExp("^" + input);
+                            for (let country of countries) {
+                                country.style.display = filter.test(country.getElementsByTagName("label")[0].textContent.toLowerCase().trim()) ? "" : "none";
+                            }
+                        }
+
+                        // Add a search bar to the country selection field.
+                        {
+                            if (!!document.getElementById("country_search")) throw "Country search box already exists!";
+                            let search_box = document.createElement("input");
+                            search_box.id = "country_search";
+                            search_box.addEventListener("keyup", countrySearch);
+                            search_box.placeholder = "Search Countries...";
+                            const countryCodeList = document.getElementById("id_country_code");
+                            const container = countryCodeList.previousSibling;
+                            container.appendChild(search_box);
+                            container.appendChild(countryCodeList);
+                            container.nextSibling.remove()
+                        }
+                    </script>
                 </div>
             
 

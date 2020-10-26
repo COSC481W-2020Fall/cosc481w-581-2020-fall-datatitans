@@ -36,17 +36,30 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
     category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
     plt.subplots(figsize=dims)
 
+    selected_countries = Country.objects.filter(country_code__in=iso_codes)
+
     plt.title(
         category_name[category]
         + " in "
-        + ", ".join(Country.objects.get(country_code=code).name for code in iso_codes)
+        + ", ".join(
+            cache.get_or_set(
+                f"country_name_{code}", selected_countries.get(country_code=code).name
+            )
+            if not (country_name := cache.get(f"country_name_{code}"))
+            else country_name
+            for code in iso_codes
+        )
     )
     if chart_type == "LINE":
         # Fairly simple implementation; I just have to pass the
         for code in iso_codes:
-            target_query = CovidDataClean.objects.filter(iso_code__exact=code).order_by(
-                "date"
-            )
+            if not (target_query := cache.get(f"query{code}{category}{chart_type}")):
+                target_query = cache.get_or_set(
+                    f"query{code}{category}{chart_type}",
+                    CovidDataClean.objects.filter(iso_code__exact=code).order_by(
+                        "date"
+                    ),
+                )
             plt.plot(
                 target_query.values_list("date"),
                 target_query.values_list(category),
@@ -54,33 +67,48 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
             )
     elif chart_type == "BAR":
         # This was an absolute nightmare to figure out
-        months = Months.objects.filter(month__year="2020")
+        if not (months := cache.get("months")):
+            months = cache.get_or_set(
+                "months", Months.objects.filter(month__gte="2020-01-01")
+            )
         offset_y = np.zeros(
             months.count()
         )  # A numpy array that will be used to store the offsets for each bar graph
         # TODO: Find a more graceful way to set the correct category
-        new_category = f"{category.replace('total', 'new')}__sum"
         for code in iso_codes:
-            valid_months = CovidDataMonthly.objects.filter(iso_code=code).dates(
+            if not (country_results := cache.get(f"monthly_results{code}")):
+                country_results = cache.get_or_set(
+                    f"monthly_results_{code}",
+                    CovidDataMonthly.objects.prefetch_related("month").filter(
+                        iso_code=code
+                    ),
+                )
+            valid_months = country_results.filter(iso_code=code).dates(
                 "month", "month"
-            )
-            current_country = Country.objects.get(country_code=code)
-            target_query = [
-                CovidDataMonthly.objects.values().get(month=month, iso_code=code)
-                if Months.objects.get(month=month).month in valid_months
-                else {
-                    "iso_code": code,
-                    "continent": current_country.continent,
-                    "location": current_country.name,
-                    "month_id": month,
-                    "new_cases": 0,
-                    "new_deaths": 0,
-                    "new_tests": 0,
-                    "data_key": f"{month}{code}",
-                }
-                for month in months.values_list(flat=True)
+            )  # The list of months this country has data for
+            current_country = selected_countries.get(country_code=code)
+            if not (target_query := cache.get(f"query_{code}_{category}_{chart_type}")):
+                target_query = cache.get_or_set(
+                    f"query_{code}_{category}_{chart_type}",
+                    [
+                        country_results.values().get(month=month)
+                        if months.get(month=month).month in valid_months
+                        else {
+                            "iso_code": code,
+                            "continent": current_country.continent,
+                            "location": current_country.name,
+                            "month_id": month,
+                            "new_cases": 0,
+                            "new_deaths": 0,
+                            "new_tests": 0,
+                            "data_key": f"{month}{code}",
+                        }
+                        for month in months.values_list(flat=True)
+                    ],
+                )
+            target_list = [
+                item[category.replace("total", "new")] for item in target_query
             ]
-            target_list = [item[category.replace("total", "new")] for item in target_query]
             plt.bar(
                 list(months.values_list(flat=True)),
                 target_list,

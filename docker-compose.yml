@@ -14,5 +14,9 @@ services:
 volumes:
   db-data:
 
+secrets:
+  postgres_password:
+    file: cred/postgres_password.txt
+
 networks:
   overlay:
