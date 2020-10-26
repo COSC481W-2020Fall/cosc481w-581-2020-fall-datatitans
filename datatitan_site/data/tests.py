@@ -11,6 +11,7 @@ import urllib.request
 
 class DatabaseTestCase(TestCase):
     def setUp(self) -> None:
+        """Initialize the test database, and read the input csv file into a pandas dataframe"""
         self.raw_data = pd.read_csv(input_file_path)
         decimals = {
             "stringency_index": 2,
@@ -40,14 +41,17 @@ class DatabaseTestCase(TestCase):
         self.assertNotEqual(result, "", "Test failed: graph was not generated.")
 
     def test_graph_without_codes(self) -> None:
+        """Verify that the graph generator does not output a graph when provided with no countries"""
         result = gen_graph(*[], category="total_cases", chart_type="LINE")
         self.assertIs(type(result), str, "Test failed: output is not a string.")
         self.assertEqual(result, "", "Test failed: graph has been generated.")
 
 
 class BlogTestCase(TestCase):
+    """Rewrite of Ben Potter's test"""
+
     def setUp(self) -> None:
-        """Generates a blog post from a call to a Lorem Ipsum API"""
+        """Generate a blog post from a call to a Lorem Ipsum API"""
         self.blog_post = {
             "author": "Marcus Tullius Cicero",
             "title": "Lorem Ipsum",
@@ -61,6 +65,6 @@ class BlogTestCase(TestCase):
         self.test_post.save()
 
     def test_blog(self) -> None:
-        """Verifies that the contents of the blog post match what was generated"""
+        """Verify that the contents of the blog post match what was generated"""
         for key, val in self.blog_post.items():
             self.assertEqual(val, self.test_post.__getattribute__(key))
