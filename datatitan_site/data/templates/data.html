@@ -22,7 +22,6 @@
                     </form>
                     <script>
                         // Call check box limit function.
-                        checkLimit(document.country_select_form.country_code, 5)
                         /** Narrows down countries to only those that match the search.
                          *
                          */
@@ -56,23 +55,6 @@
                             clear_button.type = "button";
                             clear_button.innerText = "Uncheck All";
                             container.appendChild(clear_button);
-                        }
-
-                        // Limit the number of countries that can be selected.
-                        function checkLimit(checkgroup, limit) {
-                            var checkgroup = checkgroup;
-                            var limit = limit;
-                            for (var i=0; i<checkgroup.length; i++){
-                                checkgroup[i].onclick=function(){
-                                    var checkedcount = 0;
-                                    for (var i=0; i<checkgroup.length; i++)
-                                        checkedcount+=(checkgroup[i].checked)? 1 :0;
-                                    if (checkedcount>limit){
-                                        alert("Select only 5 countries.");
-                                        this.checked=false;
-                                    }
-                                }
-                            }
                         }
 
                         function clearCheckboxes() {
