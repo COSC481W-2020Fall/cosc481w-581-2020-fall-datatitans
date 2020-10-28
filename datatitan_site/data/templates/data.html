@@ -76,9 +76,16 @@
                         }
 
                         function clearCheckboxes() {
-                            $('input[type="checkbox"]:checked').prop('checked',false);
+                            $('#id_iso_code input[type="checkbox"]:checked').prop("checked", false);
                         }
-                        $(':button').on('click', clearCheckboxes);
+
+                        $("#id_iso_code input[type='checkbox']").change(box => {
+                            let num_checked = $("#id_iso_code input[type='checkbox']:checked").length;
+                            if (num_checked > 5) {
+                                alert("Please only select up to 5 countries.");
+                                box.target.checked = false;
+                            }
+                        })
                     </script>
                 </div>
             
