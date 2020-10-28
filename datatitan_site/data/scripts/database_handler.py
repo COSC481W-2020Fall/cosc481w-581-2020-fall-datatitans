@@ -8,6 +8,8 @@ from django.db.models import Avg, Sum, RowRange, Window, F, FloatField, CharFiel
 from django.db.models.functions import Coalesce, Cast, Concat, TruncMonth
 from data.models import CovidDataRaw, CovidDataClean, Country, Months, CovidDataMonthly
 from django.db import connections, transaction
+from backoff import on_exception, expo
+from django.db.utils import OperationalError
 
 # %%
 input_file_path = Path(__file__).parent.parent / "input" / "owid-covid-data.csv"
@@ -28,6 +30,9 @@ database = connections["default"]
 
 
 # %%
+@on_exception(
+    wait_gen=expo, exception=OperationalError, max_tries=8, max_time=120, max_value=16
+)
 @transaction.atomic()
 def initialize_table() -> None:
     """Replace the raw covid data table with a fresh copy, then clean up the data, and generate a table of countries."""
