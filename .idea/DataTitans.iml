@@ -23,4 +23,7 @@
     <orderEntry type="library" name="72030bdf4d" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
   </component>
+  <component name="TemplatesService">
+    <option name="TEMPLATE_CONFIGURATION" value="Django" />
+  </component>
 </module>
