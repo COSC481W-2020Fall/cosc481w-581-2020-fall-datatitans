@@ -7,7 +7,7 @@ import pandas as pd
 from django.db.models import Avg, Sum, RowRange, Window, F, FloatField, CharField
 from django.db.models.functions import Coalesce, Cast, Concat, TruncMonth
 from data.models import CovidDataRaw, CovidDataClean, Country, Months, CovidDataMonthly
-from django.db import connection, transaction
+from django.db import connections, transaction
 
 # %%
 input_file_path = Path(__file__).parent.parent / "input" / "owid-covid-data.csv"
@@ -24,10 +24,14 @@ def input_missing_or_outdated() -> bool:
     ) < date.today()
 
 
+database = connections["default"]
+
+
 # %%
 @transaction.atomic()
 def initialize_table() -> None:
     """Replace the raw covid data table with a fresh copy, then clean up the data, and generate a table of countries."""
+    database.ensure_connection()
     read_covid_data_raw = (
         pd.read_csv(input_file_path,)
         .round(decimals=3)
@@ -188,7 +192,7 @@ def initialize_table() -> None:
 
 @transaction.atomic()
 def refresh():
-    with connection.cursor() as cursor:
+    with database.cursor() as cursor:
         cursor.execute(
             """
             REFRESH MATERIALIZED VIEW data_coviddataclean;
