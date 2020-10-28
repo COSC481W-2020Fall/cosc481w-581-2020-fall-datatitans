@@ -12,8 +12,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      datatitan_init:
-        condition: service_started
+#      datatitan_init:
+#        condition: service_started
       memcached:
         condition: service_started
     environment:
@@ -21,6 +21,7 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     volumes:
     - ./datatitan_site/data/input:/app/DataTitans/datatitan_site/data/input
+    command: ["wait-for-it", "db:5432", "--strict", "--", "pipenv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
 
   datatitan_init:
     build: ./
