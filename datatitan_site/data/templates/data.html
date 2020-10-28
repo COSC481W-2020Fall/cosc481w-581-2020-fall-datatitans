@@ -17,7 +17,7 @@
                         <div id="selection_container">
                             {{country_selector}}
                         </div>
-                        <button type="reset" class="btn btn-primary">Uncheck all</button>
+{#                        <button type="button" class="btn btn-primary">Uncheck all</button>#}
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     <script>
@@ -48,9 +48,14 @@
                             const container = countryCodeList.previousSibling;
                             container.appendChild(search_box);
                             container.appendChild(countryCodeList);
-                            container.nextSibling.remove()
+                            container.nextSibling.remove();
                             let clear_button = document.createElement("button");
-                            clear_button.className = "btn"
+                            clear_button.className = "btn btn-primary";
+                            clear_button.id = "country_clear_button";
+                            clear_button.addEventListener("click", () => $('#id_iso_code input[type="checkbox"]:checked').prop("checked", false));
+                            clear_button.type = "button";
+                            clear_button.innerText = "Uncheck All";
+                            container.appendChild(clear_button);
                         }
 
                         // Limit the number of countries that can be selected.
