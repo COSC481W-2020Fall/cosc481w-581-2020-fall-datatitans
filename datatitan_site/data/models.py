@@ -143,6 +143,11 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
+class Comment(models.Model):
+    username = models.CharField(max_length=50)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    blog_id = models.ForeignKey(Post, on_delete=models.DO_NOTHING)
 
 def publish(self):
     self.published_date = timezone.now()
