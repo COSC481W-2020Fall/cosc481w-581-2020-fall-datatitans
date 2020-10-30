@@ -10,9 +10,10 @@ import urllib.request
 
 
 class DatabaseTestCase(TestCase):
-    def setUp(self) -> None:
+    @classmethod
+    def setUpTestData(cls):
         """Initialize the test database, and read the input csv file into a pandas dataframe"""
-        self.raw_data = pd.read_csv(input_file_path)
+        cls.raw_data = pd.read_csv(input_file_path)
         decimals = {
             "stringency_index": 2,
             "median_age": 1,
@@ -20,10 +21,10 @@ class DatabaseTestCase(TestCase):
             "diabetes_prevalence": 2,
             "life_expectancy": 2,
         }
-        self.raw_data = (
-            self.raw_data.round(decimals=3)
+        cls.raw_data = (
+            cls.raw_data.round(decimals=3)
             .round(decimals=decimals)
-            .where(self.raw_data.notnull(), None)
+            .where(cls.raw_data.notnull(), None)
         )
         initialize_table()
 
