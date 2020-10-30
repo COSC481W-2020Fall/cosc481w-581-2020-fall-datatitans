@@ -18,6 +18,7 @@ sqlalchemy = "*"
 python-memcached = "*"
 psycopg2 = "*"
 backoff = "*"
+google-cloud-secret-manager = "*"
 
 [requires]
 python_version = "3.8"
