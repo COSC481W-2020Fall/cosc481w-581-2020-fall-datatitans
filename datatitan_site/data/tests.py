@@ -40,6 +40,13 @@ class DatabaseTestCase(TestCase):
         self.assertIs(type(result), str, "Test failed: output is not a string.")
         self.assertNotEqual(result, "", "Test failed: graph was not generated.")
 
+    def test_graph_without_category(self) -> None:
+        """Verify that the graph generator does not outputs a graph when provided with no category"""
+        result = gen_graph("USA", *[], chart_type="LINE")
+        self.assertIs(type(result), str, "Test failed: output is not a string.")
+        self.assertNotEqual(result, "", "Test failed: graph was not generated.")
+
+
     def test_graph_without_codes(self) -> None:
         """Verify that the graph generator does not output a graph when provided with no countries"""
         result = gen_graph(*[], category="total_cases", chart_type="LINE")
