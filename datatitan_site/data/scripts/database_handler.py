@@ -93,6 +93,30 @@ def initialize_table() -> None:
             new_deaths_smoothed_per_million=F("new_deaths_smoothed")
             / Cast(F("population"), FloatField())
             * 1000000,
+            icu_patients=F("icu_patients")
+            / Cast(F("population"), FloatField())
+            * 1000000,
+            icu_patients_per_million=F("icu_patients_per_million")
+            / Cast(F("population"), FloatField())
+            * 1000000,
+            hosp_patients=F("hosp_patients")
+            / Cast(F("population"), FloatField())
+            * 1000000,
+            hosp_patients_per_million=F("hosp_patients_per_million")
+            / Cast(F("population"), FloatField())
+            * 1000000,
+            weekly_icu_admissions=F("weekly_icu_admissions")
+            / Cast(F("population"), FloatField())
+            * 1000000,
+            weekly_icu_admissions_per_million=F("weekly_icu_admissions_per_million")
+            / Cast(F("population"), FloatField())
+            * 1000000,
+            weekly_hosp_admissions=F("weekly_hosp_admissions")
+            / Cast(F("population"), FloatField())
+            * 1000000,
+            weekly_hosp_admissions_per_million=F("weekly_hosp_admissions_per_million")
+            / Cast(F("population"), FloatField())
+            * 1000000,
             total_tests_per_thousand=Cast(F("total_tests"), FloatField())
             / Cast(F("population"), FloatField())
             * 1000,
