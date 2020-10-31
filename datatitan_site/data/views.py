@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.utils import timezone
-from data.models import Post, Country
+from data.models import Post, Country, CovidDataClean
 from data.scripts.generate_graphs import gen_graph
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.http import require_GET
@@ -26,16 +26,21 @@ def home(request):
     countries = list(dict.fromkeys(countries))
     countries = [country for country in countries if country != "none"]
     countries = list(filter(None, countries))
+    table_fields = ("location", "population", "total_cases", "total_deaths", "total_cases_per_million", "total_deaths_per_million")
+    country_stats = CovidDataClean.objects.order_by("iso_code", "-date").distinct("iso_code").filter(iso_code__in=countries).values_list(*table_fields)
     return render(
         request,
         "data.html",
         {
             "chart": gen_graph(*countries, category=str.lower(data_category), chart_type=chart_type),
-            "country_selector": ChartSelector(
-                selected_iso_codes=countries,
-                selected_data_type=data_category,
-                selected_chart_type=chart_type,
-            ).as_p(),
+            "country_selector": form.as_p(),
+            "fields": (field.replace("_", " ").title() for field in table_fields),
+            "country_table": country_stats
+        } if form.is_valid() else {
+            "chart": "",
+            "country_selector": ChartSelector().as_p(),
+            "fields": table_fields,
+            "country_table": None
         },
     )
 

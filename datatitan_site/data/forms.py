@@ -38,7 +38,7 @@ class MemorizedSelect(forms.Select):
 
 class ChartSelector(forms.Form):
     chart_type = forms.ChoiceField(
-        choices=(("LINE", "Line Chart"), ("BAR", "Bar Graph")), widget=MemorizedSelect
+        choices=(("LINE", "Line Chart"), ("BAR", "Bar Graph"))
     )
     iso_code = forms.ModelMultipleChoiceField(
         (
@@ -46,11 +46,11 @@ class ChartSelector(forms.Form):
             if not (countries := cache.get("countries"))
             else countries
         ),
-        widget=CountrySelect,
+        widget=forms.CheckboxSelectMultiple(attrs={"class": "custom-checkbox"}),
+        label="Country:"
     )
     data_type = forms.ChoiceField(
-        choices=(("TOTAL_CASES", "Total Cases"), ("TOTAL_DEATHS", "Total Deaths")),
-        widget=MemorizedSelect,
+        choices=(("TOTAL_CASES", "Total Cases"), ("TOTAL_DEATHS", "Total Deaths"))
     )
 
     def __init__(self, *args, **kwargs):

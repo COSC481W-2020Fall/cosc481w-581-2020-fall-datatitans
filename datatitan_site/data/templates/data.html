@@ -21,7 +21,6 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     <script>
-                        // Call check box limit function.
                         /** Narrows down countries to only those that match the search.
                          *
                          */
@@ -77,6 +76,26 @@
                     {{ chart|safe }}
                 </div>
             </div>
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    {% for field in fields %}
+                        <th>{{ field }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for country in country_table %}
+                    <tr>
+                        {% for field in country %}
+                            <td>{{ field }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         </div>
 	</div>
 	
