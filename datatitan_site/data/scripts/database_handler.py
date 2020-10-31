@@ -56,8 +56,10 @@ def initialize_table() -> None:
     # read_covid_data_raw["data_key"] = read_covid_data_raw.apply(
     #     lambda row: f"{str(row.date)}{str(row.iso_code)}", axis=1
     # )
+    valid_columns = [field.name for field in CovidDataRaw._meta.get_fields()]
+    valid_columns.remove("id")
     CovidDataRaw.objects.bulk_create(
-        [CovidDataRaw(**row) for row in read_covid_data_raw.to_dict("records")],
+        [CovidDataRaw(**row) for row in read_covid_data_raw[[*valid_columns]].to_dict("records")],
         ignore_conflicts=True,
     )
     refresh()
