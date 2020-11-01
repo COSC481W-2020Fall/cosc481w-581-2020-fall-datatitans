@@ -38,6 +38,28 @@ class CovidDataRaw(models.Model):
     total_deaths_per_million = models.FloatField(null=True)
     new_deaths_per_million = models.FloatField(null=True)
     new_deaths_smoothed_per_million = models.FloatField(null=True)
+    icu_patients = models.IntegerField(null=True)
+    icu_patients_per_million = models.FloatField(null=True)
+    hosp_patients = models.IntegerField(
+        verbose_name="hospital patients", db_column="hosp_patients", null=True
+    )
+    hosp_patients_per_million = models.FloatField(
+        verbose_name="hospital patients per million",
+        db_column="hosp_patients_per_million",
+        null=True,
+    )
+    weekly_icu_admissions = models.FloatField(null=True)
+    weekly_icu_admissions_per_million = models.FloatField(null=True)
+    weekly_hosp_admissions = models.FloatField(
+        verbose_name="weekly hospital admissions",
+        db_column="weekly_hosp_admissions",
+        null=True,
+    )
+    weekly_hosp_admissions_per_million = models.FloatField(
+        verbose_name="weekly hospital admissions per million",
+        db_column="weekly_hosp_admissions_per_million",
+        null=True,
+    )
     new_tests = models.IntegerField(default=0, null=True)
     total_tests = models.IntegerField(null=True)
     total_tests_per_thousand = models.FloatField(null=True)
@@ -71,7 +93,6 @@ class CovidDataRaw(models.Model):
     human_development_index = models.DecimalField(
         max_digits=4, decimal_places=3, null=True
     )
-    # data_key = models.CharField(primary_key=True, max_length=20)
 
     class Meta:
         indexes = [models.Index(fields=["iso_code", "date"])]
