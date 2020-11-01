@@ -38,7 +38,8 @@ class MemorizedSelect(forms.Select):
 
 class ChartSelector(forms.Form):
     chart_type = forms.ChoiceField(
-        choices=(("LINE", "Line Chart"), ("BAR", "Bar Graph"))
+        choices=(("LINE", "Line Chart"), ("BAR", "Bar Graph")),
+        widget=forms.Select(attrs={"class": "custom-select form-control"})
     )
     iso_code = forms.ModelMultipleChoiceField(
         (
@@ -50,7 +51,12 @@ class ChartSelector(forms.Form):
         label="Country:"
     )
     data_type = forms.ChoiceField(
-        choices=(("TOTAL_CASES", "Total Cases"), ("TOTAL_DEATHS", "Total Deaths"))
+        choices=(("CASES", "Cases"), ("DEATHS", "Deaths"), ("TESTS", "Tests")),
+        widget=forms.Select(attrs={"class": "custom-select form-control"})
+    )
+    metric = forms.ChoiceField(
+        choices=(("raw", "Raw"), ("per_capita", "Per Capita")),
+        widget=forms.Select(attrs={"class": "custom-select form-control"})
     )
 
     def __init__(self, *args, **kwargs):

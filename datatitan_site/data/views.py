@@ -19,10 +19,12 @@ def home(request):
         countries = form.cleaned_data["iso_code"].values_list("iso_code", flat=True)
         data_category = form.cleaned_data["data_type"]
         chart_type = form.cleaned_data["chart_type"]
+        metric = form.cleaned_data["metric"]
     else:
         countries = []
         data_category = "TOTAL_CASES"
         chart_type = "LINE"
+        metric = "raw"
     countries = list(dict.fromkeys(countries))
     countries = [country for country in countries if country != "none"]
     countries = list(filter(None, countries))
@@ -32,7 +34,7 @@ def home(request):
         request,
         "data.html",
         {
-            "chart": gen_graph(*countries, category=str.lower(data_category), chart_type=chart_type),
+            "chart": gen_graph(*countries, category=str.lower(data_category), chart_type=chart_type, metric=metric),
             "country_selector": form.as_p(),
             "fields": (field.replace("_", " ").title() for field in table_fields),
             "country_table": country_stats
