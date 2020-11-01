@@ -58,7 +58,7 @@ services:
     networks:
       - backend
     ports:
-    - "5432:5432"
+    - "5432"
     healthcheck:
       test: pg_isready -U DataTitans
       interval: 10s
