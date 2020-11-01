@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+    {% load cache %}
  
 
  
@@ -78,6 +79,7 @@
             </div>
         {% if country_table %}
         <div>
+        {% cache 500 country_table request.GET %}
             <table>
                 <thead>
                 <tr>
@@ -96,6 +98,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+        {% endcache %}
         </div>
         {% endif %}
         </div>
