@@ -35,10 +35,10 @@ database = connections["default"]
 )
 @transaction.atomic()
 def initialize_table() -> None:
-    """Replace the raw covid data table with a fresh copy, then clean up the data, and generate a table of countries."""
+    """Update the raw covid data table with data retrieved from the "Our World in Data" repository."""
     database.ensure_connection()
     read_covid_data_raw = (
-        pd.read_csv(input_file_path,)
+        pd.read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
         .round(decimals=3)
         .round(
             decimals={
