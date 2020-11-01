@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from google.cloud import secretmanager
+import google.auth
+import google.auth.transport.requests
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,6 +82,12 @@ WSGI_APPLICATION = 'datatitan_site.wsgi.application'
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD_FILE = os.getenv("POSTGRES_PASSWORD_FILE")
 
+creds, project = google.auth.default()
+auth_req = google.auth.transport.requests.Request()
+creds.refresh(auth_req)
+client = secretmanager.SecretManagerServiceClient()
+db_user = client.access_secret_version(name="projects/984278497023/secrets/DataTitans-Postgres-Account/versions/latest")
+
 if POSTGRES_PASSWORD_FILE:
     # Only attempt to access the postgres daemon if you think you're running in a docker container
     with Path(POSTGRES_PASSWORD_FILE).open('r') as file:
@@ -92,17 +102,16 @@ if POSTGRES_PASSWORD_FILE:
             }
         }
 else:
-    with (BASE_DIR.parent / "cred" / "postgres_password.txt").open("r") as file:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql',
-                'NAME': 'DataTitans',
-                'HOST': 'localhost',
-                'USER': 'DataTitans',
-                'PASSWORD': file.read(),
-                'PORT': '5432'
-            }
+    account = json.loads(db_user.payload.data)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'DataTitans',
+            'HOST': 'localhost',
+            'PORT': '5432',
+            **account
         }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
