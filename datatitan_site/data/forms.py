@@ -5,7 +5,7 @@ from django.core.cache import cache
 
 class CountrySelect(forms.CheckboxSelectMultiple):
     def __init__(self, *args, **kwargs):
-        self.selected_countries = []
+        # self.selected_countries = []
         super(CountrySelect, self).__init__(*args, **kwargs)
         self.attrs["class"] = "custom-checkbox"
 
@@ -17,8 +17,8 @@ class CountrySelect(forms.CheckboxSelectMultiple):
         )
         if value:
             option["label"] = value.instance.name
-            if value.instance.iso_code in self.selected_countries:
-                option["attrs"]["checked"] = True
+            # if value.instance.iso_code in self.selected_countries:
+            #     option["attrs"]["checked"] = True
         return option
 
 
@@ -59,11 +59,11 @@ class ChartSelector(forms.Form):
         widget=forms.Select(attrs={"class": "custom-select form-control"})
     )
 
-    def __init__(self, *args, **kwargs):
-        selected_countries = kwargs.pop("selected_iso_codes", [])
-        selected_data_type = kwargs.pop("selected_data_type", None)
-        selected_chart_type = kwargs.pop("selected_chart_type", None)
-        super(ChartSelector, self).__init__(*args, **kwargs)
-        self.fields["iso_code"].widget.selected_countries = selected_countries
-        self.fields["data_type"].widget.selected_option = selected_data_type
-        self.fields["chart_type"].widget.selected_option = selected_chart_type
+    # def __init__(self, *args, **kwargs):
+    #     selected_countries = kwargs.pop("selected_iso_codes", [])
+    #     selected_data_type = kwargs.pop("selected_data_type", None)
+    #     selected_chart_type = kwargs.pop("selected_chart_type", None)
+    #     super(ChartSelector, self).__init__(*args, **kwargs)
+    #     self.fields["iso_code"].widget.selected_countries = selected_countries
+    #     self.fields["data_type"].widget.selected_option = selected_data_type
+    #     self.fields["chart_type"].widget.selected_option = selected_chart_type
