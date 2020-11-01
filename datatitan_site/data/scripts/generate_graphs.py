@@ -5,7 +5,7 @@ from data.models import CovidDataClean, Country, Months, CovidDataMonthly
 from django.core.cache import cache
 import numpy as np
 
-matplotlib.use('Agg')
+matplotlib.use("Agg")
 SMALL_SIZE = 10
 SMALLER_SIZE = 3
 MEDIUM_SIZE = 20
@@ -22,7 +22,9 @@ plt.rc("figure", titlesize=BIGGER_SIZE)  # fontsize of the figure title
 dims = (8, 4)  # dimension variable for plot area
 
 
-def gen_graph(*iso_codes, category: str, chart_type: str = "LINE", metric: str = "raw") -> str:
+def gen_graph(
+    *iso_codes, category: str, chart_type: str = "LINE", metric: str = "raw"
+) -> str:
     """Creates a graph that tracks a data category over time for an arbitrary number of countries.
 
     :param iso_codes: ISO codes of countries to create graphs for
@@ -34,7 +36,9 @@ def gen_graph(*iso_codes, category: str, chart_type: str = "LINE", metric: str =
     """
     if len(iso_codes) == 0:
         return ""
-    category_name = f"""{"new" if chart_type.lower() == "bar" else "total"}_{category}"""
+    category_name = (
+        f"""{"new" if chart_type.lower() == "bar" else "total"}_{category}"""
+    )
     if metric == "per_capita":
         category_name += f"""_per_{"thousand" if category == "tests" else "million"}"""
     plt.subplots(figsize=dims)
@@ -56,7 +60,9 @@ def gen_graph(*iso_codes, category: str, chart_type: str = "LINE", metric: str =
     if chart_type.lower() == "line":
         # Fairly simple implementation
         for code in iso_codes:
-            if not (target_query := cache.get(f"query_{code}_{category_name}_{chart_type}")):
+            if not (
+                target_query := cache.get(f"query_{code}_{category_name}_{chart_type}")
+            ):
                 target_query = cache.get_or_set(
                     f"query_{code}_{category_name}_{chart_type}",
                     CovidDataClean.objects.filter(iso_code__exact=code).order_by(
@@ -92,7 +98,9 @@ def gen_graph(*iso_codes, category: str, chart_type: str = "LINE", metric: str =
                 "month", "month"
             )  # The list of months this country has data for
             current_country = selected_countries.get(iso_code=code)
-            if not (target_query := cache.get(f"query_{code}_{category_name}_{chart_type}")):
+            if not (
+                target_query := cache.get(f"query_{code}_{category_name}_{chart_type}")
+            ):
                 target_query = cache.get_or_set(
                     f"query_{code}_{category_name}_{chart_type}",
                     [
@@ -114,9 +122,7 @@ def gen_graph(*iso_codes, category: str, chart_type: str = "LINE", metric: str =
                         for month in months.values_list(flat=True)
                     ],
                 )
-            target_list = [
-                float(item[category_name]) for item in target_query
-            ]
+            target_list = [float(item[category_name]) for item in target_query]
             plt.bar(
                 list(months.values_list(flat=True)),
                 target_list,
