@@ -33,7 +33,10 @@ def gen_graph(*iso_codes, category: str, chart_type="LINE") -> str:
     """
     if len(iso_codes) == 0:
         return ""
-    category_name = {"total_cases": "Total Cases", "total_deaths": "Total Deaths"}
+    category_name = {"total_cases": "Total Cases",
+                     "total_deaths": "Total Deaths",
+                     "total_cases_per_million": "Total Cases/1M",
+                     "total_deaths_per_million": "Total Deaths/1M"}
     plt.subplots(figsize=dims)
 
     selected_countries = Country.objects.filter(country_code__in=iso_codes)
