@@ -49,7 +49,10 @@ class ChartSelector(forms.Form):
         widget=CountrySelect,
     )
     data_type = forms.ChoiceField(
-        choices=(("total_cases", "Total Cases"), ("total_deaths", "Total Deaths"), ("total_deaths_per_million", "Total Deaths per Million")),
+                choices=(("TOTAL_CASES", "Total Cases"),
+                 ("TOTAL_DEATHS", "Total Deaths"),
+                 ("TOTAL_CASES_PER_MILLION", "Total Cases/1M"),
+                 ("TOTAL_DEATHS_PER_MILLION", "Total Death/1M")),
         widget=MemorizedSelect,
     )
 
