@@ -1,6 +1,7 @@
 from django.test import TestCase
-from data.models import CovidDataRaw, Post
+from data.models import CovidDataRaw, Post, Comment
 from data.scripts.generate_graphs import gen_graph
+from django.utils import timezone
 import pandas as pd
 from data.scripts.database_handler import input_file_path, initialize_table
 import urllib.request
@@ -68,3 +69,14 @@ class BlogTestCase(TestCase):
         """Verify that the contents of the blog post match what was generated"""
         for key, val in self.blog_post.items():
             self.assertEqual(val, self.test_post.__getattribute__(key))
+
+class CommentTestCase(TestCase):
+
+    def setup(self):
+        blog_post = Post.objects.create(author="Admin", title="Test Blog", text="This is a piee of blog text")
+        Comment.objects.create(username="Fred", text="I am Mr. Flintstone", created_date=timezone.now(),blog_id=blog_post.id )
+
+    def test_comment_exists(self):
+        comment = Comment.objects.get(username="Fred")
+
+        self.assertEqual(comment.text, "I am Mr. Flintstone")
