@@ -28,7 +28,7 @@ def home(request):
     countries = list(dict.fromkeys(countries))
     countries = [country for country in countries if country != "none"]
     countries = list(filter(None, countries))
-    table_fields = ("location", "population", "total_cases", "total_deaths", "total_cases_per_million", "total_deaths_per_million")
+    table_fields = ("location", "population", "total_cases", "total_deaths", "total_tests", "total_cases_per_million", "total_deaths_per_million", "total_tests_per_thousand")
     country_stats = CovidDataClean.objects.order_by("iso_code", "-date").distinct("iso_code").filter(iso_code__in=countries).values_list(*table_fields)
     return render(
         request,
