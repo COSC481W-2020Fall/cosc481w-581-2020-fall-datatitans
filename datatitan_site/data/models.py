@@ -13,6 +13,9 @@ class Country(models.Model):
     continent = models.CharField(max_length=15)
     population = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+
     @cached_property
     def country_names(self):
         return list(Country.objects.values_list("iso_code", "name"))
