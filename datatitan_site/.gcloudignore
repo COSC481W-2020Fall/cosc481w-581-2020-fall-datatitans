@@ -21,3 +21,7 @@ __pycache__/
 cred
 Pipfile
 Pipfile.lock
+db.sqlite3
+temp
+images
+*/.pytest_cache

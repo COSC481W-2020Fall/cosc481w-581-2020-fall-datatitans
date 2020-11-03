@@ -30,7 +30,7 @@ SECRET_KEY = '(^i4r9k3ncsb7p1^z6o2(&n1-11uk_iy06qud6zb-@ho_^*$q5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'data-titans.uc.r.appspot.com']
 
 
 # Application definition
@@ -107,7 +107,7 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'DataTitans',
-            'HOST': 'localhost',
+            'HOST': '/cloudsql/data-titans:us-central1:datatitan-db' if os.getenv("SERVER_SOFTWARE") else 'localhost',
             'PORT': '5432',
             **account
         }
@@ -155,7 +155,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 CACHES = {
     'default': {
-        'BACKEND': "django.core.cache.backends.memcached.MemcachedCache",
-        'LOCATION': 'memcached:11211',
+        'BACKEND': "django.core.cache.backends.dummy.DummyCache",
+        # 'LOCATION': '127.0.0.1:11211',
     }
 }
