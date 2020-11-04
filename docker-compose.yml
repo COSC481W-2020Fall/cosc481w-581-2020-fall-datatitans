@@ -12,8 +12,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-#      datatitan_init:
-#        condition: service_started
       memcached:
         condition: service_started
     environment:
@@ -22,21 +20,6 @@ services:
     volumes:
     - ./datatitan_site/data/input:/app/DataTitans/datatitan_site/data/input
     command: ["wait-for-it", "db:5432", "--strict", "--", "pipenv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-  datatitan_init:
-    build: ./
-    networks:
-      - backend
-    secrets:
-      - postgres_password
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      POSTGRES_USER: DataTitans
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-    command: ["wait-for-it", "db:5432", "--strict", "--", "pipenv", "run", "python", "manage.py", "migrate"]
-    restart: on-failure
 
   memcached:
     image: memcached:latest
