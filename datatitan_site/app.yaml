@@ -1,0 +1,15 @@
+runtime: python38
+
+handlers:
+  - url: /favicon\.ico
+    static_files: favicon.ico
+    upload: favicon\.ico
+
+  - url: /bootstrap
+    static_dir: bootstrap
+
+  - url: /static
+    static_dir: data/static/
+
+  - url: /.*
+    script: auto
