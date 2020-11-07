@@ -1,5 +1,5 @@
 from django.test import TestCase
-from data.models import CovidDataRaw, Post
+from data.models import CovidDataRaw, Post, CovidDataClean, Country
 from data.scripts.generate_graphs import gen_graph
 import pandas as pd
 from data.scripts.database_handler import input_file_path, initialize_table
@@ -13,7 +13,9 @@ class DatabaseTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         """Initialize the test database, and read the input csv file into a pandas dataframe"""
-        cls.raw_data = pd.read_csv(input_file_path)
+        cls.raw_data: pd.DataFrame = pd.read_csv(
+            "https://covid.ourworldindata.org/data/owid-covid-data.csv"
+        )
         decimals = {
             "stringency_index": 2,
             "median_age": 1,
@@ -30,20 +32,29 @@ class DatabaseTestCase(TestCase):
 
     def test_upload(self) -> None:
         """Verify that the number of entries in the database match the data pulled from the csv file"""
-        if CovidDataRaw.objects.count() != len(self.raw_data):
-            raise AssertionError(
-                f"Expected number of rows: {len(self.raw_data)}; Actual number of rows: {CovidDataRaw.objects.count()}"
-            )
+        stored_raw_data = CovidDataRaw.objects.values("iso_code", "date")
+        self.assertEqual(stored_raw_data.count(), len(self.raw_data), f"Expected number of rows: {len(self.raw_data)}; Actual number of rows: {stored_raw_data.count()}")
+
+    def test_materialized_views(self) -> None:
+        """Verify that the materialized views work for the test database"""
+        clean_data_count = len(self.raw_data.dropna(subset=["iso_code", "continent"]))
+        stored_clean_data_count = CovidDataClean.objects.count()
+        self.assertNotEqual(stored_clean_data_count, 0)
+        self.assertEqual(
+            stored_clean_data_count,
+            clean_data_count,
+            f"Expected number of rows: {clean_data_count}; Actual number of rows: {stored_clean_data_count}",
+        )
 
     def test_graph(self) -> None:
         """Verify that the graph generator outputs a graph"""
-        result = gen_graph("USA", category="total_deaths", chart_type="LINE")
+        result = gen_graph("USA", category="deaths", chart_type="LINE")
         self.assertIs(type(result), str, "Test failed: output is not a string.")
         self.assertNotEqual(result, "", "Test failed: graph was not generated.")
 
     def test_graph_without_codes(self) -> None:
         """Verify that the graph generator does not output a graph when provided with no countries"""
-        result = gen_graph(*[], category="total_cases", chart_type="LINE")
+        result = gen_graph(*[], category="cases", chart_type="LINE")
         self.assertIs(type(result), str, "Test failed: output is not a string.")
         self.assertEqual(result, "", "Test failed: graph has been generated.")
 
