@@ -116,9 +116,7 @@ elif os.getenv("SERVER_SOFTWARE"):
         }
     }
 else:
-    with (Path(__file__).parent.parent / "cred" / "postgres_password.txt").open(
-        "r"
-    ) as file:
+    with (BASE_DIR.parent / "cred" / "postgres_password.txt").open("r") as file:
         DATABASES = {
             "default": {
                 "ENGINE": "django.db.backends.postgresql",
