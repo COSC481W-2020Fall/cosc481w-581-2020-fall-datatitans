@@ -24,6 +24,16 @@ class Country(models.Model):
         managed = False
 
 
+class DataManager(models.Manager):
+    def get_by_natural_key(self, iso_code, date):
+        return self.get(iso_code=iso_code, date=date)
+
+    def get_queryset(self):
+        columns = [field.name for field in self.model._meta.get_fields()]
+        columns.remove("id")
+        return super().get_queryset().values(*columns)
+
+
 class CovidDataRaw(models.Model):
     iso_code = models.CharField(max_length=8, unique_for_date="date", null=True)
     continent = models.CharField(max_length=15, unique_for_date="date", null=True)
@@ -96,6 +106,11 @@ class CovidDataRaw(models.Model):
     human_development_index = models.DecimalField(
         max_digits=4, decimal_places=3, null=True
     )
+
+    objects = DataManager()
+
+    def natural_key(self):
+        return self.iso_code, self.date
 
     class Meta:
         indexes = [models.Index(fields=["iso_code", "date"])]
