@@ -9,7 +9,20 @@
             <p>{{ post.text }}</p>
             <p>published: {{ post.published_date }}</p>
         </div>
+        <div class="comment-section">
+            <form method="POST" class="post-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="save btn btn-default">Post</button>
+            </form>
+        </div>
 
+        <div>
+            {% for comment in comments%}
+                <h4>{{ comment.username }}</h4>
+                <p>{{ comment.text }} <br> {{ comment.created_date }}</p>
+            {% endfor %}
+        </div>
     </div>
     <div class=col-md-2></div>
 
