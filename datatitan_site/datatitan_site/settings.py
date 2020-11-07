@@ -78,7 +78,9 @@ WSGI_APPLICATION = "datatitan_site.wsgi.application"
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 POSTGRES_USER = os.getenv("POSTGRES_USER", "DataTitans")
-POSTGRES_PASSWORD_FILE = os.getenv("POSTGRES_PASSWORD_FILE", BASE_DIR.parent / "cred" / "postgres_password.txt")
+POSTGRES_PASSWORD_FILE = os.getenv(
+    "POSTGRES_PASSWORD_FILE", BASE_DIR.parent / "cred" / "postgres_password.txt"
+)
 APP_ENV = os.getenv("APP_ENV")
 
 if APP_ENV == "docker-compose":
@@ -120,7 +122,7 @@ else:
             "default": {
                 "ENGINE": "django.db.backends.postgresql",
                 "NAME": "DataTitans",
-                "HOST": "db",
+                "HOST": "localhost",
                 "USER": POSTGRES_USER if POSTGRES_USER else "DataTitans",
                 "PASSWORD": file.read(),
                 "PORT": "5432",
@@ -158,11 +160,19 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
-        "LOCATION": "memcached:11211"
-    } if not APP_ENV != "docker-compose" else {
-        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+if APP_ENV == "docker-compose":
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+            "LOCATION": "memcached:11211",
+        }
     }
-}
+elif APP_ENV == "google-app-engine":
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}}
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+            "LOCATION": "localhost:11211",
+        }
+    }
