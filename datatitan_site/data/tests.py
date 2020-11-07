@@ -4,6 +4,8 @@ from data.scripts.generate_graphs import gen_graph
 import pandas as pd
 from data.scripts.database_handler import input_file_path, initialize_table
 import urllib.request
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium import webdriver
 
 
 # Create your tests here.
@@ -80,3 +82,43 @@ class BlogTestCase(TestCase):
         """Verify that the contents of the blog post match what was generated"""
         for key, val in self.blog_post.items():
             self.assertEqual(val, self.test_post.__getattribute__(key))
+
+
+class TableTestCase(StaticLiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        initialize_table()
+        cls.selenium = webdriver.Firefox()
+        cls.selenium.implicitly_wait(10)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def test_graph_title(self):
+        """Checks to make sure the title of the graph matches the expected title."""
+        self.selenium.get(self.live_server_url)
+        search_box = self.selenium.find_element_by_css_selector(
+            "input#country_search"
+        )
+        country_list = self.selenium.find_element_by_css_selector("ul#id_iso_code")
+        search_box.send_keys("united states")
+        self.assertEqual(
+            len(
+                list(
+                    filter(
+                        lambda x: x.is_displayed(),
+                        country_list.find_elements_by_css_selector("ul#id_iso_code>li"),
+                    )
+                )
+            ),
+            2,
+        )
+        country_list.find_element_by_css_selector("input[type='checkbox'][value='USA']").click()
+        self.selenium.find_element_by_css_selector("#country_select_form>button[type='submit']").click()
+        self.assertRegex(self.selenium.find_elements_by_css_selector(
+            "g.mpld3-baseaxes > text.mpld3-text"
+        )[2].text, r"^(Total|New)\s(Cases|Deaths|Tests)\s((Per\s(Million|Thousand)\s)|)in\s")
+
