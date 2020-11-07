@@ -2,7 +2,8 @@
 
 from django.shortcuts import render
 from django.utils import timezone
-from data.models import Post, Country, CovidDataClean, Comment
+from data.models import Country, CovidDataClean
+from blog.models import Post, Comment
 from data.scripts.generate_graphs import gen_graph
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.http import require_GET
