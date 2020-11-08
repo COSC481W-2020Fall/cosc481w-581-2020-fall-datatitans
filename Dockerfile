@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.8
 LABEL maintainer="estanevi@emich.edu"
 WORKDIR /app/DataTitans
 RUN pip install pipenv
