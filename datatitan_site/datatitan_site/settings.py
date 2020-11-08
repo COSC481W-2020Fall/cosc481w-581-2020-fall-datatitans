@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "data.apps.DataConfig",
+    "blog.apps.BlogConfig",
 ]
 
 MIDDLEWARE = [
@@ -76,10 +77,13 @@ WSGI_APPLICATION = "datatitan_site.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-POSTGRES_USER = os.getenv("POSTGRES_USER")
-POSTGRES_PASSWORD_FILE = os.getenv("POSTGRES_PASSWORD_FILE")
+POSTGRES_USER = os.getenv("POSTGRES_USER", "DataTitans")
+POSTGRES_PASSWORD_FILE = os.getenv(
+    "POSTGRES_PASSWORD_FILE", BASE_DIR.parent / "cred" / "postgres_password.txt"
+)
+APP_ENV = os.getenv("APP_ENV")
 
-if POSTGRES_PASSWORD_FILE:
+if APP_ENV == "docker-compose":
     # Only attempt to access the postgres daemon if you think you're running in a docker container
     with Path(POSTGRES_PASSWORD_FILE).open("r") as file:
         DATABASES = {
@@ -92,7 +96,7 @@ if POSTGRES_PASSWORD_FILE:
                 "PORT": "5432",
             }
         }
-elif os.getenv("SERVER_SOFTWARE"):
+elif APP_ENV == "google-app-engine":
     creds, project = google.auth.default()
     auth_req = google.auth.transport.requests.Request()
     creds.refresh(auth_req)
@@ -113,12 +117,12 @@ elif os.getenv("SERVER_SOFTWARE"):
         }
     }
 else:
-    with (BASE_DIR.parent / "cred" / "postgres_password.txt").open("r") as file:
+    with Path(POSTGRES_PASSWORD_FILE).open("r") as file:
         DATABASES = {
             "default": {
                 "ENGINE": "django.db.backends.postgresql",
                 "NAME": "DataTitans",
-                "HOST": "db",
+                "HOST": "localhost",
                 "USER": POSTGRES_USER if POSTGRES_USER else "DataTitans",
                 "PASSWORD": file.read(),
                 "PORT": "5432",
@@ -156,9 +160,19 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
-        # 'LOCATION': '127.0.0.1:11211',
+if APP_ENV == "docker-compose":
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+            "LOCATION": "memcached:11211",
+        }
     }
-}
+elif APP_ENV == "google-app-engine":
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}}
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+            "LOCATION": "localhost:11211",
+        }
+    }

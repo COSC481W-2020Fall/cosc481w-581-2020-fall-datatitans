@@ -1,8 +1,6 @@
 # The "model" in django MVC architecture which sets up the database.
 
-from django.conf import settings
 from django.db import models
-from django.utils import timezone
 from django.utils.functional import cached_property
 
 
@@ -180,25 +178,3 @@ class CovidDataMonthly(models.Model):
         ordering = ["iso_code", "month"]
         unique_together = ["iso_code", "month"]
         managed = False
-
-
-class Post(models.Model):
-    author = models.CharField(max_length=50)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
-
-class Comment(models.Model):
-    username = models.CharField(max_length=50)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    blog_id = models.ForeignKey(Post, on_delete=models.DO_NOTHING)
-
-def publish(self):
-    self.published_date = timezone.now()
-    self.save()
-
-
-def __str__(self):
-    return self.title

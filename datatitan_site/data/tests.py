@@ -1,5 +1,6 @@
 from django.test import TestCase
-from data.models import CovidDataRaw, Post, CovidDataClean, Country, Comment
+from data.models import CovidDataRaw, CovidDataClean, Country
+from blog.models import Post, Comment
 from data.scripts.generate_graphs import gen_graph
 from django.utils import timezone
 import pandas as pd

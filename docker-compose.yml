@@ -17,9 +17,8 @@ services:
     environment:
       POSTGRES_USER: DataTitans
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-    volumes:
-    - ./datatitan_site/data/input:/app/DataTitans/datatitan_site/data/input
-    command: ["wait-for-it", "db:5432", "--strict", "--", "pipenv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+      APP_ENV: docker-compose
+#    command: ["wait-for-it", "db:5432", "--strict", "--", "pipenv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
 
   memcached:
     image: memcached:latest
