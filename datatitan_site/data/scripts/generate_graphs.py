@@ -1,7 +1,7 @@
 import matplotlib
 import matplotlib.pyplot as plt
 import mpld3
-from data.models import CovidDataClean, Country, Months
+from data.models import CovidDataClean, Country, Months, CovidDataMonthly
 from django.core.cache import cache
 import numpy as np
 from django.db.models import Sum, F, Window
@@ -88,45 +88,12 @@ def gen_graph(
             months.count()
         )  # A numpy array that will be used to store the offsets for each bar graph
         # TODO: Find a more graceful way to set the correct category
-        date_partition = (F("iso_code"), TruncMonth(F("date")))
         for code in iso_codes:
             if not (country_results := cache.get(f"monthly_results_{code}")):
                 country_results = cache.get_or_set(
                     f"monthly_results_{code}",
-                    CovidDataClean.objects.filter(iso_code=code)
-                    .values(
-                        "iso_code", "continent", "location", month=TruncMonth(F("date"))
-                    )
-                    .annotate(
-                        new_cases=Window(
-                            Sum(Coalesce(F("new_cases"), 0)),
-                            partition_by=date_partition,
-                        ),
-                        new_deaths=Window(
-                            Sum(Coalesce(F("new_deaths"), 0)),
-                            partition_by=date_partition,
-                        ),
-                        new_tests=Window(
-                            Sum(Coalesce(F("new_tests"), 0)),
-                            partition_by=date_partition,
-                        ),
-                        new_cases_per_million=Window(
-                            Sum(Coalesce(F("new_cases_per_million"), 0)),
-                            partition_by=date_partition,
-                        ),
-                        new_deaths_per_million=Window(
-                            Sum(Coalesce(F("new_deaths_per_million"), 0)),
-                            partition_by=date_partition,
-                        ),
-                        new_tests_per_thousand=Window(
-                            Sum(Coalesce(F("new_tests_per_thousand"), 0)),
-                            partition_by=date_partition,
-                        ),
-                    )
-                    .order_by("iso_code", "month")
-                    .distinct("iso_code", "month"),
-                )
-            valid_months = country_results.filter(iso_code=code).dates(
+                    CovidDataMonthly.objects.filter(iso_code=code))
+            valid_months = country_results.dates(
                 "month", "month"
             )  # The list of months this country has data for
             current_country = selected_countries.get(iso_code=code)
