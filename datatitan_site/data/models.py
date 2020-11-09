@@ -171,6 +171,9 @@ class CovidDataMonthly(models.Model):
     new_cases = models.IntegerField()
     new_deaths = models.IntegerField()
     new_tests = models.IntegerField()
+    new_cases_per_million = models.FloatField()
+    new_deaths_per_million = models.FloatField()
+    new_tests_per_thousand = models.FloatField()
     data_key = models.CharField(primary_key=True, max_length=20)
 
     class Meta:
