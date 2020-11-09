@@ -25,3 +25,4 @@ db.sqlite3
 temp
 images
 */.pytest_cache
+data/fixtures
