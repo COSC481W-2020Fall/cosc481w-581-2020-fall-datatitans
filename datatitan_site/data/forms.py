@@ -3,10 +3,12 @@ from data.models import Country
 from blog.models import Comment
 from django.core.cache import cache
 
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('username', 'text')
+        fields = ("username", "text")
+
 
 class CountrySelect(forms.CheckboxSelectMultiple):
     def __init__(self, *args, **kwargs):
@@ -44,20 +46,20 @@ class MemorizedSelect(forms.Select):
 class ChartSelector(forms.Form):
     chart_type = forms.ChoiceField(
         choices=(("LINE", "Line Chart"), ("BAR", "Bar Graph")),
-        widget=forms.Select(attrs={"class": "custom-select form-control"})
+        widget=forms.Select(attrs={"class": "custom-select form-control"}),
     )
     iso_code = forms.ModelMultipleChoiceField(
         Country.objects.all(),
         widget=forms.CheckboxSelectMultiple(attrs={"class": "custom-checkbox"}),
-        label="Country:"
+        label="Country:",
     )
     data_type = forms.ChoiceField(
         choices=(("CASES", "Cases"), ("DEATHS", "Deaths"), ("TESTS", "Tests")),
-        widget=forms.Select(attrs={"class": "custom-select form-control"})
+        widget=forms.Select(attrs={"class": "custom-select form-control"}),
     )
     metric = forms.ChoiceField(
         choices=(("raw", "Raw"), ("per_capita", "Per Capita")),
-        widget=forms.Select(attrs={"class": "custom-select form-control"})
+        widget=forms.Select(attrs={"class": "custom-select form-control"}),
     )
 
     # def __init__(self, *args, **kwargs):
