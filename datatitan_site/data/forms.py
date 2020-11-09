@@ -47,11 +47,7 @@ class ChartSelector(forms.Form):
         widget=forms.Select(attrs={"class": "custom-select form-control"})
     )
     iso_code = forms.ModelMultipleChoiceField(
-        (
-            cache.get_or_set("countries", Country.objects.all())
-            if not (countries := cache.get("countries"))
-            else countries
-        ),
+        Country.objects.all(),
         widget=forms.CheckboxSelectMultiple(attrs={"class": "custom-checkbox"}),
         label="Country:"
     )
