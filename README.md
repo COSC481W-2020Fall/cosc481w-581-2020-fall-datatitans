@@ -115,7 +115,7 @@ or
 1. run `python manage.py run` this is a custom command that will run the migrations and the server
 
 ## Going the Docker route
-If you are so inclined, you can run the project using docker. In order to set this up and get it running, follow these steps (windows instructions):
+If you are so inclined, you can run the project using docker. Docker sets up a virtual container that holds an instance of the django project, as well as an instance of a postgres database. In order to set this up and get it running, follow these steps:
 
 ### 1. Installing Docker
 ..* Download docker desktop from https://www.docker.com/products/docker-desktop.
