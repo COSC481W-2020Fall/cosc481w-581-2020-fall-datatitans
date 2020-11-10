@@ -114,6 +114,40 @@ or
 
 1. run `python manage.py run` this is a custom command that will run the migrations and the server
 
+## Going the Docker route
+If you are so inclined, you can run the project using docker. In order to set this up and get it running, follow these steps (windows instructions):
+
+### 1. Installing Docker
+..* Download docker desktop from https://www.docker.com/products/docker-desktop.
+..* Follow the installation wizard to set up docker
+..* Once docker is installed, create a password file called `postgres_password.txt` on the `datatitans/cred/` directory. This will hold the postgres user credentials in the format "username, password". The username I used is DataTitans and you can set any password.
+..* At this stage you should be ready to start up the docker container.
+
+### 2. Starting up the docker container
+..* Open your terminal and navigate to the `cosc481w-581-2020-fall-datatitans` directory.
+..* Run `docker-compose up -d --build` This will create a container with a copy of the current version of the project. Once it is finished you should have a similar terminal screen
+![](datatitan_site/images/docker1composeUp.png)
+
+And your docker desktop application should look like this. One container named, with 3 images below
+![](datatitan_site/images/docker2dockerDesktop.png)
+
+..* Hover over the image ending in `datatitan_site_1` and select the cli button. This will open up a new terminal
+![](datatitan_site/images/docker3cli.png)
+
+..* Inside the terminal run `pipenv shell` and `cd datatitan_site`
+..* Run migration, `python manage.py migrate`
+..* Run `python manage.py populatedata` to update the database
+..* You should now be able to run `python manage.py runserver 0.0.0.0:8080` to start up the server. Note that the port is now 8080 to avoid conflict with your regular django setup. Accessing the site in the browser will be at `127.0.0.1:8080`.
+..* Another note: it may take a little while to connect.
+
+### 3. Closing the docker container
+In order to close the container once done working on the site, run the following command:
+
+..* In your regular terminal, in the `cosc481w-581-2020-fall-datatitans` directory, run `docker-compose down`. This will close and remove the container.
+..* To start the project up again, repeat process from step 2: Starting up the docker container 
+
+
+
 ## Adding blog posts
 
 ### Creating an admin user
