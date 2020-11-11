@@ -29,8 +29,22 @@ def home(request):
     countries = list(dict.fromkeys(countries))
     countries = [country for country in countries if country != "none"]
     countries = list(filter(None, countries))
-    table_fields = ("location", "population", "total_cases", "total_deaths", "total_tests", "total_cases_per_million", "total_deaths_per_million", "total_tests_per_thousand")
-    country_stats = CovidDataClean.objects.order_by("iso_code", "-date").distinct("iso_code").filter(iso_code__in=countries).values_list(*table_fields)
+    table_fields = (
+        "location",
+        "population",
+        "total_cases",
+        "total_deaths",
+        "total_tests",
+        "total_cases_per_million",
+        "total_deaths_per_million",
+        "total_tests_per_thousand",
+    )
+    country_stats = (
+        CovidDataClean.objects.order_by("iso_code", "-date")
+        .distinct("iso_code")
+        .filter(iso_code__in=countries)
+        .values_list(*table_fields)
+    )
     return render(
         request,
         "data.html",
@@ -38,12 +52,14 @@ def home(request):
             "chart": gen_graph(*countries, category=str.lower(data_category), chart_type=chart_type, metric=metric),
             "country_selector": form.as_p(),
             "fields": (field.replace("_", " ").title() for field in table_fields),
-            "country_table": country_stats
-        } if form.is_valid() else {
+            "country_table": country_stats,
+        }
+        if form.is_valid()
+        else {
             "chart": "",
             "country_selector": ChartSelector().as_p(),
             "fields": table_fields,
-            "country_table": None
+            "country_table": None,
         },
     )
 
@@ -72,5 +88,9 @@ def blog_detail(request, blog_id):
     blog_post = Post.objects.get(pk=blog_id)
     comments = Comment.objects.get(blog_id=blog_id)
     commentForm = CommentForm()
-    
-    return render(request, "blog_detail.html", {"post": blog_post, "comments": comments, "form": CommentForm})
+
+    return render(
+        request,
+        "blog_detail.html",
+        {"post": blog_post, "comments": comments, "form": CommentForm},
+    )
