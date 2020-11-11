@@ -41,7 +41,7 @@ def gen_graph(
     category_name = (
         f"""{"new" if chart_type.lower() == "bar" else "total"}_{category}"""
     )
-    if metric == "per_capita":
+    if metric == "normalized":
         category_name += f"""_per_{"thousand" if category == "tests" else "million"}"""
     # plt.subplots(figsize=dims)
 
