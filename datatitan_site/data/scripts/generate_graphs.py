@@ -1,13 +1,13 @@
-import matplotlib
 import matplotlib.pyplot as plt
 import mpld3
 from data.models import CovidDataClean, Country, Months, CovidDataMonthly
 from django.core.cache import cache
 import numpy as np
-from django.db.models import Sum, F, Window
-from django.db.models.functions import TruncMonth, Coalesce
+from django.db.models import Sum, F, Window, TextField, FloatField, IntegerField
+from django.db.models.functions import TruncMonth, Coalesce, Cast
+import json
 
-matplotlib.use("Agg")
+
 SMALL_SIZE = 10
 SMALLER_SIZE = 3
 MEDIUM_SIZE = 20
@@ -25,7 +25,7 @@ dims = (8, 4)  # dimension variable for plot area
 
 
 def gen_graph(
-    *iso_codes, category: str, chart_type: str = "LINE", metric: str = "raw"
+    *iso_codes, category: str, chart_type: str = "line", metric: str = "raw"
 ) -> str:
     """Creates a graph that tracks a data category over time for an arbitrary number of countries.
 
@@ -47,7 +47,7 @@ def gen_graph(
 
     selected_countries = Country.objects.filter(iso_code__in=iso_codes)
 
-    plt.title(
+    title = (
         category_name.replace("_", " ").title()
         + " in "
         + ", ".join(
@@ -59,83 +59,139 @@ def gen_graph(
             for code in iso_codes
         )
     )
+
+    plt.title(title)
+
+    data_sets = []
     if chart_type.lower() == "line":
         # Fairly simple implementation
-        for code in iso_codes:
-            if not (
-                target_query := cache.get(f"query_{code}_{category_name}_{chart_type}")
-            ):
-                target_query = cache.get_or_set(
-                    f"query_{code}_{category_name}_{chart_type}",
-                    CovidDataClean.objects.filter(iso_code__exact=code).order_by(
-                        "date"
-                    ),
-                )
-            # if code == "USA":  # quick fix for USA total cases padding issue on Y axis
-            #     plt.ylabel(category_name[category], labelpad=36)
-            plt.plot(
-                target_query.values_list("date"),
-                target_query.values_list(category_name),
-                label=code,
-            )
+        base_query = CovidDataClean.objects.filter(iso_code__in=iso_codes)
+        data_sets = [
+            {
+                "label": code,
+                "data": list(
+                    base_query.filter(iso_code=code).values(
+                        x=Cast(F("date"), TextField()),
+                        y=Cast(F(category_name.lower()), IntegerField()),
+                    )
+                ),
+                # "parsing": {
+                #     "yAxisKey": category_name.lower()
+                # }
+            }
+            for code in iso_codes
+        ]
+        # for code in iso_codes:
+        #     if not (
+        #         target_query := cache.get(f"query_{code}_{category_name}_{chart_type}")
+        #     ):
+        #         target_query = cache.get_or_set(
+        #             f"query_{code}_{category_name}_{chart_type}",
+        #             CovidDataClean.objects.filter(iso_code__exact=code).order_by(
+        #                 "date"
+        #             ),
+        #         )
+        #     # if code == "USA":  # quick fix for USA total cases padding issue on Y axis
+        #     #     plt.ylabel(category_name[category], labelpad=36)
+        #     plt.plot(
+        #         target_query.values_list("date"),
+        #         target_query.values_list(category_name),
+        #         label=code,
+        #     )
     elif chart_type.lower() == "bar":
         # This was an absolute nightmare to figure out
-        if not (months := cache.get("months")):
-            months = cache.get_or_set(
-                "months", Months.objects.filter(month__gte="2020-01-01")
-            )
-        offset_y = np.zeros(
-            months.count()
-        )  # A numpy array that will be used to store the offsets for each bar graph
-        # TODO: Find a more graceful way to set the correct category
-        for code in iso_codes:
-            if not (country_results := cache.get(f"monthly_results_{code}")):
-                country_results = cache.get_or_set(
-                    f"monthly_results_{code}",
-                    CovidDataMonthly.objects.filter(iso_code=code))
-            valid_months = country_results.dates(
-                "month", "month"
-            )  # The list of months this country has data for
-            current_country = selected_countries.get(iso_code=code)
-            if not (
-                target_query := cache.get(f"query_{code}_{category_name}_{chart_type}")
-            ):
-                target_query = cache.get_or_set(
-                    f"query_{code}_{category_name}_{chart_type}",
-                    [
-                        country_results.values().get(month=month)
-                        if months.get(month=month).month in valid_months
-                        else {
-                            "iso_code": code,
-                            "continent": current_country.continent,
-                            "location": current_country.name,
-                            "month": month,
-                            "new_cases": 0,
-                            "new_deaths": 0,
-                            "new_tests": 0,
-                            "new_cases_per_million": 0,
-                            "new_deaths_per_million": 0,
-                            "new_tests_per_thousand": 0,
-                            "data_key": f"{month}{code}",
-                        }
-                        for month in months.values_list(flat=True)
-                    ],
-                )
-            target_list = [float(item[category_name]) for item in target_query]
-            plt.bar(
-                list(months.values_list(flat=True)),
-                target_list,
-                bottom=offset_y,
-                label=code,
-                width=10,
-            )
-            offset_y += target_list
-    plt.legend(shadow=True, fancybox=True, loc=2, prop={"size": 10})
-    plt.xlabel("Dates")
-    plt.ylabel(category_name.replace("_", " ").title())
-
-    figure = plt.gcf()
-    plt.draw()
-    graph_output = mpld3.fig_to_html(figure, figid="graph")
-    plt.close(figure)
-    return graph_output
+        base_query = CovidDataMonthly.objects.filter(iso_code__in=iso_codes)
+        data_sets = [
+            {
+                "label": code,
+                "data": list(
+                    base_query.filter(iso_code=code).values(
+                        x=Cast(F("month"), TextField()),
+                        y=Cast(F(category_name.lower()), IntegerField() if metric == "raw" else FloatField())
+                    )
+                ),
+                # "stack": code
+            }
+            for code in iso_codes
+        ]
+    return json.dumps({
+        "type": chart_type.lower(),
+        "data": {
+            "datasets": data_sets
+        },
+        "options": {
+            "scales": {
+                "xAxes": [{
+                    "type": "time",
+                    "time": {
+                        "unit": "month"
+                    },
+                    "stacked": chart_type.lower() == "bar",
+                    "offset": True
+                }],
+                # "yAxes": [{
+                #     "stacked": chart_type.lower() == "bar"
+                # }]
+            }
+        }
+    })
+    #     if not (months := cache.get("months")):
+    #         months = cache.get_or_set(
+    #             "months", Months.objects.filter(month__gte="2020-01-01")
+    #         )
+    #     offset_y = np.zeros(
+    #         months.count()
+    #     )  # A numpy array that will be used to store the offsets for each bar graph
+    #     # TODO: Find a more graceful way to set the correct category
+    #     for code in iso_codes:
+    #         if not (country_results := cache.get(f"monthly_results_{code}")):
+    #             country_results = cache.get_or_set(
+    #                 f"monthly_results_{code}",
+    #                 CovidDataMonthly.objects.filter(iso_code=code),
+    #             )
+    #         valid_months = country_results.dates(
+    #             "month", "month"
+    #         )  # The list of months this country has data for
+    #         current_country = selected_countries.get(iso_code=code)
+    #         if not (
+    #             target_query := cache.get(f"query_{code}_{category_name}_{chart_type}")
+    #         ):
+    #             target_query = cache.get_or_set(
+    #                 f"query_{code}_{category_name}_{chart_type}",
+    #                 [
+    #                     country_results.values().get(month=month)
+    #                     if months.get(month=month).month in valid_months
+    #                     else {
+    #                         "iso_code": code,
+    #                         "continent": current_country.continent,
+    #                         "location": current_country.name,
+    #                         "month": month,
+    #                         "new_cases": 0,
+    #                         "new_deaths": 0,
+    #                         "new_tests": 0,
+    #                         "new_cases_per_million": 0,
+    #                         "new_deaths_per_million": 0,
+    #                         "new_tests_per_thousand": 0,
+    #                         "data_key": f"{month}{code}",
+    #                     }
+    #                     for month in months.values_list(flat=True)
+    #                 ],
+    #             )
+    #         target_list = [float(item[category_name]) for item in target_query]
+    #         plt.bar(
+    #             list(months.values_list(flat=True)),
+    #             target_list,
+    #             bottom=offset_y,
+    #             label=code,
+    #             width=10,
+    #         )
+    #         offset_y += target_list
+    # plt.legend(shadow=True, fancybox=True, loc=2, prop={"size": 10})
+    # plt.xlabel("Dates")
+    # plt.ylabel(category_name.replace("_", " ").title())
+    #
+    # figure = plt.gcf()
+    # plt.draw()
+    # graph_output = mpld3.fig_to_html(figure, figid="graph")
+    # plt.close(figure)
+    # return graph_output

@@ -73,9 +73,16 @@
             
 
                 <!-- Chart -->
-                <div class="col-md-9 card" style="padding:15px;margin-left:0;" id="graph_container">
-                    {{ chart|safe }}
+                <div class="col-md-9 card" style="padding:15px;margin-left:0" id="graph_container">
+                    <canvas id="graph"></canvas>
                 </div>
+                <script>
+                    let myChart;
+                    jQuery(function($){
+                        const ctx = document.getElementById("graph").getContext("2d")
+                        myChart = new Chart(ctx, {{ chart|safe }})
+                    })
+                </script>
             </div>
         {% if country_table %}
         <div>
