@@ -120,7 +120,7 @@ If you are inclined, you can run the project using docker. Docker sets up a virt
 ### 1. Installing Docker
 * Download docker desktop from https://www.docker.com/products/docker-desktop.
 * Follow the installation wizard to set up docker
-* Once docker is installed, create a password file called `postgres_password.txt` on the `datatitans/cred/` directory. This will hold the postgres user credentials in the format "username, password". The username I used is DataTitans and you can set any password.
+* Once docker is installed, create a password file called `postgres_password.txt` on the `datatitans/cred/` directory. This will hold the postgres instance password. Simply make any password.
 * At this stage you should be ready to start up the docker container.
 
 ### 2. Starting up the docker container
