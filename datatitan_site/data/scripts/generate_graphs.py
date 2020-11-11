@@ -1,5 +1,5 @@
-import matplotlib.pyplot as plt
-import mpld3
+# import matplotlib.pyplot as plt
+# import mpld3
 from data.models import CovidDataClean, Country, Months, CovidDataMonthly
 from django.core.cache import cache
 import numpy as np
@@ -8,20 +8,20 @@ from django.db.models.functions import TruncMonth, Coalesce, Cast
 import json
 
 
-SMALL_SIZE = 10
-SMALLER_SIZE = 3
-MEDIUM_SIZE = 20
-BIGGER_SIZE = 30
+# SMALL_SIZE = 10
+# SMALLER_SIZE = 3
+# MEDIUM_SIZE = 20
+# BIGGER_SIZE = 30
 
-plt.rc("font", size=MEDIUM_SIZE)  # default text sizes
-plt.rc("axes", titlesize=MEDIUM_SIZE)  # fontsize of the axes title
-plt.rc("axes", labelsize=MEDIUM_SIZE)  # fontsize of the x and y labels
-plt.rc("xtick", labelsize=SMALL_SIZE)  # fontsize of the tick labels
-plt.rc("ytick", labelsize=SMALL_SIZE)  # fontsize of the tick labels
-plt.rc("legend", fontsize=BIGGER_SIZE)  # legend fontsize
-plt.rc("figure", titlesize=BIGGER_SIZE)  # fontsize of the figure title
+# plt.rc("font", size=MEDIUM_SIZE)  # default text sizes
+# plt.rc("axes", titlesize=MEDIUM_SIZE)  # fontsize of the axes title
+# plt.rc("axes", labelsize=MEDIUM_SIZE)  # fontsize of the x and y labels
+# plt.rc("xtick", labelsize=SMALL_SIZE)  # fontsize of the tick labels
+# plt.rc("ytick", labelsize=SMALL_SIZE)  # fontsize of the tick labels
+# plt.rc("legend", fontsize=BIGGER_SIZE)  # legend fontsize
+# plt.rc("figure", titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-dims = (8, 4)  # dimension variable for plot area
+# dims = (8, 4)  # dimension variable for plot area
 
 
 def gen_graph(
@@ -43,7 +43,7 @@ def gen_graph(
     )
     if metric == "per_capita":
         category_name += f"""_per_{"thousand" if category == "tests" else "million"}"""
-    plt.subplots(figsize=dims)
+    # plt.subplots(figsize=dims)
 
     selected_countries = Country.objects.filter(iso_code__in=iso_codes)
 
@@ -60,7 +60,7 @@ def gen_graph(
         )
     )
 
-    plt.title(title)
+    # plt.title(title)
 
     data_sets = []
     if chart_type.lower() == "line":
