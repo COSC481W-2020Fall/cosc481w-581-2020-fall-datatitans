@@ -22,6 +22,7 @@
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="72030bdf4d" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="Chart.js" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

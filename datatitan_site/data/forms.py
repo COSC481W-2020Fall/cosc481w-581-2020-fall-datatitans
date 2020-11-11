@@ -58,7 +58,7 @@ class ChartSelector(forms.Form):
         widget=forms.Select(attrs={"class": "custom-select form-control"}),
     )
     metric = forms.ChoiceField(
-        choices=(("raw", "Raw"), ("per_capita", "Per Capita")),
+        choices=(("raw", "Raw"), ("normalized", "Normalized")),
         widget=forms.Select(attrs={"class": "custom-select form-control"}),
     )
 
