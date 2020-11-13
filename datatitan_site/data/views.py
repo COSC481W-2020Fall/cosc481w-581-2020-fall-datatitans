@@ -44,7 +44,7 @@ def home(request):
     )
     return render(
         request,
-        "data.html",
+        "data/data.html",
         {
             "chart": gen_graph(*countries, category=str.lower(data_category), chart_type=chart_type, metric=metric),
             "country_selector": form.as_p(),
@@ -62,4 +62,4 @@ def home(request):
 
 
 def about(request):
-    return render(request, "about.html", {})
+    return render(request, "base/about.html", {})
