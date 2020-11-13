@@ -168,7 +168,7 @@ if APP_ENV == "docker-compose":
         }
     }
 elif APP_ENV == "google-app-engine":
-    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}}
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
 else:
     CACHES = {
         "default": {
