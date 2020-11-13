@@ -10,6 +10,12 @@ class Country(models.Model):
     name = models.CharField(max_length=55)
     continent = models.CharField(max_length=15)
     population = models.IntegerField()
+    total_cases = models.IntegerField(null=True)
+    total_deaths = models.IntegerField(null=True)
+    total_tests = models.IntegerField(null=True)
+    total_cases_per_million = models.FloatField(null=True)
+    total_deaths_per_million = models.FloatField(null=True)
+    total_tests_per_thousand = models.FloatField(null=True)
 
     def __str__(self):
         return self.name
