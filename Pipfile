@@ -21,6 +21,7 @@ psycopg2 = "*"
 backoff = "*"
 google-cloud-secret-manager = "*"
 social-auth-app-django = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.8"
