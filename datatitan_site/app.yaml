@@ -2,6 +2,13 @@ runtime: python38
 
 env_variables:
   APP_ENV: "google-app-engine"
+  POSTGRES_ACCOUNT_SECRET_ID: "projects/984278497023/secrets/DataTitans-Postgres-Account/versions/latest"
+  OAUTH_CREDENTIALS_SECRET_ID: "projects/984278497023/secrets/App-Engine-OAuth/versions/latest"
+  DJANGO_SECRET_KEY_ID: "projects/984278497023/secrets/Django-Secret-Key/versions/latest"
+  DEBUG: "False"
+  ALLOWED_HOSTS: "['data-titans.uc.r.appspot.com']"
+  POSTGRES_HOST: "/cloudsql/data-titans:us-central1:datatitan-db"
+  DATABASE_NAME: "DataTitans"
 
 handlers:
   - url: /favicon\.ico

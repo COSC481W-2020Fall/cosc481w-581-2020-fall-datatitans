@@ -26,3 +26,4 @@ temp
 images
 */.pytest_cache
 data/fixtures
+.env
