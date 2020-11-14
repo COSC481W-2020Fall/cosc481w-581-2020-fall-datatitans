@@ -10,7 +10,7 @@ from django.views.decorators.cache import cache_page
 
 @require_GET
 @cache_page(60 * 10)
-def home(request):
+def data(request):
     # Get items from the form
     form = ChartSelector(request.GET)
     if form.is_valid():
