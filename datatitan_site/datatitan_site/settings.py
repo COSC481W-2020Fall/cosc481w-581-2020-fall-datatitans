@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "data.apps.DataConfig",
     "blog.apps.BlogConfig",
+    "social_django",
 ]
 
 MIDDLEWARE = [
@@ -67,6 +68,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -176,3 +179,13 @@ else:
             "LOCATION": "localhost:11211",
         }
     }
+
+AUTHENTICATION_BACKENDS = [
+    "social_core.backends.open_id.OpenIdAuth",
+    "social_core.backends.google.GoogleOpenId",
+    "social_core.backends.google.GoogleOAuth2",
+    "social_core.backends.google.GoogleOAuth",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
