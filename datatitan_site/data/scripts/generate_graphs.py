@@ -32,11 +32,11 @@ def gen_graph(
     :param category: The category of data to track (currently supported categories: total_cases, total_deaths)
     :param chart_type: The type of graph to generate (currently supported graphs: line)
     :param metric: Whether to display raw numbers, or to display the numbers per thousand/million
-    :return: HTML string representing the generated graph
+    :return: A dictionary representing the generated graph
     :rtype: dict
     """
     if len(iso_codes) == 0:
-        return ""
+        return {}
     category_name = (
         f"""{"new" if chart_type.lower() == "bar" else "total"}_{category}"""
     )
