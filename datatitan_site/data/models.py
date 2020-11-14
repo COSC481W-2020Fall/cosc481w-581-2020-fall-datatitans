@@ -35,6 +35,7 @@ class CovidDataRaw(models.Model):
     total_deaths_per_million = models.FloatField(null=True)
     new_deaths_per_million = models.FloatField(null=True)
     new_deaths_smoothed_per_million = models.FloatField(null=True)
+    reproduction_rate = models.FloatField(null=True)
     icu_patients = models.IntegerField(null=True)
     icu_patients_per_million = models.FloatField(null=True)
     hosp_patients = models.IntegerField(

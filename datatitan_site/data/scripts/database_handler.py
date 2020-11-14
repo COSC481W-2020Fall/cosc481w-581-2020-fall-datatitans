@@ -45,6 +45,18 @@ def initialize_table() -> None:
     read_covid_data_raw["data_key"] = read_covid_data_raw.apply(
         lambda row: f"{str(row.date)}{str(row.iso_code)}", axis=1
     )
+
+    # data_entries = []
+    # for row in read_covid_data_raw.to_dict("records"):
+    #     try:
+    #         data_entries.append(CovidDataRaw(**row))
+    #     except TypeError:
+    #         print(row)
+    #         continue
+    # CovidDataRaw.objects.bulk_create(data_entries, ignore_conflicts=True)
+
+    # print(data_entries)
+
     CovidDataRaw.objects.bulk_create(
         [CovidDataRaw(**row) for row in read_covid_data_raw.to_dict("records")],
         ignore_conflicts=True,
