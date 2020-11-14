@@ -5,7 +5,6 @@ from django.core.cache import cache
 import numpy as np
 from django.db.models import Sum, F, Window, TextField, FloatField, IntegerField
 from django.db.models.functions import TruncMonth, Coalesce, Cast
-import json
 
 
 # SMALL_SIZE = 10
@@ -26,7 +25,7 @@ import json
 
 def gen_graph(
     *iso_codes, category: str, chart_type: str = "line", metric: str = "raw"
-) -> str:
+) -> dict:
     """Creates a graph that tracks a data category over time for an arbitrary number of countries.
 
     :param iso_codes: ISO codes of countries to create graphs for
@@ -34,7 +33,7 @@ def gen_graph(
     :param chart_type: The type of graph to generate (currently supported graphs: line)
     :param metric: Whether to display raw numbers, or to display the numbers per thousand/million
     :return: HTML string representing the generated graph
-    :rtype: str
+    :rtype: dict
     """
     if len(iso_codes) == 0:
         return ""
@@ -107,34 +106,35 @@ def gen_graph(
                 "data": list(
                     base_query.filter(iso_code=code).values(
                         x=Cast(F("month"), TextField()),
-                        y=Cast(F(category_name.lower()), IntegerField() if metric == "raw" else FloatField())
+                        y=Cast(
+                            F(category_name.lower()),
+                            IntegerField() if metric == "raw" else FloatField(),
+                        ),
                     )
                 ),
                 # "stack": code
             }
             for code in iso_codes
         ]
-    return json.dumps({
+    return {
         "type": chart_type.lower(),
-        "data": {
-            "datasets": data_sets
-        },
+        "data": {"datasets": data_sets},
         "options": {
             "scales": {
-                "xAxes": [{
-                    "type": "time",
-                    "time": {
-                        "unit": "month"
-                    },
-                    "stacked": chart_type.lower() == "bar",
-                    "offset": True
-                }],
+                "xAxes": [
+                    {
+                        "type": "time",
+                        "time": {"unit": "month"},
+                        "stacked": chart_type.lower() == "bar",
+                        "offset": True,
+                    }
+                ],
                 # "yAxes": [{
                 #     "stacked": chart_type.lower() == "bar"
                 # }]
             }
-        }
-    })
+        },
+    }
     #     if not (months := cache.get("months")):
     #         months = cache.get_or_set(
     #             "months", Months.objects.filter(month__gte="2020-01-01")
