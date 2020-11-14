@@ -10,7 +10,7 @@ selenium = "*"
 
 [packages]
 Django = "*"
-numpy = "*"
+numpy = "==1.19.3"
 pandas = "*"
 matplotlib = "*"
 seaborn = "*"
