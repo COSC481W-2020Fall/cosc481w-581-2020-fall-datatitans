@@ -1,10 +1,8 @@
-# import matplotlib.pyplot as plt
-# import mpld3
-from data.models import CovidDataClean, Country, Months, CovidDataMonthly
 from django.core.cache import cache
-import numpy as np
-from django.db.models import Sum, F, Window, TextField, FloatField, IntegerField
-from django.db.models.functions import TruncMonth, Coalesce, Cast
+from django.db.models import F, TextField, FloatField, IntegerField
+from django.db.models.functions import Cast
+
+from data.models import CovidDataClean, Country, CovidDataMonthly
 
 
 def gen_graph(
