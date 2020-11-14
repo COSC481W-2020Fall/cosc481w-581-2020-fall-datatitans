@@ -20,6 +20,7 @@ python-memcached = "*"
 psycopg2 = "*"
 backoff = "*"
 google-cloud-secret-manager = "*"
+social-auth-app-django = "*"
 
 [requires]
 python_version = "3.8"
