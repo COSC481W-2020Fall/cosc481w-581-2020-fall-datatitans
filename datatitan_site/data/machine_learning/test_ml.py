@@ -1,3 +1,6 @@
+# NOTE: A coursera tutorial was used as the template for this code:
+# https://www.coursera.org/learn/compare-time-series-predictions-of-covid19-deaths/home/welcome
+#
 # Until requirements.txt is updated, run from the command line:
 # pipenv install statsmodels
 
