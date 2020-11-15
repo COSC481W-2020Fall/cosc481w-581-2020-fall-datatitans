@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-md-8">
                     <h3><a href="{% url 'blog_detail' post.id %}">{{ post.title }}</a></h3>
-                    <p>{{ post.text|slice:"0:20" }}...</p>
+                    <p>{{ post.text|truncatechars:20 }}</p>
                     <p>published: {{ post.published_date }}</p>
                 </div>
             </div>
