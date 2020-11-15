@@ -110,13 +110,13 @@ elif APP_ENV == "google-app-engine":
     auth_req = google.auth.transport.requests.Request()
     creds.refresh(auth_req)
     client = secretmanager.SecretManagerServiceClient()
-    db_user = client.access_secret_version(
-        name=os.getenv("POSTGRES_ACCOUNT_SECRET_ID")
-    )
+    db_user = client.access_secret_version(name=os.getenv("POSTGRES_ACCOUNT_SECRET_ID"))
     account = json.loads(db_user.payload.data)
-    oauth_credentials = json.loads(client.access_secret_version(
-        name=os.getenv("OAUTH_CREDENTIALS_SECRET_ID")
-    ).payload.data)
+    oauth_credentials = json.loads(
+        client.access_secret_version(
+            name=os.getenv("OAUTH_CREDENTIALS_SECRET_ID")
+        ).payload.data
+    )
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -130,7 +130,9 @@ elif APP_ENV == "google-app-engine":
     }
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = oauth_credentials["web"]["client_id"]
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = oauth_credentials["web"]["client_secret"]
-    SECRET_KEY = client.access_secret_version(name=os.getenv("DJANGO_SECRET_KEY_ID")).payload.data
+    SECRET_KEY = client.access_secret_version(
+        name=os.getenv("DJANGO_SECRET_KEY_ID")
+    ).payload.data
 else:
     with Path(POSTGRES_PASSWORD_FILE).open("r") as file:
         DATABASES = {
