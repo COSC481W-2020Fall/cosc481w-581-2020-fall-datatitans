@@ -24,7 +24,7 @@ def blog_detail(request, blog_id):
             comment.blog_id = blog_id
             comment.save()
     blog_post = Post.objects.get(pk=blog_id)
-    comments = Comment.objects.get(blog_id=blog_id)
+    comments = Comment.objects.filter(blog_id=blog_id)
 
     return render(
         request,
