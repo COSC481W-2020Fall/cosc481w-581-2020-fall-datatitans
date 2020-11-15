@@ -9,6 +9,7 @@ env_variables:
   ALLOWED_HOSTS: "['data-titans.uc.r.appspot.com']"
   POSTGRES_HOST: "/cloudsql/data-titans:us-central1:datatitan-db"
   DATABASE_NAME: "DataTitans"
+  INPUT_FILE: "gs://data-titans.appspot.com/owid-covid-data.csv"
 
 handlers:
   - url: /favicon\.ico
