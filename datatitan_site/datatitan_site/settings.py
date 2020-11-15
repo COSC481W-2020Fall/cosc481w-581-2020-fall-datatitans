@@ -130,7 +130,7 @@ elif APP_ENV == "google-app-engine":
     }
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = oauth_credentials["web"]["client_id"]
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = oauth_credentials["web"]["client_secret"]
-    SECRET_KEY = client.access_secret_version(os.getenv("DJANGO_SECRET_KEY_ID")).payload.data
+    SECRET_KEY = client.access_secret_version(name=os.getenv("DJANGO_SECRET_KEY_ID")).payload.data
 else:
     with Path(POSTGRES_PASSWORD_FILE).open("r") as file:
         DATABASES = {
