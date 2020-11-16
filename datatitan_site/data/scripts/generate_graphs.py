@@ -20,7 +20,7 @@ def gen_graph(
     if len(iso_codes) == 0:
         return {}
     category_name = (
-        f"""{"new" if chart_type.lower() == "bar" else "total"}_{category}"""
+        f"""{"new" if chart_type.lower() == "bar" else "total"}_{category.lower()}"""
     )
     if metric == "normalized":
         category_name += f"""_per_{"thousand" if category == "tests" else "million"}"""
