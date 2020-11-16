@@ -33,41 +33,24 @@ def gen_graph(
         category_name.replace("_", " ").title()
         + " in "
         + ", ".join(
-            cache.get_or_set(
-                f"country_name_{code}", selected_countries.get(iso_code=code).name
-            )
-            if not (country_name := cache.get(f"country_name_{code}"))
-            else country_name
+            Country.objects.get(iso_code=code).name
             for code in iso_codes
         )
     )
 
-    if not (data := cache.get("raw_data")):
-        data: pd.DataFrame = (
-            pd.read_csv(os.getenv("INPUT_FILE"), usecols=[
-                "iso_code",
-                "date",
-                "new_cases",
-                "new_deaths",
-                "new_tests",
-                "total_cases",
-                "total_deaths",
-                "total_tests",
-                "new_cases_per_million",
-                "new_deaths_per_million",
-                "new_tests_per_thousand",
-                "total_cases_per_million",
-                "total_deaths_per_million",
-                "total_tests_per_thousand",
-            ]).dropna(subset=["iso_code"])
-        )
-        data["iso_code"] = data["iso_code"].astype("category")
-        data["date"] = pd.to_datetime(
-            data["date"], yearfirst=True, infer_datetime_format=True
-        )
-        data["date"] = data["date"].dt.date
-        data = data.set_index(["iso_code", "date"]).sort_index().round(decimals=3)
-        cache.set("raw_data", data)
+    data: pd.DataFrame = (
+        pd.read_csv(os.getenv("INPUT_FILE"), usecols=[
+            "iso_code",
+            "date",
+            category_name
+        ]).dropna(subset=["iso_code"])
+    )
+    data["iso_code"] = data["iso_code"].astype("category")
+    data["date"] = pd.to_datetime(
+        data["date"], yearfirst=True, infer_datetime_format=True
+    )
+    data["date"] = data["date"].dt.date
+    data = data.set_index(["iso_code", "date"]).sort_index().round(decimals=3)
     data = data.loc[list(iso_codes)]
 
     data_sets = []
