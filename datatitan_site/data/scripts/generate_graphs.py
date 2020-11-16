@@ -61,6 +61,7 @@ def gen_graph(
                 "total_tests_per_thousand",
             ]).dropna(subset=["iso_code"])
         )
+        data["iso_code"] = data["iso_code"].astype("category")
         data["date"] = pd.to_datetime(
             data["date"], yearfirst=True, infer_datetime_format=True
         )
