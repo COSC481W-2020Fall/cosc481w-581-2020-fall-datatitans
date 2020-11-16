@@ -1,6 +1,8 @@
 from django.core.cache import cache
 from django.db.models import F, TextField, FloatField, IntegerField
 from django.db.models.functions import Cast
+import os
+import pandas as pd
 
 from data.models import CovidDataClean, Country, CovidDataMonthly
 
@@ -40,19 +42,35 @@ def gen_graph(
         )
     )
 
+    data: pd.DataFrame = (
+        pd.read_csv(os.getenv("INPUT_FILE"))[
+            ["iso_code", "date", category_name]
+        ].dropna(subset=["iso_code"])
+    )
+    data["date"] = pd.to_datetime(
+        data["date"], yearfirst=True, infer_datetime_format=True
+    )
+    data["date"] = data["date"].dt.date
+    data = data.set_index(["iso_code", "date"]).loc[list(iso_codes)].sort_index()
+
     data_sets = []
     if chart_type.lower() == "line":
         # Fairly simple implementation
-        base_query = CovidDataClean.objects.filter(iso_code__in=iso_codes)
+        # base_query = CovidDataClean.objects.filter(iso_code__in=iso_codes)
         data_sets = [
             {
                 "label": code,
-                "data": list(
-                    base_query.filter(iso_code=code).values(
-                        x=Cast(F("date"), TextField()),
-                        y=Cast(F(category_name.lower()), IntegerField()),
-                    )
-                ),
+                # "data": list(
+                #     base_query.filter(iso_code=code).values(
+                #         x=Cast(F("date"), TextField()),
+                #         y=Cast(F(category_name.lower()), IntegerField()),
+                #     )
+                # ),
+                "data": data.loc[code]
+                .reset_index()
+                .dropna()
+                .rename(columns={"date": "x", category_name: "y"})
+                .to_dict("records"),
                 # "parsing": {
                 #     "yAxisKey": category_name.lower()
                 # }
@@ -61,19 +79,26 @@ def gen_graph(
         ]
     elif chart_type.lower() == "bar":
         # This was an absolute nightmare to figure out
-        base_query = CovidDataMonthly.objects.filter(iso_code__in=iso_codes)
+        # base_query = CovidDataMonthly.objects.filter(iso_code__in=iso_codes)
         data_sets = [
             {
                 "label": code,
-                "data": list(
-                    base_query.filter(iso_code=code).values(
-                        x=Cast(F("month"), TextField()),
-                        y=Cast(
-                            F(category_name.lower()),
-                            IntegerField() if metric == "raw" else FloatField(),
-                        ),
-                    )
-                ),
+                # "data": list(
+                #     base_query.filter(iso_code=code).values(
+                #         x=Cast(F("month"), TextField()),
+                #         y=Cast(
+                #             F(category_name.lower()),
+                #             IntegerField() if metric == "raw" else FloatField(),
+                #         ),
+                #     )
+                # ),
+                "data": data.loc[code]
+                .reset_index()
+                .groupby(pd.Grouper(key="date", freq="M"))
+                .agg(y=pd.NamedAgg(category_name, "sum"))
+                .reset_index()
+                .rename(columns={"date": "x"})
+                .to_dict("records"),
                 # "stack": code
             }
             for code in iso_codes
@@ -86,7 +111,7 @@ def gen_graph(
                 "xAxes": [
                     {
                         "type": "time",
-                        "time": {"unit": "month"},
+                        "time": {"unit": "month", "tooltipFormat": "YYYY-MM-DD"},
                         "stacked": chart_type.lower() == "bar",
                         "offset": True,
                     }
