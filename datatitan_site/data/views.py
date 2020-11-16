@@ -1,7 +1,7 @@
 # The "view" in django mvc architecture which integrates with html to display data
 
 from django.shortcuts import render
-from data.models import CovidDataClean
+from data.models import Country
 from data.scripts.generate_graphs import gen_graph
 from django.views.decorators.http import require_GET
 from data.forms import ChartSelector
@@ -37,8 +37,7 @@ def data(request):
         "total_tests_per_thousand",
     )
     country_stats = (
-        CovidDataClean.objects.order_by("iso_code", "-date")
-        .distinct("iso_code")
+        Country.objects.order_by("iso_code")
         .filter(iso_code__in=countries)
         .values_list(*table_fields)
     )

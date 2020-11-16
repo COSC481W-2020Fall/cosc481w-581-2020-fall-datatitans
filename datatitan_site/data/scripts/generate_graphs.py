@@ -4,7 +4,7 @@ from django.db.models.functions import Cast
 import os
 import pandas as pd
 
-from data.models import CovidDataClean, Country, CovidDataMonthly
+from data.models import Country
 
 
 def gen_graph(
