@@ -27,3 +27,4 @@ images
 */.pytest_cache
 data/fixtures
 .env
+data/input
