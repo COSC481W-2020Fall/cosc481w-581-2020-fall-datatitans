@@ -6,6 +6,7 @@ from data.scripts.generate_graphs import gen_graph
 from django.views.decorators.http import require_GET
 from data.forms import ChartSelector
 from django.views.decorators.cache import cache_page
+from django.db.models import F
 
 
 @require_GET
@@ -39,13 +40,30 @@ def data(request):
     country_stats = (
         Country.objects.order_by("iso_code")
         .filter(iso_code__in=countries)
-        .values_list(*table_fields)
+        .values_list("name", "population")
+        .annotate(
+            total_cases=F("countrystats__total_cases"),
+            total_deaths=F("countrystats__total_deaths"),
+            total_tests=F("countrystats__total_tests"),
+            total_cases_per_million=F("countrystats__total_cases")
+            / F("population")
+            * 1000000,
+            total_deaths_per_million=F("countrystats__total_deaths")
+            / F("population")
+            * 1000000,
+            total_tests_per_thousand=F("countrystats__total_tests") / F("population") * 1000,
+        )
     )
     return render(
         request,
         "data/data.html",
         {
-            "chart": gen_graph(*countries, category=str.lower(data_category), chart_type=chart_type, metric=metric),
+            "chart": gen_graph(
+                *countries,
+                category=str.lower(data_category),
+                chart_type=chart_type,
+                metric=metric
+            ),
             "country_selector": form.as_p(),
             "fields": (field.replace("_", " ").title() for field in table_fields),
             "country_table": country_stats,
