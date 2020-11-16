@@ -7,7 +7,7 @@ env_variables:
   DJANGO_SECRET_KEY_ID: "projects/984278497023/secrets/Django-Secret-Key/versions/latest"
   DEBUG: "False"
   ALLOWED_HOSTS: "['data-titans.uc.r.appspot.com']"
-  POSTGRES_HOST: "/cloudsql/data-titans:us-central1:datatitan-db"
+  POSTGRES_HOST: "/cloudsql/data-titans:us-central1:datatitans-test"
   DATABASE_NAME: "DataTitans"
   INPUT_FILE: "gs://data-titans.appspot.com/owid-covid-data.csv"
   

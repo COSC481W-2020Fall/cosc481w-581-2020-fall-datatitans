@@ -121,7 +121,7 @@ elif APP_ENV == "google-app-engine":
         "default": {
             "ENGINE": "django.db.backends.postgresql",
             "NAME": "DataTitans",
-            "HOST": "/cloudsql/data-titans:us-central1:datatitan-db"
+            "HOST": os.getenv("POSTGRES_HOST")
             if os.getenv("SERVER_SOFTWARE")
             else "localhost",
             "PORT": "5432",
