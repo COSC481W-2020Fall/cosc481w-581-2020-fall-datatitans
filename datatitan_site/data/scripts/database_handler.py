@@ -6,10 +6,11 @@ from pathlib import Path
 import pandas as pd
 from django.db.models import Avg, Sum, RowRange, Window, F, FloatField, CharField
 from django.db.models.functions import Coalesce, Cast, Concat, TruncMonth
-from data.models import CovidDataRaw, CovidDataClean, Country, Months, CovidDataMonthly
+from data.models import Country, CountryStats
 from django.db import connections, transaction
 from backoff import on_exception, expo
 from django.db.utils import OperationalError
+import os
 
 # %%
 input_file_path = Path(__file__).parent.parent / "input" / "owid-covid-data.csv"
@@ -37,32 +38,91 @@ database = connections["default"]
 def initialize_table() -> None:
     """Update the raw covid data table with data retrieved from the "Our World in Data" repository."""
     database.ensure_connection()
-    read_covid_data_raw = (
-        pd.read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
-        .round(decimals=3)
-        .round(
-            decimals={
-                "stringency_index": 2,
-                "median_age": 1,
-                "extreme_poverty": 1,
-                "diabetes_prevalence": 2,
-                "life_expectancy": 2,
-            }
+    # read_covid_data_raw = (
+    #     pd.read_csv(
+    #         "https://covid.ourworldindata.org/data/owid-covid-data.csv",
+    #         usecols=[
+    #             "iso_code",
+    #             "continent",
+    #             "location",
+    #             "new_cases",
+    #             "new_deaths",
+    #             "new_tests",
+    #         ],
+    #     )
+    #     .round(decimals=3)
+    #     .round(
+    #         decimals={
+    #             "stringency_index": 2,
+    #             "median_age": 1,
+    #             "extreme_poverty": 1,
+    #             "diabetes_prevalence": 2,
+    #             "life_expectancy": 2,
+    #         }
+    #     )
+    # )
+    # %%
+    raw_data = (
+        pd.read_csv(
+            os.getenv("INPUT_FILE"),
+            usecols=[
+                "iso_code",
+                "continent",
+                "location",
+                "date",
+                "population",
+                "new_cases",
+                "new_deaths",
+                "new_tests",
+            ],
+        )
+        .dropna(subset=["iso_code", "continent", "location", "population"])
+        .set_index(["iso_code", "date"])
+        .sort_index()
+    )
+    # %%
+    country_aggregates = (
+        raw_data[["new_cases", "new_deaths", "new_tests"]]
+        # .reset_index()
+        .groupby([pd.Grouper(level="iso_code")]).agg(
+            total_cases=pd.NamedAgg("new_cases", "sum"),
+            total_deaths=pd.NamedAgg("new_deaths", "sum"),
+            total_tests=pd.NamedAgg("new_tests", "sum"),
         )
     )
-    read_covid_data_raw: pd.DataFrame = read_covid_data_raw.where(
-        read_covid_data_raw.notnull(), None
+    # %%
+    country_facts = (
+        raw_data[["continent", "location", "population"]]
+        # .set_index("iso_code")
+        .drop_duplicates().rename(columns={"location": "name"})
     )
+    # %%
+    # read_covid_data_raw: pd.DataFrame = read_covid_data_raw.where(
+    #     read_covid_data_raw.notnull(), None
+    # )
     # read_covid_data_raw["data_key"] = read_covid_data_raw.apply(
     #     lambda row: f"{str(row.date)}{str(row.iso_code)}", axis=1
     # )
-    valid_columns = [field.name for field in CovidDataRaw._meta.get_fields()]
-    valid_columns.remove("id")
-    CovidDataRaw.objects.bulk_create(
-        [CovidDataRaw(**row) for row in read_covid_data_raw[[*valid_columns]].to_dict("records")],
+    # valid_columns = [field.name for field in Country._meta.get_fields()]
+    # valid_columns.remove("id")
+    Country.objects.bulk_create(
+        [
+            Country(**row)
+            for row in country_facts.reset_index()
+            .drop(columns=["date"])
+            .to_dict("records")
+        ],
         ignore_conflicts=True,
     )
-    refresh()
+    CountryStats.objects.all().delete()
+    CountryStats.objects.bulk_create(
+        [
+            CountryStats(iso_code_id=key, **val)
+            for key, val in country_aggregates.to_dict("index").items()
+        ],
+        ignore_conflicts=True,
+    )
+    # refresh()
     # # %%
     # window = {"partition_by": F("iso_code"), "order_by": [F("date")]}
     # past_week = RowRange(start=-6, end=0)
