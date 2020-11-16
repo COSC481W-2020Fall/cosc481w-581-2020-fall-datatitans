@@ -22,6 +22,17 @@ class Country(models.Model):
     #     managed = False
 
 
+class CountryStats(models.Model):
+    iso_code = models.OneToOneField(Country, on_delete=models.CASCADE, primary_key=True)
+    total_cases = models.FloatField(null=True)
+    total_deaths = models.FloatField(null=True)
+    total_tests = models.FloatField(null=True)
+    # total_cases_per_million = models.FloatField(null=True)
+    # total_deaths_per_million = models.FloatField(null=True)
+    # total_tests_per_thousand = models.FloatField(null=True)
+
+
+
 # class DataManager(models.Manager):
 #     def get_by_natural_key(self, iso_code, date):
 #         return self.get(iso_code=iso_code, date=date)
