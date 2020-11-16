@@ -44,24 +44,22 @@ def gen_graph(
 
     if not (data := cache.get("raw_data")):
         data: pd.DataFrame = (
-            pd.read_csv(os.getenv("INPUT_FILE"))[
-                [
-                    "iso_code",
-                    "date",
-                    "new_cases",
-                    "new_deaths",
-                    "new_tests",
-                    "total_cases",
-                    "total_deaths",
-                    "total_tests",
-                    "new_cases_per_million",
-                    "new_deaths_per_million",
-                    "new_tests_per_thousand",
-                    "total_cases_per_million",
-                    "total_deaths_per_million",
-                    "total_tests_per_thousand",
-                ]
-            ].dropna(subset=["iso_code"])
+            pd.read_csv(os.getenv("INPUT_FILE"), usecols=[
+                "iso_code",
+                "date",
+                "new_cases",
+                "new_deaths",
+                "new_tests",
+                "total_cases",
+                "total_deaths",
+                "total_tests",
+                "new_cases_per_million",
+                "new_deaths_per_million",
+                "new_tests_per_thousand",
+                "total_cases_per_million",
+                "total_deaths_per_million",
+                "total_tests_per_thousand",
+            ]).dropna(subset=["iso_code"])
         )
         data["date"] = pd.to_datetime(
             data["date"], yearfirst=True, infer_datetime_format=True
