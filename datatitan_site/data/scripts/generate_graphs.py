@@ -42,16 +42,34 @@ def gen_graph(
         )
     )
 
-    data: pd.DataFrame = (
-        pd.read_csv(os.getenv("INPUT_FILE"))[
-            ["iso_code", "date", category_name]
-        ].dropna(subset=["iso_code"])
-    )
-    data["date"] = pd.to_datetime(
-        data["date"], yearfirst=True, infer_datetime_format=True
-    )
-    data["date"] = data["date"].dt.date
-    data = data.set_index(["iso_code", "date"]).loc[list(iso_codes)].sort_index()
+    if not (data := cache.get("raw_data")):
+        data: pd.DataFrame = (
+            pd.read_csv(os.getenv("INPUT_FILE"))[
+                [
+                    "iso_code",
+                    "date",
+                    "new_cases",
+                    "new_deaths",
+                    "new_tests",
+                    "total_cases",
+                    "total_deaths",
+                    "total_tests",
+                    "new_cases_per_million",
+                    "new_deaths_per_million",
+                    "new_tests_per_thousand",
+                    "total_cases_per_million",
+                    "total_deaths_per_million",
+                    "total_tests_per_thousand",
+                ]
+            ].dropna(subset=["iso_code"])
+        )
+        data["date"] = pd.to_datetime(
+            data["date"], yearfirst=True, infer_datetime_format=True
+        )
+        data["date"] = data["date"].dt.date
+        data = data.set_index(["iso_code", "date"]).sort_index().round(decimals=3)
+        cache.set("raw_data", data)
+    data = data.loc[list(iso_codes)]
 
     data_sets = []
     if chart_type.lower() == "line":
@@ -66,7 +84,7 @@ def gen_graph(
                 #         y=Cast(F(category_name.lower()), IntegerField()),
                 #     )
                 # ),
-                "data": data.loc[code]
+                "data": data.loc[code][[category_name]]
                 .reset_index()
                 .dropna()
                 .rename(columns={"date": "x", category_name: "y"})
@@ -92,7 +110,7 @@ def gen_graph(
                 #         ),
                 #     )
                 # ),
-                "data": data.loc[code]
+                "data": data.loc[code][[category_name]]
                 .reset_index()
                 .groupby(pd.Grouper(key="date", freq="M"))
                 .agg(y=pd.NamedAgg(category_name, "sum"))
