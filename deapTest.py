@@ -56,7 +56,7 @@ def main():
         bot = tools.selWorst(population, k=1)
         print(str(gen+1)+": " + str(top) +", " +str(bot))
 
-    print("M off by " + str(m-top[0][0])+" and b off by " + str(b-top[0][1]))
+    print("M off by " + str(m-top[0][0])+" and B off by " + str(b-top[0][1]))
    
    
 
