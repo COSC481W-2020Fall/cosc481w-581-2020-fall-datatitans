@@ -39,15 +39,16 @@ def main():
 
     toolbox.register("evaluate", eval2)
     toolbox.register("mate", tools.cxTwoPoint)
-    toolbox.register("mutate", tools.mutGaussian, mu=0, sigma = .05, indpb=0.05)
+    toolbox.register("mutate", tools.mutPolynomialBounded, eta = .5, low=[0,0], up = [1,1], indpb=0.5)
     toolbox.register("select", tools.selTournament, tournsize=100)
 
-    population = toolbox.population(n=300)
+    population = toolbox.population(n=1000)
     
 
-    NGEN=100
+
+    NGEN=1000
     for gen in range(NGEN):
-        offspring = algorithms.varAnd(population, toolbox, cxpb=0.5, mutpb=0.1)
+        offspring = algorithms.varAnd(population, toolbox, cxpb=0.5, mutpb=0.5)
         fits = toolbox.map(toolbox.evaluate, offspring)
         for fit, ind in zip(fits, offspring):
             ind.fitness.values = fit
