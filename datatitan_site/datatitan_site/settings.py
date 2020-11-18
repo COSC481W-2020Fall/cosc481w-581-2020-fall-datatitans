@@ -120,11 +120,9 @@ elif APP_ENV == "google-app-engine":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": "DataTitans",
-            "HOST": os.getenv("POSTGRES_HOST")
-            if os.getenv("SERVER_SOFTWARE")
-            else "localhost",
-            "PORT": "5432",
+            "NAME": os.getenv("DATABASE_NAME"),
+            "HOST": os.getenv("POSTGRES_HOST"),
+            "PORT": os.getenv("POSTGRES_PORT"),
             **account,
         }
     }
@@ -138,11 +136,11 @@ else:
         DATABASES = {
             "default": {
                 "ENGINE": "django.db.backends.postgresql",
-                "NAME": "DataTitans",
-                "HOST": "localhost",
+                "NAME": os.getenv("DATABASE_NAME"),
+                "HOST": os.getenv("POSTGRES_HOST"),
                 "USER": POSTGRES_USER if POSTGRES_USER else "DataTitans",
                 "PASSWORD": file.read(),
-                "PORT": "5432",
+                "PORT": os.getenv("POSTGRES_PORT"),
             }
         }
 
