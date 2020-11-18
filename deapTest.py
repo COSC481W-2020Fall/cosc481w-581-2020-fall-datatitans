@@ -9,10 +9,11 @@ import pandas as pd
 
 
 def main():
+    m = .5
+    b = .25
     #m = random.random()
     #b = random.random()
-    m=.5
-    b=.25
+    #generate parts of y = mx + b
     print("y="+str(m)+"x+"+str(b))
     testCase = []
     UI = input("Enter own settings (Y/N): ")
@@ -23,11 +24,11 @@ def main():
         GenS = int(input("Enter number of generations to run: "))
         PopS = int(input("Enter population size for each of the aforemention generations: "))
     else:
-        SampleSize = 500
-        MutE = .25
+        SampleSize = 100
+        MutE = .1
         MutC = .5
         GenS = 100
-        PopS = 200
+        PopS = 100
     for x in range(SampleSize):
         testCase.append(x*m+b)
     os.system("pause")
@@ -73,8 +74,7 @@ def main():
         population = toolbox.select(offspring, k=len(population))
         top = tools.selBest(population, k=1)
         bestof.append(top[0]+[gen+1])
-        bot = tools.selWorst(population, k=1)
-        print(str(gen+1)+": " + str(top) +", " +str(bot))
+        print(str(gen+1)+": " + str(top))
 
     print("M off by " + str(m-top[0][0])+" and B off by " + str(b-top[0][1]))
     UbestOf =[]
@@ -98,6 +98,7 @@ def main():
         for i in xList:
             Y.append(i*M+B)
         return Y
+
     plotY = calcY(plotX,m,b)
     plt.plot(plotX, plotY, label = "Actual Line")
     count = 0
@@ -105,10 +106,11 @@ def main():
     for i in UbestOf:
         count +=1
         if count == 1 or count == math.floor(.25*len(UbestOf)) or count == math.floor(.50*len(UbestOf)) or count == math.floor(.75*len(UbestOf)) or count == len(UbestOf):
-            plt.plot(plotX, calcY(plotX,i[0],i[1]), label="Best from gen "+str(i[2]))
+            plt.plot(plotX, calcY(plotX,i[0],i[1]), label="Best from gen "+str(i[2]), linestyle = "--")
 
     plt.title("ML genetic algo attempts at reproducing line y="+str(m)+"x+"+str(b))
     plt.legend()
     plt.show()
+
 if __name__ == "__main__":
     main()
