@@ -12,12 +12,17 @@ def main():
     creator.create("FitnessMax", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.FitnessMax) 
     toolbox = base.Toolbox()
-    def genRan():
-        return (random.random())
+    
+    def genRan(): #sets intial weight to random vaule between -1 and 1
+        return ((random.random()-.5)*2)
+
     toolbox.register("Alpha", genRan)
     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.Alpha, n=4*len(factors))
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
     #above code lays the ground work for individual and the population setup for the ml proccess
+    PopS=100
+    population = toolbox.population(n=PopS)
+
 
     def predictor(individual, T): #this function should take an indviudal and return the predicted value for a given set of days
         return (0)
@@ -25,10 +30,11 @@ def main():
     def eval(individual): # this function will be our eval function, aka the fitness function, the closer to zero the better
         return(0)
 
-    toolbox.register("evaluate", eval)
-    toolbox.register("mate", tools.cxBlend, alpha = .05)
-    toolbox.register("mutate", tools.mutPolynomialBounded, eta = .2, low=[0,0], up = [1,1], indpb=0.5)
-    toolbox.register("select", tools.selTournament, tournsize=100)
+
+    toolbox.register("evaluate", eval) #lets the code recgognize what our eval/fitness function is 
+    toolbox.register("mate", tools.cxBlend, alpha = .05) #sets up mate to produce a new individual with blended weights
+    toolbox.register("mutate", tools.mutPolynomialBounded, eta = .2, low=[-1,-1], up = [1,1], indpb=0.5) # sets up mutation chance during mate procces
+    toolbox.register("select", tools.selTournament, tournsize=PopS) #Seems best to have this match popsize
     #Above code block sets up info need for ml procces
 
     NGEN=100
