@@ -25,6 +25,7 @@ def main():
 
 
     def predictor(individual, T): #this function should take an indviudal and return the predicted value for a given set of days
+        #y=P((w0)b + (w1)T+ (w2)T2+ (w3)T3)
         return (0)
 
     def eval(individual): # this function will be our eval function, aka the fitness function, the closer to zero the better
