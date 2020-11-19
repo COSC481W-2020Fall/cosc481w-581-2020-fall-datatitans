@@ -37,13 +37,15 @@ def main():
     toolbox.register("select", tools.selTournament, tournsize=PopS) #Seems best to have this match popsize
     #Above code block sets up info need for ml procces
 
-    NGEN=100
+    NGEN=100 #number of generartions to run
     for gen in range(NGEN):
-        offspring = algorithms.varAnd(population, toolbox, cxpb=0.5, mutpb=0.25)
+        offspring = algorithms.varAnd(population, toolbox, cxpb=0.5, mutpb=0.25) #cxpd is mating chance and mutpb is the chance of mutation
         fits = toolbox.map(toolbox.evaluate, offspring)
         for fit, ind in zip(fits, offspring):
             ind.fitness.values = fit
+        top = tools.selBest(population, k=1) #saves the best of each gen to top, no use now but may be useful for internal stats later
         population = toolbox.select(offspring, k=len(population))
-        
+    #above code is where the ml proccess occurs the larger the pops and the more gens the better results will be typically
+
 if __name__ == "__main__":
     main()
