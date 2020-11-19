@@ -9,6 +9,7 @@ import pandas as pd
 
 def main():
     factors = ["GDP", "Strignecy","PopDen"] #not sure how this will work, but I would like these to contain the headers of the data set or some other way of referencing what we are using as factors
+    degree = 3
     creator.create("FitnessMax", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.FitnessMax) 
     toolbox = base.Toolbox()
@@ -17,7 +18,7 @@ def main():
         return ((random.random()-.5)*2)
 
     toolbox.register("Alpha", genRan)
-    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.Alpha, n=4*len(factors))
+    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.Alpha, n=(degree+1)*len(factors))#sets up weights in an indviaul based on the degree of the formuala and the number of factors
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
     #above code lays the ground work for individual and the population setup for the ml proccess
     PopS=100
