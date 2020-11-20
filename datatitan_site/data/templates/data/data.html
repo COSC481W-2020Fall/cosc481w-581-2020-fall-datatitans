@@ -74,6 +74,7 @@
 
                 <!-- Chart -->
                 <div class="col-md-9 card" style="padding:15px;margin-left:0" id="graph_container">
+                    {# TODO: Try generating graph asynchronously? #}
                     <canvas id="graph"></canvas>
                 </div>
                 {{ chart|json_script:"graph_data" }}
