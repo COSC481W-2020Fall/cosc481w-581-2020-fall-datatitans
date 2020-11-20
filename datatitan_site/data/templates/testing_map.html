@@ -1,22 +1,11 @@
-<!DOCTYPE html>
 
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% load cache %}
 
-<head>
-<style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    }
 
-    #chartdiv {
-      width: 100%;
-      height: 98vh;
-    }
-</style>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+
 
 <script src="//cdn.amcharts.com/lib/4/core.js"></script>
 <script src="//cdn.amcharts.com/lib/4/maps.js"></script>
@@ -2391,5 +2380,8 @@ polygonSeries.data = [
 </script>
 <div id="chartdiv"></div>
 
-</body>
-</html>
+
+
+
+
+{% endblock content %}

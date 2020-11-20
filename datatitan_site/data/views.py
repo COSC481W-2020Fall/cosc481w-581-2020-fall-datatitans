@@ -52,6 +52,10 @@ def about(request):
     return render(request, "about.html", {})
 
 
+def testing_map(request):
+    return render(request, "testing_map.html", {})
+
+
 def blog(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by(
         "published_date"
