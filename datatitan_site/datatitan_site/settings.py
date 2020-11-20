@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False").casefold() != "false"
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "data-titans.uc.r.appspot.com"]
+ALLOWED_HOSTS = json.loads(os.getenv("ALLOWED_HOSTS"))
 
 # Application definition
 
