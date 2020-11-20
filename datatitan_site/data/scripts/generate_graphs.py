@@ -107,6 +107,10 @@ def gen_graph(
         "type": chart_type.lower(),
         "data": {"datasets": data_sets},
         "options": {
+            "title": {
+                "display": True,
+                "text": title
+            },
             "scales": {
                 "xAxes": [
                     {
