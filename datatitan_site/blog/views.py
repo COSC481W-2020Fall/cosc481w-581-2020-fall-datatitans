@@ -9,7 +9,7 @@ from blog.forms import CommentForm
 
 def blog(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by(
-        "published_date"
+        "-published_date"
     )
     return render(request, "blog/blog.html", {"posts": posts})
 
