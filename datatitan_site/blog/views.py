@@ -17,15 +17,15 @@ def blog(request):
 def blog_detail(request, blog_id):
     blog_post = Post.objects.get(pk=blog_id)
 
-    if request.user.is_authenticated and request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            Comment.objects.create(
-                user=request.user,
-                text=form.cleaned_data.get("text"),
-                blog=blog_post,
-            )
-            return redirect("blog_detail", blog_id=blog_id)
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            if (form := CommentForm(request.POST)).is_valid():
+                Comment.objects.create(
+                    user=request.user,
+                    text=form.cleaned_data.get("text"),
+                    blog=blog_post,
+                )
+        return redirect("blog_detail", blog_id=blog_id)
 
     return render(
         request,
