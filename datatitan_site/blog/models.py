@@ -20,7 +20,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    username = models.CharField(max_length=50)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
-    blog_id = models.ForeignKey(Post, on_delete=models.DO_NOTHING)
+    blog = models.ForeignKey(Post, on_delete=models.DO_NOTHING)

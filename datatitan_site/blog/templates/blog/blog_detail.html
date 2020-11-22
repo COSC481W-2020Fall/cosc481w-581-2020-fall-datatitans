@@ -21,7 +21,7 @@
 
         <div>
             {% for comment in comments%}
-                <h4>{{ comment.username }}</h4>
+                <h4>{{ comment.user__username }}</h4>
                 <p>{{ comment.text }} <br> {{ comment.created_date }}</p>
             {% endfor %}
         </div>
