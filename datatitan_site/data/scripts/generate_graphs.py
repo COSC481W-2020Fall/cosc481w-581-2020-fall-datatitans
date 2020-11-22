@@ -32,10 +32,7 @@ def gen_graph(
     title = (
         category_name.replace("_", " ").title()
         + " in "
-        + ", ".join(
-            Country.objects.get(iso_code=code).name
-            for code in iso_codes
-        )
+        + ", ".join(selected_countries.values_list("name", flat=True))
     )
 
     data: pd.DataFrame = (
@@ -112,10 +109,7 @@ def gen_graph(
         "type": chart_type.lower(),
         "data": {"datasets": data_sets},
         "options": {
-            "title": {
-                "display": True,
-                "text": title
-            },
+            "title": {"display": True, "text": title},
             "scales": {
                 "xAxes": [
                     {
@@ -128,6 +122,6 @@ def gen_graph(
                 # "yAxes": [{
                 #     "stacked": chart_type.lower() == "bar"
                 # }]
-            }
+            },
         },
     }
