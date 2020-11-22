@@ -9,6 +9,7 @@
             <p>{{ post.text }}</p>
             <p>published: {{ post.published_date }}</p>
         </div>
+    {% if user.is_authenticated %}
         <div class="comment-section">
             <form method="POST" class="post-form">
                 {% csrf_token %}
@@ -16,6 +17,7 @@
                 <button type="submit" class="save btn btn-default">Post</button>
             </form>
         </div>
+    {% endif %}
 
         <div>
             {% for comment in comments%}

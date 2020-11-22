@@ -14,7 +14,9 @@ def blog(request):
 
 
 def blog_detail(request, blog_id):
-    if request.method == "POST":
+    blog_post = Post.objects.get(pk=blog_id)
+
+    if request.user.is_authenticated and request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -23,7 +25,6 @@ def blog_detail(request, blog_id):
             comment.created_date = timezone.now()
             comment.blog_id = blog_id
             comment.save()
-    blog_post = Post.objects.get(pk=blog_id)
     comments = Comment.objects.filter(blog_id=blog_id)
 
     return render(
