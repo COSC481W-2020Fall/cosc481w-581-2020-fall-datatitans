@@ -39,19 +39,24 @@ def gen_graph(
     )
 
     data: pd.DataFrame = (
-        pd.read_csv(os.getenv("INPUT_FILE"), usecols=[
-            "iso_code",
-            "date",
-            category_name
-        ]).dropna(subset=["iso_code"])
+        pd.read_csv(
+            os.getenv("INPUT_FILE"),
+            usecols=["iso_code", "date", category_name],
+            dtype={"iso_code": "category"},
+            index_col=["iso_code", "date"],
+            parse_dates=["date"],
+        )
+        .sort_index()
+        .round(decimals=3)
+        .loc[list(iso_codes)]
     )
-    data["iso_code"] = data["iso_code"].astype("category")
-    data["date"] = pd.to_datetime(
-        data["date"], yearfirst=True, infer_datetime_format=True
-    )
-    data["date"] = data["date"].dt.date
-    data = data.set_index(["iso_code", "date"]).sort_index().round(decimals=3)
-    data = data.loc[list(iso_codes)]
+    # data["iso_code"] = data["iso_code"].astype("category")
+    # data["date"] = pd.to_datetime(
+    #     data["date"], yearfirst=True, infer_datetime_format=True
+    # )
+    # data["date"] = data["date"].dt.date
+    # data = data.set_index(["iso_code", "date"]).sort_index().round(decimals=3)
+    # data = data.loc[list(iso_codes)]
 
     data_sets = []
     if chart_type.lower() == "line":
