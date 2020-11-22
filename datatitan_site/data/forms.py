@@ -1,13 +1,5 @@
 from django import forms
 from data.models import Country
-from blog.models import Comment
-from django.core.cache import cache
-
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ("username", "text")
 
 
 class CountrySelect(forms.CheckboxSelectMultiple):

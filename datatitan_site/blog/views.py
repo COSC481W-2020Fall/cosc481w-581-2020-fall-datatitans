@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
 from blog.models import Post, Comment
-from data.forms import CommentForm
+from blog.forms import CommentForm
 
 # Create your views here.
 
