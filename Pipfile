@@ -26,6 +26,8 @@ social-auth-app-django = "*"
 python-dotenv = "*"
 pyarrow = "*"
 fastparquet = "*"
+statsmodels = "*"
+deap = "*"
 
 [requires]
 python_version = "3.8"

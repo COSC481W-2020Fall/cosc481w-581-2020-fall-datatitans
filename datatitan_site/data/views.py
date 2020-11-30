@@ -78,5 +78,9 @@ def data(request):
     )
 
 
+def testing_map(request):
+    return render(request, "data/testing_map.html", {})
+
+
 def about(request):
     return render(request, "base/about.html", {})
