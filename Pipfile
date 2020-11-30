@@ -28,6 +28,7 @@ pyarrow = "*"
 fastparquet = "*"
 statsmodels = "*"
 deap = "*"
+dask = "*"
 
 [requires]
 python_version = "3.8"
