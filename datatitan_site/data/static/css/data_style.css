@@ -147,6 +147,11 @@ div#graph_container{
 	width: 100%;
 }
 
+#chartdiv {
+	width: 100%;
+	height: 98vh;
+}
+
 @media screen and (max-width: 1410px){
 	#data{
 		flex-direction: column;
