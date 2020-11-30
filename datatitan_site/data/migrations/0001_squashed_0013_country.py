@@ -6,21 +6,37 @@ import django.utils.timezone
 
 class Migration(migrations.Migration):
 
-    replaces = [('data', '0001_initial'), ('data', '0002_created_raw_data_table'), ('data', '0003_created_clean_data_view'), ('data', '0004_created_country_data_view'), ('data', '0005_created_monthly_data_view'), ('data', '0006_add_icu_and_hospital_admission_columns'), ('data', '0007_updated_monthly_data'), ('data', '0008_refined_monthly_data_query'), ('data', '0009_delete_post'), ('data', '0010_add_country_aggregations'), ('data', '0011_dropped_manual_tables'), ('data', '0012_auto_20201116_1347'), ('data', '0013_country')]
+    replaces = [
+        ("data", "0001_initial"),
+        ("data", "0002_created_raw_data_table"),
+        ("data", "0003_created_clean_data_view"),
+        ("data", "0004_created_country_data_view"),
+        ("data", "0005_created_monthly_data_view"),
+        ("data", "0006_add_icu_and_hospital_admission_columns"),
+        ("data", "0007_updated_monthly_data"),
+        ("data", "0008_refined_monthly_data_query"),
+        ("data", "0009_delete_post"),
+        ("data", "0010_add_country_aggregations"),
+        ("data", "0011_dropped_manual_tables"),
+        ("data", "0012_auto_20201116_1347"),
+        ("data", "0013_country"),
+    ]
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Country',
+            name="Country",
             fields=[
-                ('iso_code', models.CharField(max_length=8, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=55)),
-                ('continent', models.CharField(max_length=15)),
-                ('population', models.FloatField()),
+                (
+                    "iso_code",
+                    models.CharField(max_length=8, primary_key=True, serialize=False),
+                ),
+                ("name", models.CharField(max_length=55)),
+                ("continent", models.CharField(max_length=15)),
+                ("population", models.FloatField()),
             ],
         ),
     ]

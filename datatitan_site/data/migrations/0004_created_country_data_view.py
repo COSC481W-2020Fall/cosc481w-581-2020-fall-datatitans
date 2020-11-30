@@ -6,11 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('data', '0003_created_clean_data_view'),
+        ("data", "0003_created_clean_data_view"),
     ]
 
     operations = [
-        migrations.RunSQL("""
+        migrations.RunSQL(
+            """
         create materialized view if not exists data_country as
         SELECT DISTINCT ON (data_coviddataclean.iso_code) data_coviddataclean.iso_code,
                                                           data_coviddataclean.location AS name,
@@ -20,5 +21,7 @@ class Migration(migrations.Migration):
         ORDER BY data_coviddataclean.iso_code;
 
         alter materialized view data_country owner to "DataTitans";
-        """, """DROP MATERIALIZED VIEW IF EXISTS data_country""")
+        """,
+            """DROP MATERIALIZED VIEW IF EXISTS data_country""",
+        )
     ]

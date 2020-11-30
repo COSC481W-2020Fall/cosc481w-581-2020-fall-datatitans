@@ -15,4 +15,3 @@ ORDER BY data_coviddataclean.iso_code,
          (date(date_trunc('month'::text, data_coviddataclean.date::timestamp with time zone)));
 
 alter materialized view data_coviddatamonthly owner to "DataTitans";
-

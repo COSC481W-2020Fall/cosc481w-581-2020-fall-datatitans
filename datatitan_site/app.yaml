@@ -10,7 +10,7 @@ env_variables:
   POSTGRES_HOST: "/cloudsql/data-titans:us-central1:datatitans-test"
   DATABASE_NAME: "DataTitans"
   INPUT_FILE: "gs://data-titans.appspot.com/input/owid-covid-data.csv"
-  
+
 instance_class: F2
 
 handlers:

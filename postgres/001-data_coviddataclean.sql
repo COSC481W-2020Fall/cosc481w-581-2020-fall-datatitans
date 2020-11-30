@@ -50,4 +50,3 @@ WHERE dc.iso_code IS NOT NULL
 ORDER BY dc.iso_code, dc.date;
 
 alter materialized view data_coviddataclean owner to "DataTitans";
-

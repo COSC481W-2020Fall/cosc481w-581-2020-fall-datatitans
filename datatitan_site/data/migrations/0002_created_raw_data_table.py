@@ -6,11 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('data', '0001_initial'),
+        ("data", "0001_initial"),
     ]
 
     operations = [
-        migrations.RunSQL("""
+        migrations.RunSQL(
+            """
         create table data_coviddataraw
         (
             iso_code text,
@@ -59,5 +60,7 @@ class Migration(migrations.Migration):
             );
 
         alter table data_coviddataraw owner to "DataTitans";
-        """, """DROP TABLE IF EXISTS data_coviddataraw""")
+        """,
+            """DROP TABLE IF EXISTS data_coviddataraw""",
+        )
     ]

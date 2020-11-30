@@ -5,6 +5,7 @@ import generate_graphs.py
 # It works in jupyter notebook but not in PyCharm.
 # How will we test graph creation? assertTrue file size > 0?
 
+
 class GraphTest(unittest.TestCase):
 
     # Naming convention: start names of all test functions with the word "test"
@@ -12,7 +13,7 @@ class GraphTest(unittest.TestCase):
         # Arrange
         self.codes = ("USA", "CAN", "MEX")
         self.nocodes = ()
-        self.str1 = ("astring")
+        self.str1 = "astring"
 
     def tearDown(self):
         # print("tearDown called...")
@@ -26,6 +27,7 @@ class GraphTest(unittest.TestCase):
         # Assert
         self.assertEqual(result, "")
 
+
 # to invoke unittest framework:
-if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+if __name__ == "__main__":
+    unittest.main(argv=["first-arg-is-ignored"], exit=False)

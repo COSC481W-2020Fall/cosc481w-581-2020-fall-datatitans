@@ -4,7 +4,7 @@ import urllib.request
 
 
 class DataConfig(AppConfig):
-    name = 'data'
+    name = "data"
 
     def ready(self):
         # if 'runserver' not in sys.argv:

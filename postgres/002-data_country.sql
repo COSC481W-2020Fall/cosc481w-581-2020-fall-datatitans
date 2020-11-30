@@ -7,4 +7,3 @@ FROM data_coviddataclean
 ORDER BY data_coviddataclean.iso_code;
 
 alter materialized view data_country owner to "DataTitans";
-

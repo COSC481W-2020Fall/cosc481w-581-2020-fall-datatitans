@@ -32,7 +32,6 @@ class CountryStats(models.Model):
     # total_tests_per_thousand = models.FloatField(null=True)
 
 
-
 # class DataManager(models.Manager):
 #     def get_by_natural_key(self, iso_code, date):
 #         return self.get(iso_code=iso_code, date=date)

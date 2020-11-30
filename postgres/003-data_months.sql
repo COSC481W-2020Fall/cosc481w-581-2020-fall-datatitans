@@ -4,4 +4,3 @@ FROM data_coviddataraw
 ORDER BY (date(date_trunc('month'::text, data_coviddataraw.date::timestamp with time zone)));
 
 alter materialized view data_months owner to "DataTitans";
-

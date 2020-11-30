@@ -6,18 +6,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('data', '0004_created_country_data_view'),
+        ("data", "0004_created_country_data_view"),
     ]
 
     operations = [
-        migrations.RunSQL("""
+        migrations.RunSQL(
+            """
         create materialized view data_months as
         SELECT DISTINCT date(date_trunc('month'::text, data_coviddataraw.date::timestamp with time zone)) AS month
         FROM data_coviddataraw
         ORDER BY (date(date_trunc('month'::text, data_coviddataraw.date::timestamp with time zone)));
 
-        alter materialized view data_months owner to "DataTitans";""","""DROP MATERIALIZED VIEW IF EXISTS data_months"""),
-        migrations.RunSQL("""
+        alter materialized view data_months owner to "DataTitans";""",
+            """DROP MATERIALIZED VIEW IF EXISTS data_months""",
+        ),
+        migrations.RunSQL(
+            """
         create materialized view data_coviddatamonthly as
         SELECT DISTINCT data_coviddataclean.iso_code,
                         data_coviddataclean.continent,
@@ -34,5 +38,7 @@ class Migration(migrations.Migration):
         ORDER BY data_coviddataclean.iso_code,
                  (date(date_trunc('month'::text, data_coviddataclean.date::timestamp with time zone)));
 
-        alter materialized view data_coviddatamonthly owner to "DataTitans";""", """DROP MATERIALIZED VIEW IF EXISTS data_coviddatamonthly""")
+        alter materialized view data_coviddatamonthly owner to "DataTitans";""",
+            """DROP MATERIALIZED VIEW IF EXISTS data_coviddatamonthly""",
+        ),
     ]

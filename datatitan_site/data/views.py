@@ -51,7 +51,9 @@ def data(request):
             total_deaths_per_million=F("countrystats__total_deaths")
             / F("population")
             * 1000000,
-            total_tests_per_thousand=F("countrystats__total_tests") / F("population") * 1000,
+            total_tests_per_thousand=F("countrystats__total_tests")
+            / F("population")
+            * 1000,
         )
     )
     return render(

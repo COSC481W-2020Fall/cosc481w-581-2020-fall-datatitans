@@ -6,11 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('data', '0008_refined_monthly_data_query'),
+        ("data", "0008_refined_monthly_data_query"),
     ]
 
     operations = [
-        migrations.DeleteModel(
-            name='Post',
-        ),
+        migrations.DeleteModel(name="Post",),
     ]

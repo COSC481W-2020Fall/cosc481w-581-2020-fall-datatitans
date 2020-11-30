@@ -8,17 +8,20 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('data', '0012_auto_20201116_1347'),
+        ("data", "0012_auto_20201116_1347"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Country',
+            name="Country",
             fields=[
-                ('iso_code', models.CharField(max_length=8, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=55)),
-                ('continent', models.CharField(max_length=15)),
-                ('population', models.FloatField()),
+                (
+                    "iso_code",
+                    models.CharField(max_length=8, primary_key=True, serialize=False),
+                ),
+                ("name", models.CharField(max_length=55)),
+                ("continent", models.CharField(max_length=15)),
+                ("population", models.FloatField()),
             ],
         ),
     ]

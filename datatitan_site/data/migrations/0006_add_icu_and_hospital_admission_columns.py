@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('data', '0005_created_monthly_data_view'),
+        ("data", "0005_created_monthly_data_view"),
     ]
 
     operations = [
@@ -32,6 +32,6 @@ class Migration(migrations.Migration):
             drop column weekly_icu_admissions_per_million,
             drop column weekly_hosp_admissions,
             drop column weekly_hosp_admissions_per_million
-            """
+            """,
         )
     ]

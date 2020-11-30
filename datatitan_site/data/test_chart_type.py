@@ -1,4 +1,5 @@
 import unittest
+
 # import forms.py
 # import generate_graphs.py
 
@@ -8,25 +9,23 @@ import unittest
 # import generate_graphs
 
 
-
 class ChartTest(unittest.TestCase):
-    
     def setUp(self):
         # Arrange
         self.nocodes = ()
         self.none = ()
-        self.line = ("LINE")
-        self.bar = ("BAR")
-        
+        self.line = "LINE"
+        self.bar = "BAR"
+
     def tearDown(self):
         self.line = ()
         self.bar = ()
-    
+
     def test_no_chart(self):
         result = gen_no_chart(*self.nocodes, category=str(""))
-        
+
         # Assert
-        self.assertEqual(result, '')
+        self.assertEqual(result, "")
 
     def test_line_chart(self):
         # No function to call in forms.py, other than init
@@ -41,20 +40,20 @@ class ChartTest(unittest.TestCase):
         self.assertEqual(result, self.bar)
 
 
-    
-
-
 def gen_no_chart(*iso_codes, category: str, chart_type="") -> str:
     print("chart type: ", chart_type)
     return chart_type
+
 
 def gen_line_chart(*iso_codes, category: str, chart_type="LINE") -> str:
     print("chart type: ", chart_type)
     return chart_type
 
+
 def gen_bar_chart(*iso_codes, category: str, chart_type="BAR") -> str:
     print("chart type: ", chart_type)
     return chart_type
+
 
 if __name__ == "__main__":
     unittest.main()

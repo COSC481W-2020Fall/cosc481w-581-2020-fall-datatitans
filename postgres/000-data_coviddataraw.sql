@@ -46,4 +46,3 @@ create table data_coviddataraw
 );
 
 alter table data_coviddataraw owner to "DataTitans";
-

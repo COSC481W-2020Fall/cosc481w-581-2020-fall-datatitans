@@ -124,29 +124,29 @@ or
 1. Run web server
 2. Navigate to the url: `127.0.0.1/admin`
 3. Enter the user name and password
-4. On the admin page click the "+Add" button next to Posts 
+4. On the admin page click the "+Add" button next to Posts
 ![](datatitan_site/images/adminPage.png)
 5. Add Author, title and text of the blog.
 ![](datatitan_site/images/blog.png)
 6. You can save and continue later (do not fill out publish date info or choose a future date),
 and when ready to publish just click the now and today buttons under the 'Publish date' form item.
 
-## Accessing AWS server via PuTTY SSH 
+## Accessing AWS server via PuTTY SSH
 
-These instructions detail how to access our AWS server via PuTTY. 
+These instructions detail how to access our AWS server via PuTTY.
 
-Notes: 
-•	Currently, the user information is for Chisulo’s account. If others are going to be working with AWS, we will need to create our own IAM accounts. 
+Notes:
+•	Currently, the user information is for Chisulo’s account. If others are going to be working with AWS, we will need to create our own IAM accounts.
 
-•	For now, we will continue to do all project edits through GitHub. So we only need to access the AWS server to upload working releases. 
+•	For now, we will continue to do all project edits through GitHub. So we only need to access the AWS server to upload working releases.
 
 ### Instructions:
 
-If you do not have PuTTY installed, you can download it here: 
-https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html 
+If you do not have PuTTY installed, you can download it here:
+https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 
-Before starting PuTTY, download the authentication key here: 
-https://drive.google.com/file/d/1JcfkE_vzwfANi76w5tOlJ-426tpZrVQG/view?usp=sharing 
+Before starting PuTTY, download the authentication key here:
+https://drive.google.com/file/d/1JcfkE_vzwfANi76w5tOlJ-426tpZrVQG/view?usp=sharing
 
 Open PuTTY, you will see the Configuration screen (Image 1):
 <br><img src="datatitan_site/images/PuTTY1.png" width="400">
@@ -159,7 +159,7 @@ Per Image 1, with Session selected in the Category column on the left:
 3. Connection type: choose the SSH radio button
 
 <br>
-Image 2: 
+Image 2:
 <br><img src="datatitan_site/images/PuTTY2.png" width="400">
 
 
@@ -201,7 +201,7 @@ Type "exit" to quit
 ### Run server in background
 
 1. cd into datatitan_site directory
-2. run `screen`. This creates a new terminal screen. 
+2. run `screen`. This creates a new terminal screen.
 3. run `python manage.py runserver 0.0.0.0:8000`
 4. type `Ctrl + a` then `Ctrl + d` if on Windows. `Cmd + a` then `Cmd + d` on Mac. Running this will detach the screen from your terminal sesssion so it can continue to run even when you disconnect from the server.
 5. (optional) to do all this in 1 step, run `screen -d -m python manage.py runserver 0.0.0.0:8000`

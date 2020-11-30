@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 SUM(COALESCE("data_coviddataclean"."new_tests_per_thousand", 0)) OVER (PARTITION BY "data_coviddataclean"."iso_code", DATE_TRUNC('month', "data_coviddataclean"."date")) AS "new_tests_per_thousand",
                 CONCAT(DATE(DATE_TRUNC('month'::text, data_coviddataclean.date::timestamp with time zone))) as data_key
             FROM "data_coviddataclean" ORDER BY "data_coviddataclean"."iso_code", "month";
-            
+
             ALTER MATERIALIZED VIEW data_coviddatamonthly OWNER TO "DataTitans";
             """,
             """
@@ -47,8 +47,8 @@ class Migration(migrations.Migration):
             FROM data_coviddataclean
             ORDER BY data_coviddataclean.iso_code,
                      (DATE(date_trunc('month'::text, data_coviddataclean.date::timestamp with time zone)));
-    
+
             ALTER MATERIALIZED VIEW data_coviddatamonthly OWNER TO "DataTitans";
-            """
+            """,
         )
     ]

@@ -6,7 +6,7 @@
         <div class=col-md-2></div>
         <div class="blog-container col-md-8 shadow p-3 mb-5 bg-white rounded">
             <h2>Blog Page</h2>
-    
+
             {% for post in posts %}
             <div class="row shadow p-3 mb-5 bg-white rounded">
                 <div class="col-md-2" >
@@ -18,11 +18,11 @@
                     <p>published: {{ post.published_date }}</p>
                 </div>
             </div>
-                
+
             {% endfor %}
         </div>
         <div class=col-md-2></div>
-        
+
     </div>
-    
+
 {% endblock content %}

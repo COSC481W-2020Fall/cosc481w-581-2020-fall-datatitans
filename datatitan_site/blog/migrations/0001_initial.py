@@ -9,29 +9,52 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('author', models.CharField(max_length=50)),
-                ('title', models.CharField(max_length=200)),
-                ('text', models.TextField()),
-                ('created_date', models.DateTimeField(auto_now_add=True)),
-                ('published_date', models.DateTimeField(default=django.utils.timezone.now)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("author", models.CharField(max_length=50)),
+                ("title", models.CharField(max_length=200)),
+                ("text", models.TextField()),
+                ("created_date", models.DateTimeField(auto_now_add=True)),
+                (
+                    "published_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('username', models.CharField(max_length=50)),
-                ('text', models.TextField()),
-                ('created_date', models.DateTimeField(auto_now_add=True)),
-                ('blog_id', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='blog.post')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("username", models.CharField(max_length=50)),
+                ("text", models.TextField()),
+                ("created_date", models.DateTimeField(auto_now_add=True)),
+                (
+                    "blog_id",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING, to="blog.post"
+                    ),
+                ),
             ],
         ),
     ]

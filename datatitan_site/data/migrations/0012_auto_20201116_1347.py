@@ -6,23 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('data', '0011_dropped_manual_tables'),
+        ("data", "0011_dropped_manual_tables"),
     ]
 
     operations = [
-        migrations.DeleteModel(
-            name='Country',
-        ),
-        migrations.DeleteModel(
-            name='CovidDataClean',
-        ),
-        migrations.DeleteModel(
-            name='CovidDataMonthly',
-        ),
-        migrations.DeleteModel(
-            name='CovidDataRaw',
-        ),
-        migrations.DeleteModel(
-            name='Months',
-        ),
+        migrations.DeleteModel(name="Country",),
+        migrations.DeleteModel(name="CovidDataClean",),
+        migrations.DeleteModel(name="CovidDataMonthly",),
+        migrations.DeleteModel(name="CovidDataRaw",),
+        migrations.DeleteModel(name="Months",),
     ]
