@@ -5,10 +5,11 @@
 import numpy as np
 import pandas as pd
 import datetime
+from pathlib import Path
 
-data_dir = "..\\input\\"
+data_dir = Path(__file__).parent.parent / "input"
 
-df = pd.read_csv(data_dir + "testdata.csv")
+df = pd.read_csv(data_dir / "testdata.csv")
 print(df.head())
 print((df["date"][0]))
 print(type(df["date"][0]))
