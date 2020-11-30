@@ -14,9 +14,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="comment", old_name="blog_id", new_name="blog",
+            model_name="comment",
+            old_name="blog_id",
+            new_name="blog",
         ),
-        migrations.RemoveField(model_name="comment", name="username",),
+        migrations.RemoveField(
+            model_name="comment",
+            name="username",
+        ),
         migrations.AddField(
             model_name="comment",
             name="user",

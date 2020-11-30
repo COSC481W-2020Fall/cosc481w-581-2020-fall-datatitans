@@ -22,7 +22,9 @@ class Migration(migrations.Migration):
                 ("continent", models.CharField(max_length=15)),
                 ("population", models.IntegerField()),
             ],
-            options={"managed": False,},
+            options={
+                "managed": False,
+            },
         ),
         migrations.CreateModel(
             name="CovidDataClean",
@@ -53,7 +55,10 @@ class Migration(migrations.Migration):
                     models.CharField(max_length=20, primary_key=True, serialize=False),
                 ),
             ],
-            options={"ordering": ["iso_code", "date"], "managed": False,},
+            options={
+                "ordering": ["iso_code", "date"],
+                "managed": False,
+            },
         ),
         migrations.CreateModel(
             name="CovidDataMonthly",
@@ -73,7 +78,10 @@ class Migration(migrations.Migration):
                     models.CharField(max_length=20, primary_key=True, serialize=False),
                 ),
             ],
-            options={"ordering": ["iso_code", "month"], "managed": False,},
+            options={
+                "ordering": ["iso_code", "month"],
+                "managed": False,
+            },
         ),
         migrations.CreateModel(
             name="CovidDataRaw",
@@ -183,12 +191,20 @@ class Migration(migrations.Migration):
                     models.DecimalField(decimal_places=3, max_digits=4, null=True),
                 ),
             ],
-            options={"ordering": ["iso_code", "date"], "managed": False,},
+            options={
+                "ordering": ["iso_code", "date"],
+                "managed": False,
+            },
         ),
         migrations.CreateModel(
             name="Months",
-            fields=[("month", models.DateField(primary_key=True, serialize=False)),],
-            options={"ordering": ["month"], "managed": False,},
+            fields=[
+                ("month", models.DateField(primary_key=True, serialize=False)),
+            ],
+            options={
+                "ordering": ["month"],
+                "managed": False,
+            },
         ),
         migrations.CreateModel(
             name="Post",

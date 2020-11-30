@@ -10,9 +10,19 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.DeleteModel(name="Country",),
-        migrations.DeleteModel(name="CovidDataClean",),
-        migrations.DeleteModel(name="CovidDataMonthly",),
-        migrations.DeleteModel(name="CovidDataRaw",),
-        migrations.DeleteModel(name="Months",),
+        migrations.DeleteModel(
+            name="Country",
+        ),
+        migrations.DeleteModel(
+            name="CovidDataClean",
+        ),
+        migrations.DeleteModel(
+            name="CovidDataMonthly",
+        ),
+        migrations.DeleteModel(
+            name="CovidDataRaw",
+        ),
+        migrations.DeleteModel(
+            name="Months",
+        ),
     ]
