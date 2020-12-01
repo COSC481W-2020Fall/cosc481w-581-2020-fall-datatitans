@@ -8,7 +8,7 @@ import pandas as pd
 import datetime
 
 def main():
-    
+    np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)    
     ## Below added by BPU from TestDFforML.py script
     df = pd.read_csv("mlTestData.csv")
     # Show all ISO_CODEs
@@ -55,15 +55,14 @@ def main():
     ## End BPU additions
     
     os.system("pause")
-    PopS=1
-    NGEN=1 #number of generartions to run
+    PopS=10
+    NGEN=10 #number of generartions to run
     #start of ml
     factors = ["GDP_PER_CAPITA", "POPULATION_DENSITY"] #not sure how this will work, but I would like these to contain the headers of the data set or some other way of referencing what we are using as factors
     degree = 3
     creator.create("FitnessMax", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.FitnessMax) 
     toolbox = base.Toolbox()
-    
     def genRan(): #sets intial weight to random vaule between -1 and 1
         return ((random.random()-.5)*2) #fix
 
@@ -73,7 +72,7 @@ def main():
     #above code lays the ground work for individual and the population setup for the ml proccess
     population = toolbox.population(n=PopS)
 
-    np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)    
+    
 
     def predictor(individual, ISO): #this function should take an indviudal and return the predicted value for a given set of days
         #y=P((w0)b + (w1)T+ (w2)T2+ (w3)T3)
@@ -85,9 +84,7 @@ def main():
                for k in range(degree):
                   summ += individual[(j*degree)+k]*math.pow(i,k+1)*(df.loc[ISO].head(1)[factors[j]]/max_vals[factors[j]])
                   #      weignt                   time                      indiviual factor
-           rArray.append(summ[0])
-        
-
+           rArray.append(int(df.loc[ISO].head(1)['POPULATION'][0])*summ[0])
         return (rArray)
 
     def eval(individual): # this function will be our eval function, aka the fitness function, the closer to zero the better
@@ -116,11 +113,12 @@ def main():
         for fit, ind in zip(fits, offspring):
             ind.fitness.values = fit
         top = tools.selBest(population, k=1) #saves the best of each gen to top, no use now but may be useful for internal stats later
-        fts =""
+        fts ="\t"
         for j in range(len(factors)):
+                fts+=factors[j]+': \t'
                 for k in range(degree):
                    fts += str(top[0][(j*degree)+k])+" "
-                fts= fts + "\n"
+                fts= fts + "\n\t"
         print(str(gen+1)+": "+fts)
         population = toolbox.select(offspring, k=len(population))
     #above code is where the ml proccess occurs the larger the pops and the more gens the better results will be typically
