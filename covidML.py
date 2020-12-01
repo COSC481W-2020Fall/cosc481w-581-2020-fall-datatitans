@@ -8,25 +8,28 @@ import pandas as pd
 
 
 def main():
-    factors = ["GDP", "Strignecy","PopDen"] #not sure how this will work, but I would like these to contain the headers of the data set or some other way of referencing what we are using as factors
-    degree = 3
+    factors = ["GDP", "PopDen"] #not sure how this will work, but I would like these to contain the headers of the data set or some other way of referencing what we are using as factors
+    degree = len(factors)
     creator.create("FitnessMax", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.FitnessMax) 
     toolbox = base.Toolbox()
     
     def genRan(): #sets intial weight to random vaule between -1 and 1
-        return ((random.random()-.5)*2)
+        return ((random.random()-.5)*2) #fix
 
     toolbox.register("Alpha", genRan)
-    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.Alpha, n=(degree+1)*len(factors))#sets up weights in an indviaul based on the degree of the formuala and the number of factors
+    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.Alpha, n=(degree)*len(factors))#sets up weights in an indviaul based on the degree of the formuala and the number of factors
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
     #above code lays the ground work for individual and the population setup for the ml proccess
     PopS=100
     population = toolbox.population(n=PopS)
-
+    
 
     def predictor(individual, T): #this function should take an indviudal and return the predicted value for a given set of days
         #y=P((w0)b + (w1)T+ (w2)T2+ (w3)T3)
+        rArray = [] #array of predicted values
+        for i in range(T):
+            print(i)
         return (0)
 
     def eval(individual): # this function will be our eval function, aka the fitness function, the closer to zero the better
