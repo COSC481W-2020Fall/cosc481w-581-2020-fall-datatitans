@@ -59,7 +59,7 @@ def main():
     NGEN=1 #number of generartions to run
     #start of ml
     factors = ["GDP_PER_CAPITA", "POPULATION_DENSITY"] #not sure how this will work, but I would like these to contain the headers of the data set or some other way of referencing what we are using as factors
-    degree = len(factors)
+    degree = 3
     creator.create("FitnessMax", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.FitnessMax) 
     toolbox = base.Toolbox()
@@ -119,8 +119,8 @@ def main():
         fts =""
         for j in range(len(factors)):
                 for k in range(degree):
-                   fts += str(top[(j*degree)+k]+"  ")
-                fts+="\n"
+                   fts += str(top[0][(j*degree)+k])+" "
+                fts= fts + "\n"
         print(str(gen+1)+": "+fts)
         population = toolbox.select(offspring, k=len(population))
     #above code is where the ml proccess occurs the larger the pops and the more gens the better results will be typically
