@@ -10,7 +10,6 @@ import datetime
 def main():
     
     ## Below added by BPU from TestDFforML.py script
-
     df = pd.read_csv("mlTestData.csv")
     # Show all ISO_CODEs
     # codes = df['iso_code'].unique()
@@ -33,6 +32,10 @@ def main():
     df = df.set_index('ISO_CODE')
     #df.head()
     
+    # Now that the only NaN values are at the start of each country's rows, remove all rows with NaN in Total_Cases
+    df = df.dropna(subset=['TOTAL_CASES'])
+    # Now clean up the international and world data
+    df = df.dropna(subset=['CONTINENT'])
    
     #for c in cols:
         #print(c)
@@ -42,11 +45,17 @@ def main():
     for alpha in range(len(codes) - 2):
         print('Processing ', codes[alpha])
         df.loc[codes[alpha]] = df.loc[codes[alpha]].fillna(method='ffill')
-
+    
+    # Create Series of max values for each column in df
+    max_vals = df.max(axis=0)
+    print('Max GDP: ', max_vals['GDP_PER_CAPITA'])
+    print('Max Pop Dens: ', max_vals['POPULATION_DENSITY'])
+    
     # Write df to a csv file
     #df.to_csv(data_dir+'testout.csv',index=False)
     
     ## End BPU additions
+    
     os.system("pause")
     #start of ml
     factors = ["GDP_PER_CAPITA", "POPULATION_DENSITY"] #not sure how this will work, but I would like these to contain the headers of the data set or some other way of referencing what we are using as factors
