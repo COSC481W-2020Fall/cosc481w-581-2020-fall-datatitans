@@ -10,16 +10,16 @@ import datetime
 def main():
     
     ## Below added by BPU from TestDFforML.py script
-    import datetime
-    data_dir = "\\datatitan_site\\data\\input\\"
 
-    df = pd.read_csv(data_dir + 'owid-covid-data-project.csv')
+    df = pd.read_csv("mlTestData.csv")
     # Show all ISO_CODEs
     # codes = df['iso_code'].unique()
     # codes
 
     # print('Number of ISO Codes:',len(codes))
-
+    
+    codes = df['iso_code'].unique()
+   
     # create a list of column names, then strip extra spaces and convert to upper case
     cols = list(df.columns)
     cols = [x.upper().strip() for x in cols]
@@ -32,7 +32,8 @@ def main():
 
     df = df.set_index('ISO_CODE')
     #df.head()
-
+    
+   
     #for c in cols:
         #print(c)
 
