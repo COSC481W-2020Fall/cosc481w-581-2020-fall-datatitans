@@ -27,7 +27,7 @@ def main():
         SampleSize = 100
         MutE = .1
         MutC = .5
-        GenS = 100
+        GenS = 1000
         PopS = 100
     for x in range(SampleSize):
         testCase.append(x*m+b)
@@ -89,7 +89,7 @@ def main():
                     break
             if isU:
                 UbestOf.append(i)
-    
+    UbestOf.append(bestof[len(bestof)-1])
     
 
     plotX = list(range(SampleSize))
