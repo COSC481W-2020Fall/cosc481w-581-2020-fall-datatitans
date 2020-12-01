@@ -33,8 +33,6 @@ def main():
     df = df.set_index('ISO_CODE')
     #df.head()
     
-    # Now that the only NaN values are at the start of each country's rows, remove all rows with NaN in Total_Cases
-    df = df.dropna(subset=['TOTAL_CASES'])
    
     #for c in cols:
         #print(c)
@@ -44,12 +42,7 @@ def main():
     for alpha in range(len(codes) - 2):
         print('Processing ', codes[alpha])
         df.loc[codes[alpha]] = df.loc[codes[alpha]].fillna(method='ffill')
-    
-    # Create Series of max values for each column in df
-    max_vals = df.max(axis=0)
-    print('Max GDP: ', max_vals['GDP_PER_CAPITA'])
-    print('Max Pop Dens: ', max_vals['POPULATION_DENSITY'])
-    
+
     # Write df to a csv file
     #df.to_csv(data_dir+'testout.csv',index=False)
     
@@ -74,16 +67,27 @@ def main():
     
     
 
-    def predictor(individual, T): #this function should take an indviudal and return the predicted value for a given set of days
+    def predictor(individual, ISO): #this function should take an indviudal and return the predicted value for a given set of days
         #y=P((w0)b + (w1)T+ (w2)T2+ (w3)T3)
         rArray = [] #array of predicted values
+        T = len(df[ISO])
         for i in range(T):
-            print(i)
-        return (0)
+           sum = 0 # day 0 value
+           for j in factors:
+               for k in range(degree):
+                  sum += individual[(j-1*degree)+k]*i
+           rArray.append(sum)
+        
+        return (rArray)
 
     def eval(individual): # this function will be our eval function, aka the fitness function, the closer to zero the better
-        return(0)
-
+        tester = 0
+        for i in codes:
+            actual = 1 #total deaths
+            predicted = predicted(individual, i)
+            tester -= abs(actual-predicted)/actual
+        return(tester)
+#aa
 
     toolbox.register("evaluate", eval) #lets the code recgognize what our eval/fitness function is 
     toolbox.register("mate", tools.cxBlend, alpha = .05) #sets up mate to produce a new individual with blended weights
