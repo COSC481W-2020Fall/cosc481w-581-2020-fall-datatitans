@@ -47,9 +47,9 @@ def main():
     #df.to_csv(data_dir+'testout.csv',index=False)
     
     ## End BPU additions
-    
-    
-    factors = ["GDP", "PopDen"] #not sure how this will work, but I would like these to contain the headers of the data set or some other way of referencing what we are using as factors
+    os.system("pause")
+    #start of ml
+    factors = ["GDP_PER_CAPITA", "POPULATION_DENSITY"] #not sure how this will work, but I would like these to contain the headers of the data set or some other way of referencing what we are using as factors
     degree = len(factors)
     creator.create("FitnessMax", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.FitnessMax) 
@@ -64,6 +64,7 @@ def main():
     #above code lays the ground work for individual and the population setup for the ml proccess
     PopS=100
     population = toolbox.population(n=PopS)
+    
     
 
     def predictor(individual, T): #this function should take an indviudal and return the predicted value for a given set of days
