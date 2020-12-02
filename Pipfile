@@ -6,10 +6,13 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 coverage = "*"
+selenium = "*"
+pre-commit = "*"
+dask = {extras = ["complete"], version = "*"}
 
 [packages]
 Django = "*"
-numpy = "*"
+numpy = "==1.19.3"
 pandas = "*"
 matplotlib = "*"
 seaborn = "*"
@@ -17,7 +20,17 @@ mpld3 = "*"
 sqlalchemy = "*"
 python-memcached = "*"
 psycopg2 = "*"
+backoff = "*"
+google-cloud-secret-manager = "*"
+google-cloud-storage = "*"
+gcsfs = "*"
+social-auth-app-django = "*"
+python-dotenv = "*"
+pyarrow = "*"
+fastparquet = "*"
 statsmodels = "*"
+deap = "*"
+urllib3 = {version = "*", markers = "(python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4') and python_version < '4'"}
 
 [requires]
 python_version = "3.8"

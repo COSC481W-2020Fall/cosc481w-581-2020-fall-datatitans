@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class=" content-div row">
+    <div class=col-md-2></div>
+    <div class="blog-container col-md-8 shadow p-3 mb-5 bg-white rounded">
+        <h2>{{ post.title }}</h2>
+        <div>
+            <p>{{ post.text }}</p>
+            <p>published: {{ post.published_date }}</p>
+        </div>
+    {% if user.is_authenticated %}
+        <div class="comment-section">
+            <form method="POST" class="post-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="save btn btn-default">Post</button>
+            </form>
+        </div>
+    {% endif %}
+
+        <div>
+            {% for comment in comments%}
+                <h4>{{ comment.user__username }}</h4>
+                <p>{{ comment.text }} <br> {{ comment.created_date }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class=col-md-2></div>
+
+</div>
+{% endblock content %}

@@ -1,0 +1,28 @@
+runtime: python38
+
+env_variables:
+  APP_ENV: "google-app-engine"
+  POSTGRES_ACCOUNT_SECRET_ID: "projects/984278497023/secrets/DataTitans-Postgres-Account/versions/latest"
+  OAUTH_CREDENTIALS_SECRET_ID: "projects/984278497023/secrets/App-Engine-OAuth/versions/latest"
+  DJANGO_SECRET_KEY_ID: "projects/984278497023/secrets/Django-Secret-Key/versions/latest"
+  DEBUG: "False"
+  ALLOWED_HOSTS: '["data-titans.uc.r.appspot.com"]'
+  POSTGRES_HOST: "/cloudsql/data-titans:us-central1:datatitans-test"
+  DATABASE_NAME: "DataTitans"
+  INPUT_FILE: "gs://data-titans.appspot.com/input/owid-covid-data.csv"
+
+instance_class: F2
+
+handlers:
+  - url: /favicon\.ico
+    static_files: favicon.ico
+    upload: favicon\.ico
+
+  - url: /bootstrap
+    static_dir: bootstrap
+
+  - url: /static
+    static_dir: static/
+
+  - url: /.*
+    script: auto

@@ -3,12 +3,49 @@ services:
   datatitan_site:
     build: ./
     ports:
-    - "8000:8000"
+      - "8080:8000"
+    networks:
+      - frontend
+      - backend
+    secrets:
+      - postgres_password
+    depends_on:
+      db:
+        condition: service_healthy
+      memcached:
+        condition: service_started
+    environment:
+      POSTGRES_USER: DataTitans
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      APP_ENV: docker-compose
+#    command: ["wait-for-it", "db:5432", "--strict", "--", "pipenv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+
   memcached:
-    image: library/memcached:latest
+    image: memcached:latest
+    ports:
+      - "11211"
+    networks:
+      - backend
+
   db:
-    image: library/mysql:latest
+    image: postgres:latest
     restart: always
+    environment:
+      POSTGRES_USER: DataTitans
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets:
+      - postgres_password
+    volumes:
+    - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    ports:
+    - "5432"
+    healthcheck:
+      test: pg_isready -U DataTitans
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 
 volumes:
@@ -19,4 +56,8 @@ secrets:
     file: cred/postgres_password.txt
 
 networks:
-  overlay:
+  frontend:
+    driver: bridge
+
+  backend:
+    driver: bridge

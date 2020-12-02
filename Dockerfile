@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.8
 LABEL maintainer="estanevi@emich.edu"
 WORKDIR /app/DataTitans
 RUN pip install pipenv
@@ -7,7 +7,6 @@ COPY Pipfile.lock .
 RUN pipenv install --deploy --ignore-pipfile
 COPY . .
 WORKDIR datatitan_site
-RUN pipenv run python manage.py migrate
-VOLUME /app/DataTitans/datatitan_site/data/input
+ENV APP_ENV=docker
 EXPOSE 8000
 CMD ["pipenv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]

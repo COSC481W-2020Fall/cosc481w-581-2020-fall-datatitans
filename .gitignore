@@ -392,3 +392,7 @@ fabric.properties
 .history
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,django,pydev,visualstudiocode,eclipse
+
+.idea/dataSources.xml
+
+datatitan_site/static/

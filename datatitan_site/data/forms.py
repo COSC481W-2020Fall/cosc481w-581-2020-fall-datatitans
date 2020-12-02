@@ -1,11 +1,10 @@
 from django import forms
 from data.models import Country
-from django.core.cache import cache
 
 
 class CountrySelect(forms.CheckboxSelectMultiple):
     def __init__(self, *args, **kwargs):
-        self.selected_countries = []
+        # self.selected_countries = []
         super(CountrySelect, self).__init__(*args, **kwargs)
         self.attrs["class"] = "custom-checkbox"
 
@@ -17,8 +16,8 @@ class CountrySelect(forms.CheckboxSelectMultiple):
         )
         if value:
             option["label"] = value.instance.name
-            if value.instance.country_code in self.selected_countries:
-                option["attrs"]["checked"] = True
+            # if value.instance.iso_code in self.selected_countries:
+            #     option["attrs"]["checked"] = True
         return option
 
 
@@ -38,26 +37,28 @@ class MemorizedSelect(forms.Select):
 
 class ChartSelector(forms.Form):
     chart_type = forms.ChoiceField(
-        choices=(("LINE", "Line Chart"), ("BAR", "Bar Graph")), widget=MemorizedSelect
+        choices=(("LINE", "Line Chart"), ("BAR", "Bar Graph")),
+        widget=forms.Select(attrs={"class": "custom-select form-control"}),
     )
-    country_code = forms.ModelMultipleChoiceField(
-        (
-            cache.get_or_set("countries", Country.objects.all())
-            if not (countries := cache.get("countries"))
-            else countries
-        ),
-        widget=CountrySelect,
+    iso_code = forms.ModelMultipleChoiceField(
+        Country.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={"class": "custom-checkbox"}),
+        label="Country:",
     )
     data_type = forms.ChoiceField(
-        choices=(("TOTAL_CASES", "Total Cases"), ("TOTAL_DEATHS", "Total Deaths")),
-        widget=MemorizedSelect,
+        choices=(("CASES", "Cases"), ("DEATHS", "Deaths"), ("TESTS", "Tests")),
+        widget=forms.Select(attrs={"class": "custom-select form-control"}),
+    )
+    metric = forms.ChoiceField(
+        choices=(("raw", "Raw"), ("normalized", "Normalized")),
+        widget=forms.Select(attrs={"class": "custom-select form-control"}),
     )
 
-    def __init__(self, *args, **kwargs):
-        selected_countries = kwargs.pop("selected_country_codes", [])
-        selected_data_type = kwargs.pop("selected_data_type", None)
-        selected_chart_type = kwargs.pop("selected_chart_type", None)
-        super(ChartSelector, self).__init__(*args, **kwargs)
-        self.fields["country_code"].widget.selected_countries = selected_countries
-        self.fields["data_type"].widget.selected_option = selected_data_type
-        self.fields["chart_type"].widget.selected_option = selected_chart_type
+    # def __init__(self, *args, **kwargs):
+    #     selected_countries = kwargs.pop("selected_iso_codes", [])
+    #     selected_data_type = kwargs.pop("selected_data_type", None)
+    #     selected_chart_type = kwargs.pop("selected_chart_type", None)
+    #     super(ChartSelector, self).__init__(*args, **kwargs)
+    #     self.fields["iso_code"].widget.selected_countries = selected_countries
+    #     self.fields["data_type"].widget.selected_option = selected_data_type
+    #     self.fields["chart_type"].widget.selected_option = selected_chart_type
