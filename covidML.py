@@ -55,10 +55,10 @@ def main():
     ## End BPU additions
     
     os.system("pause")
-    PopS=10
+    PopS=10 #pop size
     NGEN=10 #number of generartions to run
     #start of ml
-    factors = ["GDP_PER_CAPITA", "POPULATION_DENSITY"] #not sure how this will work, but I would like these to contain the headers of the data set or some other way of referencing what we are using as factors
+    factors = ["GDP_PER_CAPITA", "POPULATION_DENSITY"] #enter factors here
     degree = 3
     creator.create("FitnessMax", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.FitnessMax) 
