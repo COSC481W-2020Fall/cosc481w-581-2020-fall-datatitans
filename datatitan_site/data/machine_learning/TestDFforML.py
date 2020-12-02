@@ -2,16 +2,20 @@
 # Then clean them up by prefilling NaN and None fields; changing the Date column to Date/Time format
 # The output is written to a file in the data directory (data/input)
 
+
 import numpy as np
 import pandas as pd
 import datetime
 from pathlib import Path
 
-data_dir = Path(__file__).parent.parent / "input"
+data_dir = Path(__file__).parent.parent / "sourcedata"
 
-df = pd.read_csv(data_dir / "testdata.csv")
-print(df.head())
+df = pd.read_csv(data_dir / "owid-covid-data-project.csv")
+
+df.head()
+
 print((df["date"][0]))
+
 print(type(df["date"][0]))
 
 len(df)
@@ -20,14 +24,17 @@ len(df)
 codes = df["iso_code"].unique()
 codes
 
+print("Number of ISO Codes:", len(codes))
+
 # create a list of column names, then strip extra spaces and convert to upper case
 cols = list(df.columns)
 cols = [x.upper().strip() for x in cols]
 df.columns = cols
 df.head(0)
 
-print(cols)
-# print(type(cols))
+cols
+
+type(cols)
 
 # Convert date column to date/time type
 df["DATE"] = pd.to_datetime(df["DATE"])
@@ -42,15 +49,18 @@ for c in cols:
 
 df[250:260]
 
-c = "USA"
-df.loc[c]
+df.loc["USA"]
+
+print(type(codes[0]))
 
 # Fill in missing values using ffill; leading NaN values will NOT be replaced
 
-for c in codes:
-    df.loc[c] = df.loc[c].fillna(method="ffill")
+# for cd in codes:
+#    df.loc[cd] = df.loc[cd].fillna(method='ffill')
 
-df[250:260]
+for alpha in range(len(codes) - 2):
+    print("Processing ", codes[alpha])
+    df.loc[codes[alpha]] = df.loc[codes[alpha]].fillna(method="ffill")
 
 # Write df to a csv file
 df.to_csv(data_dir + "testout.csv", index=False)
