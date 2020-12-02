@@ -6,12 +6,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import datetime
+from pathlib import Path
 
 
 def main():
     np.warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
     ## Below added by BPU from TestDFforML.py script
-    data_path = os.path.relpath("datatitan_site/data/input/owid-covid-data.csv")
+    data_path = Path(__file__).parent / "datatitan_site/data/input/owid-covid-data.csv"
     df = pd.read_csv(data_path)
     # Show all ISO_CODEs
     # codes = df
