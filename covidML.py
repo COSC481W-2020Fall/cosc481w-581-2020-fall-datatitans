@@ -56,8 +56,8 @@ def main():
     ## End BPU additions
     
     os.system("pause")
-    PopS=10 #pop size
-    NGEN=10 #number of generartions to run
+    PopS=100 #pop size
+    NGEN=1000 #number of generartions to run
     #start of ml
     factors = ["GDP_PER_CAPITA", "POPULATION_DENSITY"] #enter factors here
     degree = 3
