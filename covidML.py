@@ -167,16 +167,19 @@ def main():
 
     plt.plot(xAxis1, plotActual1, label = "USA-Actual")
     plt.plot(xAxis1, plotPredicted1, label = "USA-Predicted")
+    plt.title("USA")
     plt.legend()
     plt.show()
 
     plt.plot(xAxis2, plotActual2, label = "Algeria-Actual")
     plt.plot(xAxis2, plotPredicted2, label = "Algeria-Predicted")
+    plt.title("Algeria")
     plt.legend()
     plt.show()
 
     plt.plot(xAxis3, plotActual3, label = "Germany-Actual")
     plt.plot(xAxis3, plotPredicted3, label = "Germany-Predicted")
+    plt.title("Germany")
     plt.legend()
     plt.show()
 
