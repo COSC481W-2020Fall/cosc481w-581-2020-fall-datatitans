@@ -60,8 +60,8 @@ def main():
     #plt.show()
 
     #os.system("pause")
-    PopS=1 #pop size
-    NGEN=3 #number of generartions to run
+    PopS=10 #pop size
+    NGEN=10 #number of generartions to run
     #start of ml
     percentUsage= .5 #percent of database to use
     factors = ["GDP_PER_CAPITA", "POPULATION_DENSITY"] #enter factors here
@@ -124,6 +124,14 @@ def main():
     f = open("results.txt", "w")
     f.close()
     f = open("results.txt", "a")
+    fa = ""
+    for i in factors:
+        fa += str(i)+ " "
+    f.write("Factors: "+ fa+ "\n")
+    f.write("Degree: "+str(degree)+ "\n")
+    f.write("Database usage: "+str(percentUsage)+ "\n")  
+    f.write("Pop Size: "+str(PopS)+ "\n")
+    f.write("Number of Generations: "+str(NGEN)+ "\n")  
     rt=0
     for gen in range(NGEN):
         rT=time.time()
