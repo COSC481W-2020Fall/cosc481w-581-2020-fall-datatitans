@@ -3,125 +3,4596 @@
 {% load static %}
 {% block content %}
     {% load cache %}
-
-    <style>
-    /* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
+<style>
 .centerDiv {
     text-align: center;
 }
     </style>
 
-<div class="centerDiv">Total Cases
-<label class="switch">
-<input type="checkbox" id="data_slider">
-<span class="slider round"></span>
-</label>
-Total Deaths</div>
+
 
 <script src="//cdn.amcharts.com/lib/4/core.js"></script>
 <script src="//cdn.amcharts.com/lib/4/maps.js"></script>
 <script src="//cdn.amcharts.com/lib/4/geodata/worldLow.js"></script>
 
 <script>
-    /*
-    Additional options
-    // to exclude or pull out a countries object
-    polygonSeries.exclude = ["countries ISO2 code"];
-    // to only include a particular countries objects
-    polygonSeries.include = ["ISO2", "ISO2"];
-     */
-// map theme
+var data = {
+"case":[
+  {
+    "id": "AW",
+    "iso_code": "ABW",
+    "location": "Aruba",
+    "continent": "North America",
+    "population": 106766,
+    "value": 4553,
+    "total_deaths": 39,
+    "value_per_million": 42644.66216,
+    "total_deaths_per_million": 365.2848285
+  },
+  {
+    "id": "AF",
+    "iso_code": "AFG",
+    "location": "Afghanistan",
+    "continent": "Asia",
+    "population": 38928341,
+    "value": 41935,
+    "total_deaths": 1554,
+    "value_per_million": 1077.235734,
+    "total_deaths_per_million": 39.91950235
+  },
+  {
+    "id": "AO",
+    "iso_code": "AGO",
+    "location": "Angola",
+    "continent": "Africa",
+    "population": 32866268,
+    "value": 11577,
+    "total_deaths": 291,
+    "value_per_million": 352.245652,
+    "total_deaths_per_million": 8.854062773
+  },
+  {
+    "id": "AI",
+    "iso_code": "AIA",
+    "location": "Anguilla",
+    "continent": "North America",
+    "population": 15002,
+    "value": 3,
+    "total_deaths": 0,
+    "value_per_million": 199.9733369,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "AL",
+    "iso_code": "ALB",
+    "location": "Albania",
+    "continent": "Europe",
+    "population": 2877800,
+    "value": 22300,
+    "total_deaths": 536,
+    "value_per_million": 7748.974911,
+    "total_deaths_per_million": 186.253388
+  },
+  {
+    "id": "AD",
+    "iso_code": "AND",
+    "location": "Andorra",
+    "continent": "Europe",
+    "population": 77265,
+    "value": 5045,
+    "total_deaths": 75,
+    "value_per_million": 65294.76477,
+    "total_deaths_per_million": 970.6853038
+  },
+  {
+    "id": "AE",
+    "iso_code": "ARE",
+    "location": "United Arab Emirates",
+    "continent": "Asia",
+    "population": 9890400,
+    "value": 137310,
+    "total_deaths": 505,
+    "value_per_million": 13883.15943,
+    "total_deaths_per_million": 51.05961336
+  },
+  {
+    "id": "AR",
+    "iso_code": "ARG",
+    "location": "Argentina",
+    "continent": "South America",
+    "population": 45195777,
+    "value": 1205915,
+    "total_deaths": 32520,
+    "value_per_million": 26682.02828,
+    "total_deaths_per_million": 719.5362522
+  },
+  {
+    "id": "AM",
+    "iso_code": "ARM",
+    "location": "Armenia",
+    "continent": "Asia",
+    "population": 2963234,
+    "value": 99563,
+    "total_deaths": 1476,
+    "value_per_million": 33599.43899,
+    "total_deaths_per_million": 498.1044359
+  },
+  {
+    "id": "AG",
+    "iso_code": "ATG",
+    "location": "Antigua and Barbuda",
+    "continent": "North America",
+    "population": 97928,
+    "value": 130,
+    "total_deaths": 3,
+    "value_per_million": 1327.505923,
+    "total_deaths_per_million": 30.63475206
+  },
+  {
+    "id": "AU",
+    "iso_code": "AUS",
+    "location": "Australia",
+    "continent": "Oceania",
+    "population": 25499881,
+    "value": 27622,
+    "total_deaths": 907,
+    "value_per_million": 1083.220741,
+    "total_deaths_per_million": 35.56879344
+  },
+  {
+    "id": "AT",
+    "iso_code": "AUT",
+    "location": "Austria",
+    "continent": "Europe",
+    "population": 9006400,
+    "value": 125229,
+    "total_deaths": 1204,
+    "value_per_million": 13904.44573,
+    "total_deaths_per_million": 133.6827145
+  },
+  {
+    "id": "AZ",
+    "iso_code": "AZE",
+    "location": "Azerbaijan",
+    "continent": "Asia",
+    "population": 10139175,
+    "value": 59509,
+    "total_deaths": 780,
+    "value_per_million": 5869.215197,
+    "total_deaths_per_million": 76.92933597
+  },
+  {
+    "id": "BI",
+    "iso_code": "BDI",
+    "location": "Burundi",
+    "continent": "Africa",
+    "population": 11890781,
+    "value": 606,
+    "total_deaths": 1,
+    "value_per_million": 50.96385174,
+    "total_deaths_per_million": 0.084098765
+  },
+  {
+    "id": "BE",
+    "iso_code": "BEL",
+    "location": "Belgium",
+    "continent": "Europe",
+    "population": 11589616,
+    "value": 461589,
+    "total_deaths": 12138,
+    "value_per_million": 39827.80793,
+    "total_deaths_per_million": 1047.316839
+  },
+  {
+    "id": "BJ",
+    "iso_code": "BEN",
+    "location": "Benin",
+    "continent": "Africa",
+    "population": 12123198,
+    "value": 2745,
+    "total_deaths": 43,
+    "value_per_million": 226.4254036,
+    "total_deaths_per_million": 3.546918891
+  },
+  {
+    "id": "BF",
+    "iso_code": "BFA",
+    "location": "Burkina Faso",
+    "continent": "Africa",
+    "population": 20903278,
+    "value": 2539,
+    "total_deaths": 67,
+    "value_per_million": 121.4642029,
+    "total_deaths_per_million": 3.20523891
+  },
+  {
+    "id": "BD",
+    "iso_code": "BGD",
+    "location": "Bangladesh",
+    "continent": "Asia",
+    "population": 164689383,
+    "value": 414164,
+    "total_deaths": 6004,
+    "value_per_million": 2514.819064,
+    "total_deaths_per_million": 36.45650916
+  },
+  {
+    "id": "BG",
+    "iso_code": "BGR",
+    "location": "Bulgaria",
+    "continent": "Europe",
+    "population": 6948445,
+    "value": 64591,
+    "total_deaths": 1466,
+    "value_per_million": 9295.748905,
+    "total_deaths_per_million": 210.9824572
+  },
+  {
+    "id": "BH",
+    "iso_code": "BHR",
+    "location": "Bahrain",
+    "continent": "Asia",
+    "population": 1701583,
+    "value": 82624,
+    "total_deaths": 328,
+    "value_per_million": 48557.13768,
+    "total_deaths_per_million": 192.7616813
+  },
+  {
+    "id": "BS",
+    "iso_code": "BHS",
+    "location": "Bahamas",
+    "continent": "North America",
+    "population": 393248,
+    "value": 6843,
+    "total_deaths": 150,
+    "value_per_million": 17401.23281,
+    "total_deaths_per_million": 381.438685
+  },
+  {
+    "id": "BA",
+    "iso_code": "BIH",
+    "location": "Bosnia and Herzegovina",
+    "continent": "Europe",
+    "population": 3280815,
+    "value": 55598,
+    "total_deaths": 1358,
+    "value_per_million": 16946.39899,
+    "total_deaths_per_million": 413.9215408
+  },
+  {
+    "id": "BY",
+    "iso_code": "BLR",
+    "location": "Belarus",
+    "continent": "Europe",
+    "population": 9449321,
+    "value": 102313,
+    "total_deaths": 995,
+    "value_per_million": 10827.55047,
+    "total_deaths_per_million": 105.2985712
+  },
+  {
+    "id": "BZ",
+    "iso_code": "BLZ",
+    "location": "Belize",
+    "continent": "North America",
+    "population": 397621,
+    "value": 3905,
+    "total_deaths": 64,
+    "value_per_million": 9820.909861,
+    "total_deaths_per_million": 160.9572935
+  },
+  {
+    "id": "BM",
+    "iso_code": "BMU",
+    "location": "Bermuda",
+    "continent": "North America",
+    "population": 62273,
+    "value": 206,
+    "total_deaths": 9,
+    "value_per_million": 3308.014709,
+    "total_deaths_per_million": 144.5249145
+  },
+  {
+    "id": "BO",
+    "iso_code": "BOL",
+    "location": "Bolivia",
+    "continent": "South America",
+    "population": 11673029,
+    "value": 142062,
+    "total_deaths": 8758,
+    "value_per_million": 12170.10598,
+    "total_deaths_per_million": 750.2765563
+  },
+  {
+    "id": "BR",
+    "iso_code": "BRA",
+    "location": "Brazil",
+    "continent": "South America",
+    "population": 212559409,
+    "value": 5590025,
+    "total_deaths": 161106,
+    "value_per_million": 26298.64764,
+    "total_deaths_per_million": 757.9339854
+  },
+  {
+    "id": "BB",
+    "iso_code": "BRB",
+    "location": "Barbados",
+    "continent": "North America",
+    "population": 287371,
+    "value": 239,
+    "total_deaths": 7,
+    "value_per_million": 831.6775179,
+    "total_deaths_per_million": 24.35875575
+  },
+  {
+    "id": "BN",
+    "iso_code": "BRN",
+    "location": "Brunei",
+    "continent": "Asia",
+    "population": 437483,
+    "value": 148,
+    "total_deaths": 3,
+    "value_per_million": 338.2988596,
+    "total_deaths_per_million": 6.857409316
+  },
+  {
+    "id": "BT",
+    "iso_code": "BTN",
+    "location": "Bhutan",
+    "continent": "Asia",
+    "population": 771612,
+    "value": 358,
+    "total_deaths": 0,
+    "value_per_million": 463.9637538,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "BW",
+    "iso_code": "BWA",
+    "location": "Botswana",
+    "continent": "Africa",
+    "population": 2351625,
+    "value": 6642,
+    "total_deaths": 24,
+    "value_per_million": 2824.429915,
+    "total_deaths_per_million": 10.20570882
+  },
+  {
+    "id": "CF",
+    "iso_code": "CAF",
+    "location": "Central African Republic",
+    "continent": "Africa",
+    "population": 4829764,
+    "value": 4875,
+    "total_deaths": 62,
+    "value_per_million": 1009.366089,
+    "total_deaths_per_million": 12.83706616
+  },
+  {
+    "id": "CA",
+    "iso_code": "CAN",
+    "location": "Canada",
+    "continent": "North America",
+    "population": 37742157,
+    "value": 247703,
+    "total_deaths": 10331,
+    "value_per_million": 6563.03242,
+    "total_deaths_per_million": 273.7257439
+  },
+  {
+    "id": "CH",
+    "iso_code": "CHE",
+    "location": "Switzerland",
+    "continent": "Europe",
+    "population": 8654618,
+    "value": 191703,
+    "total_deaths": 2272,
+    "value_per_million": 22150.37105,
+    "total_deaths_per_million": 262.5188079
+  },
+  {
+    "id": "CL",
+    "iso_code": "CHL",
+    "location": "Chile",
+    "continent": "South America",
+    "population": 19116209,
+    "value": 515042,
+    "total_deaths": 14340,
+    "value_per_million": 26942.68513,
+    "total_deaths_per_million": 750.148735
+  },
+  {
+    "id": "CN",
+    "iso_code": "CHN",
+    "location": "China",
+    "continent": "Asia",
+    "population": 1439323774,
+    "value": 91439,
+    "total_deaths": 4739,
+    "value_per_million": 63.52913893,
+    "total_deaths_per_million": 3.292518393
+  },
+  {
+    "id": "CI",
+    "iso_code": "CIV",
+    "location": "Cote d'Ivoire",
+    "continent": "Africa",
+    "population": 26378275,
+    "value": 20778,
+    "total_deaths": 126,
+    "value_per_million": 787.6936608,
+    "total_deaths_per_million": 4.776658064
+  },
+  {
+    "id": "CM",
+    "iso_code": "CMR",
+    "location": "Cameroon",
+    "continent": "Africa",
+    "population": 26545864,
+    "value": 22103,
+    "total_deaths": 429,
+    "value_per_million": 832.6344172,
+    "total_deaths_per_million": 16.16070963
+  },
+  {
+    "id": "CD",
+    "iso_code": "COD",
+    "location": "Democratic Republic of Congo",
+    "continent": "Africa",
+    "population": 89561404,
+    "value": 11449,
+    "total_deaths": 314,
+    "value_per_million": 127.8340835,
+    "total_deaths_per_million": 3.505974516
+  },
+  {
+    "id": "CG",
+    "iso_code": "COG",
+    "location": "Congo",
+    "continent": "Africa",
+    "population": 5518092,
+    "value": 5379,
+    "total_deaths": 92,
+    "value_per_million": 974.7934612,
+    "total_deaths_per_million": 16.67242953
+  },
+  {
+    "id": "CO",
+    "iso_code": "COL",
+    "location": "Colombia",
+    "continent": "South America",
+    "population": 50882884,
+    "value": 1108084,
+    "total_deaths": 32013,
+    "value_per_million": 21777.14612,
+    "total_deaths_per_million": 629.150659
+  },
+  {
+    "id": "KM",
+    "iso_code": "COM",
+    "location": "Comoros",
+    "continent": "Africa",
+    "population": 869595,
+    "value": 554,
+    "total_deaths": 7,
+    "value_per_million": 637.0781801,
+    "total_deaths_per_million": 8.049724297
+  },
+  {
+    "id": "CV",
+    "iso_code": "CPV",
+    "location": "Cape Verde",
+    "continent": "Africa",
+    "population": 555988,
+    "value": 9053,
+    "total_deaths": 95,
+    "value_per_million": 16282.72553,
+    "total_deaths_per_million": 170.8669971
+  },
+  {
+    "id": "CR",
+    "iso_code": "CRI",
+    "location": "Costa Rica",
+    "continent": "North America",
+    "population": 5094114,
+    "value": 113261,
+    "total_deaths": 1431,
+    "value_per_million": 22233.69952,
+    "total_deaths_per_million": 280.9124413
+  },
+  {
+    "id": "CU",
+    "iso_code": "CUB",
+    "location": "Cuba",
+    "continent": "North America",
+    "population": 11326616,
+    "value": 7144,
+    "total_deaths": 129,
+    "value_per_million": 630.7267766,
+    "total_deaths_per_million": 11.38910333
+  },
+  {
+    "id": "KY",
+    "iso_code": "CYM",
+    "location": "Cayman Islands",
+    "continent": "North America",
+    "population": 65720,
+    "value": 242,
+    "total_deaths": 1,
+    "value_per_million": 3682.288497,
+    "total_deaths_per_million": 15.21606817
+  },
+  {
+    "id": "CY",
+    "iso_code": "CYP",
+    "location": "Cyprus",
+    "continent": "Europe",
+    "population": 875899,
+    "value": 5100,
+    "total_deaths": 27,
+    "value_per_million": 5822.589134,
+    "total_deaths_per_million": 30.82547189
+  },
+  {
+    "id": "CZ",
+    "iso_code": "CZE",
+    "location": "Czech Republic",
+    "continent": "Europe",
+    "population": 10708982,
+    "value": 378716,
+    "total_deaths": 4133,
+    "value_per_million": 35364.33248,
+    "total_deaths_per_million": 385.937711
+  },
+  {
+    "id": "DE",
+    "iso_code": "DEU",
+    "location": "Germany",
+    "continent": "Europe",
+    "population": 83783945,
+    "value": 597583,
+    "total_deaths": 10930,
+    "value_per_million": 7132.428534,
+    "total_deaths_per_million": 130.4545877
+  },
+  {
+    "id": "DJ",
+    "iso_code": "DJI",
+    "location": "Djibouti",
+    "continent": "Africa",
+    "population": 988002,
+    "value": 5580,
+    "total_deaths": 61,
+    "value_per_million": 5647.761847,
+    "total_deaths_per_million": 61.74076571
+  },
+  {
+    "id": "DM",
+    "iso_code": "DMA",
+    "location": "Dominica",
+    "continent": "North America",
+    "population": 71991,
+    "value": 42,
+    "total_deaths": 0,
+    "value_per_million": 583.4062591,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "DK",
+    "iso_code": "DNK",
+    "location": "Denmark",
+    "continent": "Europe",
+    "population": 5792203,
+    "value": 50530,
+    "total_deaths": 729,
+    "value_per_million": 8723.796455,
+    "total_deaths_per_million": 125.8588485
+  },
+  {
+    "id": "DO",
+    "iso_code": "DOM",
+    "location": "Dominican Republic",
+    "continent": "North America",
+    "population": 10847904,
+    "value": 128278,
+    "total_deaths": 2257,
+    "value_per_million": 11825.14152,
+    "total_deaths_per_million": 208.0586259
+  },
+  {
+    "id": "DZ",
+    "iso_code": "DZA",
+    "location": "Algeria",
+    "continent": "Africa",
+    "population": 43851043,
+    "value": 59527,
+    "total_deaths": 1999,
+    "value_per_million": 1357.481965,
+    "total_deaths_per_million": 45.5861449
+  },
+  {
+    "id": "EC",
+    "iso_code": "ECU",
+    "location": "Ecuador",
+    "continent": "South America",
+    "population": 17643060,
+    "value": 171433,
+    "total_deaths": 12704,
+    "value_per_million": 9716.73848,
+    "total_deaths_per_million": 720.0564981
+  },
+  {
+    "id": "EG",
+    "iso_code": "EGY",
+    "location": "Egypt",
+    "continent": "Africa",
+    "population": 102334403,
+    "value": 108329,
+    "total_deaths": 6318,
+    "value_per_million": 1058.578511,
+    "total_deaths_per_million": 61.73876834
+  },
+  {
+    "id": "ER",
+    "iso_code": "ERI",
+    "location": "Eritrea",
+    "continent": "Africa",
+    "population": 3546427,
+    "value": 480,
+    "total_deaths": 0,
+    "value_per_million": 135.347492,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "EH",
+    "iso_code": "ESH",
+    "location": "Western Sahara",
+    "continent": "Africa",
+    "population": 597330,
+    "value": 766,
+    "total_deaths": 1,
+    "value_per_million": 1282.373228,
+    "total_deaths_per_million": 1.674116485
+  },
+  {
+    "id": "ES",
+    "iso_code": "ESP",
+    "location": "Spain",
+    "continent": "Europe",
+    "population": 46754783,
+    "value": 1284408,
+    "total_deaths": 38118,
+    "value_per_million": 27471.15734,
+    "total_deaths_per_million": 815.2748779
+  },
+  {
+    "id": "EE",
+    "iso_code": "EST",
+    "location": "Estonia",
+    "continent": "Europe",
+    "population": 1326539,
+    "value": 5333,
+    "total_deaths": 73,
+    "value_per_million": 4020.236118,
+    "total_deaths_per_million": 55.03042127
+  },
+  {
+    "id": "ET",
+    "iso_code": "ETH",
+    "location": "Ethiopia",
+    "continent": "Africa",
+    "population": 114963583,
+    "value": 97881,
+    "total_deaths": 1503,
+    "value_per_million": 851.4087457,
+    "total_deaths_per_million": 13.07370526
+  },
+  {
+    "id": "FI",
+    "iso_code": "FIN",
+    "location": "Finland",
+    "continent": "Europe",
+    "population": 5540718,
+    "value": 16930,
+    "total_deaths": 361,
+    "value_per_million": 3055.560669,
+    "total_deaths_per_million": 65.15401073
+  },
+  {
+    "id": "FJ",
+    "iso_code": "FJI",
+    "location": "Fiji",
+    "continent": "Oceania",
+    "population": 896444,
+    "value": 34,
+    "total_deaths": 2,
+    "value_per_million": 37.92763407,
+    "total_deaths_per_million": 2.231037298
+  },
+  {
+    "id": "FK",
+    "iso_code": "FLK",
+    "location": "Falkland Islands",
+    "continent": "South America",
+    "population": 3483,
+    "value": 13,
+    "total_deaths": 0,
+    "value_per_million": 3732.414585,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "FR",
+    "iso_code": "FRA",
+    "location": "France",
+    "continent": "Europe",
+    "population": 65273512,
+    "value": 1543321,
+    "total_deaths": 38674,
+    "value_per_million": 23643.90934,
+    "total_deaths_per_million": 592.4914841
+  },
+  {
+    "id": "FO",
+    "iso_code": "FRO",
+    "location": "Faeroe Islands",
+    "continent": "Europe",
+    "population": 48865,
+    "value": 495,
+    "total_deaths": 0,
+    "value_per_million": 10129.94986,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "GA",
+    "iso_code": "GAB",
+    "location": "Gabon",
+    "continent": "Africa",
+    "population": 2225728,
+    "value": 9005,
+    "total_deaths": 55,
+    "value_per_million": 4045.86724,
+    "total_deaths_per_million": 24.7110159
+  },
+  {
+    "id": "GB",
+    "iso_code": "GBR",
+    "location": "United Kingdom",
+    "continent": "Europe",
+    "population": 67886004,
+    "value": 1099059,
+    "total_deaths": 47742,
+    "value_per_million": 16189.77308,
+    "total_deaths_per_million": 703.2672007
+  },
+  {
+    "id": "GE",
+    "iso_code": "GEO",
+    "location": "Georgia",
+    "continent": "Asia",
+    "population": 3989175,
+    "value": 49218,
+    "total_deaths": 401,
+    "value_per_million": 12337.88941,
+    "total_deaths_per_million": 100.5220378
+  },
+  {
+    "id": "GG",
+    "iso_code": "GGY",
+    "location": "Guernsey",
+    "continent": "Europe",
+    "population": 67052,
+    "value": 273,
+    "total_deaths": 13,
+    "value_per_million": 4071.466921,
+    "total_deaths_per_million": 193.8793772
+  },
+  {
+    "id": "GH",
+    "iso_code": "GHA",
+    "location": "Ghana",
+    "continent": "Africa",
+    "population": 31072945,
+    "value": 48643,
+    "total_deaths": 320,
+    "value_per_million": 1565.445438,
+    "total_deaths_per_million": 10.29834797
+  },
+  {
+    "id": "GI",
+    "iso_code": "GIB",
+    "location": "Gibraltar",
+    "continent": "Europe",
+    "population": 33691,
+    "value": 743,
+    "total_deaths": 0,
+    "value_per_million": 22053.36737,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "GN",
+    "iso_code": "GIN",
+    "location": "Guinea",
+    "continent": "Africa",
+    "population": 13132792,
+    "value": 12331,
+    "total_deaths": 73,
+    "value_per_million": 938.9473312,
+    "total_deaths_per_million": 5.558604751
+  },
+  {
+    "id": "GM",
+    "iso_code": "GMB",
+    "location": "Gambia",
+    "continent": "Africa",
+    "population": 2416664,
+    "value": 3680,
+    "total_deaths": 120,
+    "value_per_million": 1522.760301,
+    "total_deaths_per_million": 49.65522721
+  },
+  {
+    "id": "GW",
+    "iso_code": "GNB",
+    "location": "Guinea-Bissau",
+    "continent": "Africa",
+    "population": 1967998,
+    "value": 2413,
+    "total_deaths": 41,
+    "value_per_million": 1226.119132,
+    "total_deaths_per_million": 20.83335451
+  },
+  {
+    "id": "GQ",
+    "iso_code": "GNQ",
+    "location": "Equatorial Guinea",
+    "continent": "Africa",
+    "population": 1402985,
+    "value": 5089,
+    "total_deaths": 83,
+    "value_per_million": 3627.26615,
+    "total_deaths_per_million": 59.15957761
+  },
+  {
+    "id": "GR",
+    "iso_code": "GRC",
+    "location": "Greece",
+    "continent": "Europe",
+    "population": 10423056,
+    "value": 46892,
+    "total_deaths": 673,
+    "value_per_million": 4498.8725,
+    "total_deaths_per_million": 64.5683953
+  },
+  {
+    "id": "GD",
+    "iso_code": "GRD",
+    "location": "Grenada",
+    "continent": "North America",
+    "population": 112519,
+    "value": 30,
+    "total_deaths": 0,
+    "value_per_million": 266.6216372,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "GL",
+    "iso_code": "GRL",
+    "location": "Greenland",
+    "continent": "North America",
+    "population": 56772,
+    "value": 17,
+    "total_deaths": 0,
+    "value_per_million": 299.4433876,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "GT",
+    "iso_code": "GTM",
+    "location": "Guatemala",
+    "continent": "North America",
+    "population": 17915567,
+    "value": 109147,
+    "total_deaths": 3752,
+    "value_per_million": 6092.299507,
+    "total_deaths_per_million": 209.4268074
+  },
+  {
+    "id": "GU",
+    "iso_code": "GUM",
+    "location": "Guam",
+    "continent": "Oceania",
+    "population": 168783,
+    "value": 4903,
+    "total_deaths": 83,
+    "value_per_million": 29049.1341,
+    "total_deaths_per_million": 491.7556863
+  },
+  {
+    "id": "GY",
+    "iso_code": "GUY",
+    "location": "Guyana",
+    "continent": "South America",
+    "population": 786559,
+    "value": 4324,
+    "total_deaths": 130,
+    "value_per_million": 5497.362563,
+    "total_deaths_per_million": 165.2768578
+  },
+  {
+    "id": "HN",
+    "iso_code": "HND",
+    "location": "Honduras",
+    "continent": "North America",
+    "population": 9904608,
+    "value": 99124,
+    "total_deaths": 2730,
+    "value_per_million": 10007.86705,
+    "total_deaths_per_million": 275.6292829
+  },
+  {
+    "id": "HR",
+    "iso_code": "HRV",
+    "location": "Croatia",
+    "continent": "Europe",
+    "population": 4105268,
+    "value": 56567,
+    "total_deaths": 654,
+    "value_per_million": 13779.12477,
+    "total_deaths_per_million": 159.3075044
+  },
+  {
+    "id": "HT",
+    "iso_code": "HTI",
+    "location": "Haiti",
+    "continent": "North America",
+    "population": 11402533,
+    "value": 9100,
+    "total_deaths": 232,
+    "value_per_million": 798.0682889,
+    "total_deaths_per_million": 20.34635638
+  },
+  {
+    "id": "HU",
+    "iso_code": "HUN",
+    "location": "Hungary",
+    "continent": "Europe",
+    "population": 9660350,
+    "value": 94916,
+    "total_deaths": 2147,
+    "value_per_million": 9825.316888,
+    "total_deaths_per_million": 222.2486763
+  },
+  {
+    "id": "ID",
+    "iso_code": "IDN",
+    "location": "Indonesia",
+    "continent": "Asia",
+    "population": 273523621,
+    "value": 421731,
+    "total_deaths": 14259,
+    "value_per_million": 1541.8449,
+    "total_deaths_per_million": 52.13078106
+  },
+  {
+    "id": "IM",
+    "iso_code": "IMN",
+    "location": "Isle of Man",
+    "continent": "Europe",
+    "population": 85032,
+    "value": 357,
+    "total_deaths": 24,
+    "value_per_million": 4198.419419,
+    "total_deaths_per_million": 282.2466836
+  },
+  {
+    "id": "IN",
+    "iso_code": "IND",
+    "location": "India",
+    "continent": "Asia",
+    "population": 1380004385,
+    "value": 8364086,
+    "total_deaths": 124315,
+    "value_per_million": 6060.912625,
+    "total_deaths_per_million": 90.08304709
+  },
+  {
+    "id": "IE",
+    "iso_code": "IRL",
+    "location": "Ireland",
+    "continent": "Europe",
+    "population": 4937796,
+    "value": 63483,
+    "total_deaths": 1930,
+    "value_per_million": 12856.54571,
+    "total_deaths_per_million": 390.862644
+  },
+  {
+    "id": "IR",
+    "iso_code": "IRN",
+    "location": "Iran",
+    "continent": "Asia",
+    "population": 83992953,
+    "value": 646164,
+    "total_deaths": 36579,
+    "value_per_million": 7693.073965,
+    "total_deaths_per_million": 435.5008211
+  },
+  {
+    "id": "IQ",
+    "iso_code": "IRQ",
+    "location": "Iraq",
+    "continent": "Asia",
+    "population": 40222503,
+    "value": 485870,
+    "total_deaths": 11128,
+    "value_per_million": 12079.55656,
+    "total_deaths_per_million": 276.6610521
+  },
+  {
+    "id": "IS",
+    "iso_code": "ISL",
+    "location": "Iceland",
+    "continent": "Europe",
+    "population": 341250,
+    "value": 4989,
+    "total_deaths": 17,
+    "value_per_million": 14619.78022,
+    "total_deaths_per_million": 49.81684982
+  },
+  {
+    "id": "IL",
+    "iso_code": "ISR",
+    "location": "Israel",
+    "continent": "Asia",
+    "population": 8655541,
+    "value": 317556,
+    "total_deaths": 2597,
+    "value_per_million": 36688.17466,
+    "total_deaths_per_million": 300.0390155
+  },
+  {
+    "id": "IT",
+    "iso_code": "ITA",
+    "location": "Italy",
+    "continent": "Europe",
+    "population": 60461828,
+    "value": 790377,
+    "total_deaths": 39764,
+    "value_per_million": 13072.33053,
+    "total_deaths_per_million": 657.6711508
+  },
+  {
+    "id": "JM",
+    "iso_code": "JAM",
+    "location": "Jamaica",
+    "continent": "North America",
+    "population": 2961161,
+    "value": 9326,
+    "total_deaths": 215,
+    "value_per_million": 3149.440372,
+    "total_deaths_per_million": 72.60665665
+  },
+  {
+    "id": "JE",
+    "iso_code": "JEY",
+    "location": "Jersey",
+    "continent": "Europe",
+    "population": 101073,
+    "value": 620,
+    "total_deaths": 32,
+    "value_per_million": 6134.180246,
+    "total_deaths_per_million": 316.6028514
+  },
+  {
+    "id": "JO",
+    "iso_code": "JOR",
+    "location": "Jordan",
+    "continent": "Asia",
+    "population": 10203140,
+    "value": 91234,
+    "total_deaths": 1029,
+    "value_per_million": 8941.757145,
+    "total_deaths_per_million": 100.8513066
+  },
+  {
+    "id": "JP",
+    "iso_code": "JPN",
+    "location": "Japan",
+    "continent": "Asia",
+    "population": 126476458,
+    "value": 103838,
+    "total_deaths": 1794,
+    "value_per_million": 821.0065465,
+    "total_deaths_per_million": 14.18445795
+  },
+  {
+    "id": "KZ",
+    "iso_code": "KAZ",
+    "location": "Kazakhstan",
+    "continent": "Asia",
+    "population": 18776707,
+    "value": 152725,
+    "total_deaths": 2263,
+    "value_per_million": 8133.74784,
+    "total_deaths_per_million": 120.5216655
+  },
+  {
+    "id": "KE",
+    "iso_code": "KEN",
+    "location": "Kenya",
+    "continent": "Africa",
+    "population": 53771300,
+    "value": 58587,
+    "total_deaths": 1051,
+    "value_per_million": 1089.558928,
+    "total_deaths_per_million": 19.5457428
+  },
+  {
+    "id": "KG",
+    "iso_code": "KGZ",
+    "location": "Kyrgyzstan",
+    "continent": "Asia",
+    "population": 6524191,
+    "value": 61309,
+    "total_deaths": 1167,
+    "value_per_million": 9397.180432,
+    "total_deaths_per_million": 178.8727522
+  },
+  {
+    "id": "KH",
+    "iso_code": "KHM",
+    "location": "Cambodia",
+    "continent": "Asia",
+    "population": 16718971,
+    "value": 292,
+    "total_deaths": 0,
+    "value_per_million": 17.46518969,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "KN",
+    "iso_code": "KNA",
+    "location": "Saint Kitts and Nevis",
+    "continent": "North America",
+    "population": 53192,
+    "value": 19,
+    "total_deaths": 0,
+    "value_per_million": 357.1965709,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "KR",
+    "iso_code": "KOR",
+    "location": "South Korea",
+    "continent": "Asia",
+    "population": 51269183,
+    "value": 27050,
+    "total_deaths": 475,
+    "value_per_million": 527.6073933,
+    "total_deaths_per_million": 9.264824836
+  },
+  {
+    "id": "KW",
+    "iso_code": "KWT",
+    "location": "Kuwait",
+    "continent": "Asia",
+    "population": 4270563,
+    "value": 128843,
+    "total_deaths": 794,
+    "value_per_million": 30170.02676,
+    "total_deaths_per_million": 185.9239637
+  },
+  {
+    "id": "LA",
+    "iso_code": "LAO",
+    "location": "Laos",
+    "continent": "Asia",
+    "population": 7275556,
+    "value": 24,
+    "total_deaths": 0,
+    "value_per_million": 3.298716964,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "LB",
+    "iso_code": "LBN",
+    "location": "Lebanon",
+    "continent": "Asia",
+    "population": 6825442,
+    "value": 87097,
+    "total_deaths": 676,
+    "value_per_million": 12760.6388,
+    "total_deaths_per_million": 99.04120495
+  },
+  {
+    "id": "LR",
+    "iso_code": "LBR",
+    "location": "Liberia",
+    "continent": "Africa",
+    "population": 5057677,
+    "value": 1438,
+    "total_deaths": 82,
+    "value_per_million": 284.3202522,
+    "total_deaths_per_million": 16.21297683
+  },
+  {
+    "id": "LY",
+    "iso_code": "LBY",
+    "location": "Libya",
+    "continent": "Africa",
+    "population": 6871287,
+    "value": 64587,
+    "total_deaths": 900,
+    "value_per_million": 9399.549167,
+    "total_deaths_per_million": 130.9798295
+  },
+  {
+    "id": "LC",
+    "iso_code": "LCA",
+    "location": "Saint Lucia",
+    "continent": "North America",
+    "population": 183629,
+    "value": 105,
+    "total_deaths": 0,
+    "value_per_million": 571.805107,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "LI",
+    "iso_code": "LIE",
+    "location": "Liechtenstein",
+    "continent": "Europe",
+    "population": 38137,
+    "value": 673,
+    "total_deaths": 3,
+    "value_per_million": 17646.90458,
+    "total_deaths_per_million": 78.66376485
+  },
+  {
+    "id": "LK",
+    "iso_code": "LKA",
+    "location": "Sri Lanka",
+    "continent": "Asia",
+    "population": 21413250,
+    "value": 12187,
+    "total_deaths": 24,
+    "value_per_million": 569.1335972,
+    "total_deaths_per_million": 1.120801373
+  },
+  {
+    "id": "LS",
+    "iso_code": "LSO",
+    "location": "Lesotho",
+    "continent": "Africa",
+    "population": 2142252,
+    "value": 1963,
+    "total_deaths": 44,
+    "value_per_million": 916.325437,
+    "total_deaths_per_million": 20.53913358
+  },
+  {
+    "id": "LT",
+    "iso_code": "LTU",
+    "location": "Lithuania",
+    "continent": "Europe",
+    "population": 2722291,
+    "value": 18092,
+    "total_deaths": 182,
+    "value_per_million": 6645.872906,
+    "total_deaths_per_million": 66.85545373
+  },
+  {
+    "id": "LU",
+    "iso_code": "LUX",
+    "location": "Luxembourg",
+    "continent": "Europe",
+    "population": 625976,
+    "value": 20344,
+    "total_deaths": 171,
+    "value_per_million": 32499.64855,
+    "total_deaths_per_million": 273.1734124
+  },
+  {
+    "id": "LV",
+    "iso_code": "LVA",
+    "location": "Latvia",
+    "continent": "Europe",
+    "population": 1886202,
+    "value": 6752,
+    "total_deaths": 85,
+    "value_per_million": 3579.680225,
+    "total_deaths_per_million": 45.06410236
+  },
+  {
+    "id": "MA",
+    "iso_code": "MAR",
+    "location": "Morocco",
+    "continent": "Africa",
+    "population": 36910558,
+    "value": 235310,
+    "total_deaths": 3982,
+    "value_per_million": 6375.140685,
+    "total_deaths_per_million": 107.8824113
+  },
+  {
+    "id": "MC",
+    "iso_code": "MCO",
+    "location": "Monaco",
+    "continent": "Europe",
+    "population": 39244,
+    "value": 412,
+    "total_deaths": 1,
+    "value_per_million": 10498.42014,
+    "total_deaths_per_million": 25.48160228
+  },
+  {
+    "id": "MD",
+    "iso_code": "MDA",
+    "location": "Moldova",
+    "continent": "Europe",
+    "population": 4033963,
+    "value": 78507,
+    "total_deaths": 1851,
+    "value_per_million": 19461.50721,
+    "total_deaths_per_million": 458.8539855
+  },
+  {
+    "id": "MG",
+    "iso_code": "MDG",
+    "location": "Madagascar",
+    "continent": "Africa",
+    "population": 27691019,
+    "value": 17111,
+    "total_deaths": 244,
+    "value_per_million": 617.9259781,
+    "total_deaths_per_million": 8.811521165
+  },
+  {
+    "id": "MV",
+    "iso_code": "MDV",
+    "location": "Maldives",
+    "continent": "Asia",
+    "population": 540542,
+    "value": 11822,
+    "total_deaths": 38,
+    "value_per_million": 21870.64095,
+    "total_deaths_per_million": 70.29981019
+  },
+  {
+    "id": "MX",
+    "iso_code": "MEX",
+    "location": "Mexico",
+    "continent": "North America",
+    "population": 128932753,
+    "value": 943630,
+    "total_deaths": 93228,
+    "value_per_million": 7318.776479,
+    "total_deaths_per_million": 723.0746093
+  },
+  {
+    "id": "MH",
+    "iso_code": "MHL",
+    "location": "Marshall Islands",
+    "continent": "Oceania",
+    "population": 59194,
+    "value": 2,
+    "total_deaths": 0,
+    "value_per_million": 33.78720816,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "MK",
+    "iso_code": "MKD",
+    "location": "Macedonia",
+    "continent": "Europe",
+    "population": 2083380,
+    "value": 35097,
+    "total_deaths": 1071,
+    "value_per_million": 16846.18265,
+    "total_deaths_per_million": 514.0684849
+  },
+  {
+    "id": "ML",
+    "iso_code": "MLI",
+    "location": "Mali",
+    "continent": "Africa",
+    "population": 20250834,
+    "value": 3609,
+    "total_deaths": 137,
+    "value_per_million": 178.2148824,
+    "total_deaths_per_million": 6.765153475
+  },
+  {
+    "id": "MT",
+    "iso_code": "MLT",
+    "location": "Malta",
+    "continent": "Europe",
+    "population": 441539,
+    "value": 6590,
+    "total_deaths": 65,
+    "value_per_million": 14925.06891,
+    "total_deaths_per_million": 147.212364
+  },
+  {
+    "id": "MM",
+    "iso_code": "MMR",
+    "location": "Myanmar",
+    "continent": "Asia",
+    "population": 54409794,
+    "value": 56940,
+    "total_deaths": 1330,
+    "value_per_million": 1046.502767,
+    "total_deaths_per_million": 24.44412857
+  },
+  {
+    "id": "ME",
+    "iso_code": "MNE",
+    "location": "Montenegro",
+    "continent": "Europe",
+    "population": 628062,
+    "value": 20851,
+    "total_deaths": 326,
+    "value_per_million": 33198.9517,
+    "total_deaths_per_million": 519.0570358
+  },
+  {
+    "id": "MN",
+    "iso_code": "MNG",
+    "location": "Mongolia",
+    "continent": "Asia",
+    "population": 3278292,
+    "value": 353,
+    "total_deaths": 0,
+    "value_per_million": 107.6780226,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "MP",
+    "iso_code": "MNP",
+    "location": "Northern Mariana Islands",
+    "continent": "Oceania",
+    "population": 57557,
+    "value": 96,
+    "total_deaths": 2,
+    "value_per_million": 1667.911809,
+    "total_deaths_per_million": 34.74816269
+  },
+  {
+    "id": "MZ",
+    "iso_code": "MOZ",
+    "location": "Mozambique",
+    "continent": "Africa",
+    "population": 31255435,
+    "value": 13283,
+    "total_deaths": 95,
+    "value_per_million": 424.9820871,
+    "total_deaths_per_million": 3.039471375
+  },
+  {
+    "id": "MR",
+    "iso_code": "MRT",
+    "location": "Mauritania",
+    "continent": "Africa",
+    "population": 4649660,
+    "value": 7744,
+    "total_deaths": 164,
+    "value_per_million": 1665.498122,
+    "total_deaths_per_million": 35.27139619
+  },
+  {
+    "id": "MS",
+    "iso_code": "MSR",
+    "location": "Montserrat",
+    "continent": "North America",
+    "population": 4999,
+    "value": 13,
+    "total_deaths": 1,
+    "value_per_million": 2600.520104,
+    "total_deaths_per_million": 200.040008
+  },
+  {
+    "id": "MU",
+    "iso_code": "MUS",
+    "location": "Mauritius",
+    "continent": "Africa",
+    "population": 1271767,
+    "value": 452,
+    "total_deaths": 10,
+    "value_per_million": 355.4110148,
+    "total_deaths_per_million": 7.863075548
+  },
+  {
+    "id": "MW",
+    "iso_code": "MWI",
+    "location": "Malawi",
+    "continent": "Africa",
+    "population": 19129955,
+    "value": 5934,
+    "total_deaths": 184,
+    "value_per_million": 310.1941432,
+    "total_deaths_per_million": 9.618423044
+  },
+  {
+    "id": "MY",
+    "iso_code": "MYS",
+    "location": "Malaysia",
+    "continent": "Asia",
+    "population": 32365998,
+    "value": 35425,
+    "total_deaths": 271,
+    "value_per_million": 1094.512828,
+    "total_deaths_per_million": 8.372984513
+  },
+  {
+    "id": "NA",
+    "iso_code": "NAM",
+    "location": "Namibia",
+    "continent": "Africa",
+    "population": 2540916,
+    "value": 13046,
+    "total_deaths": 133,
+    "value_per_million": 5134.368865,
+    "total_deaths_per_million": 52.34332815
+  },
+  {
+    "id": "NC",
+    "iso_code": "NCL",
+    "location": "New Caledonia",
+    "continent": "Oceania",
+    "population": 285491,
+    "value": 28,
+    "total_deaths": 0,
+    "value_per_million": 98.0766469,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "NE",
+    "iso_code": "NER",
+    "location": "Niger",
+    "continent": "Africa",
+    "population": 24206636,
+    "value": 1225,
+    "total_deaths": 69,
+    "value_per_million": 50.6059578,
+    "total_deaths_per_million": 2.850458031
+  },
+  {
+    "id": "NG",
+    "iso_code": "NGA",
+    "location": "Nigeria",
+    "continent": "Africa",
+    "population": 206139587,
+    "value": 63328,
+    "total_deaths": 1155,
+    "value_per_million": 307.2093086,
+    "total_deaths_per_million": 5.602999486
+  },
+  {
+    "id": "NI",
+    "iso_code": "NIC",
+    "location": "Nicaragua",
+    "continent": "North America",
+    "population": 6624554,
+    "value": 5514,
+    "total_deaths": 156,
+    "value_per_million": 832.3579218,
+    "total_deaths_per_million": 23.54875513
+  },
+  {
+    "id": "NL",
+    "iso_code": "NLD",
+    "location": "Netherlands",
+    "continent": "Europe",
+    "population": 17134873,
+    "value": 383066,
+    "total_deaths": 7672,
+    "value_per_million": 22355.92875,
+    "total_deaths_per_million": 447.7418654
+  },
+  {
+    "id": "NO",
+    "iso_code": "NOR",
+    "location": "Norway",
+    "continent": "Europe",
+    "population": 5421242,
+    "value": 21954,
+    "total_deaths": 282,
+    "value_per_million": 4049.625529,
+    "total_deaths_per_million": 52.01760039
+  },
+  {
+    "id": "NP",
+    "iso_code": "NPL",
+    "location": "Nepal",
+    "continent": "Asia",
+    "population": 29136808,
+    "value": 182923,
+    "total_deaths": 1034,
+    "value_per_million": 6278.072739,
+    "total_deaths_per_million": 35.4877583
+  },
+  {
+    "id": "NZ",
+    "iso_code": "NZL",
+    "location": "New Zealand",
+    "continent": "Oceania",
+    "population": 4822233,
+    "value": 1617,
+    "total_deaths": 25,
+    "value_per_million": 335.3218312,
+    "total_deaths_per_million": 5.18432021
+  },
+  {
+    "id": "OM",
+    "iso_code": "OMN",
+    "location": "Oman",
+    "continent": "Asia",
+    "population": 5106622,
+    "value": 116847,
+    "total_deaths": 1275,
+    "value_per_million": 22881.46646,
+    "total_deaths_per_million": 249.6758131
+  },
+  {
+    "id": "PK",
+    "iso_code": "PAK",
+    "location": "Pakistan",
+    "continent": "Asia",
+    "population": 220892331,
+    "value": 338875,
+    "total_deaths": 6893,
+    "value_per_million": 1534.118448,
+    "total_deaths_per_million": 31.20524814
+  },
+  {
+    "id": "PA",
+    "iso_code": "PAN",
+    "location": "Panama",
+    "continent": "North America",
+    "population": 4314768,
+    "value": 136024,
+    "total_deaths": 2744,
+    "value_per_million": 31525.21758,
+    "total_deaths_per_million": 635.9553978
+  },
+  {
+    "id": "PE",
+    "iso_code": "PER",
+    "location": "Peru",
+    "continent": "South America",
+    "population": 32971846,
+    "value": 911787,
+    "total_deaths": 34671,
+    "value_per_million": 27653.50172,
+    "total_deaths_per_million": 1051.533481
+  },
+  {
+    "id": "PH",
+    "iso_code": "PHL",
+    "location": "Philippines",
+    "continent": "Asia",
+    "population": 109581085,
+    "value": 388137,
+    "total_deaths": 7367,
+    "value_per_million": 3542.007273,
+    "total_deaths_per_million": 67.22875577
+  },
+  {
+    "id": "PW",
+    "iso_code": "PNG",
+    "location": "Papua New Guinea",
+    "continent": "Oceania",
+    "population": 8947027,
+    "value": 597,
+    "total_deaths": 7,
+    "value_per_million": 66.7260756,
+    "total_deaths_per_million": 0.782382796
+  },
+  {
+    "id": "PL",
+    "iso_code": "POL",
+    "location": "Poland",
+    "continent": "Europe",
+    "population": 37846605,
+    "value": 439536,
+    "total_deaths": 6475,
+    "value_per_million": 11613.61765,
+    "total_deaths_per_million": 171.0853589
+  },
+  {
+    "id": "PR",
+    "iso_code": "PRI",
+    "location": "Puerto Rico",
+    "continent": "North America",
+    "population": 2860840,
+    "value": 69020,
+    "total_deaths": 850,
+    "value_per_million": 24125.78124,
+    "total_deaths_per_million": 297.1155325
+  },
+  {
+    "id": "PT",
+    "iso_code": "PRT",
+    "location": "Portugal",
+    "continent": "Europe",
+    "population": 10196707,
+    "value": 156940,
+    "total_deaths": 2694,
+    "value_per_million": 15391.24347,
+    "total_deaths_per_million": 264.2029432
+  },
+  {
+    "id": "PY",
+    "iso_code": "PRY",
+    "location": "Paraguay",
+    "continent": "South America",
+    "population": 7132530,
+    "value": 65258,
+    "total_deaths": 1454,
+    "value_per_million": 9149.348128,
+    "total_deaths_per_million": 203.8547332
+  },
+  {
+    "id": "PS",
+    "iso_code": "PSE",
+    "location": "Palestine",
+    "continent": "Asia",
+    "population": 5101416,
+    "value": 67918,
+    "total_deaths": 576,
+    "value_per_million": 13313.55843,
+    "total_deaths_per_million": 112.9098274
+  },
+  {
+    "id": "PF",
+    "iso_code": "PYF",
+    "location": "French Polynesia",
+    "continent": "Oceania",
+    "population": 280904,
+    "value": 8949,
+    "total_deaths": 38,
+    "value_per_million": 31857.85891,
+    "total_deaths_per_million": 135.2775325
+  },
+  {
+    "id": "QA",
+    "iso_code": "QAT",
+    "location": "Qatar",
+    "continent": "Asia",
+    "population": 2881060,
+    "value": 133370,
+    "total_deaths": 232,
+    "value_per_million": 46291.98975,
+    "total_deaths_per_million": 80.52591754
+  },
+  {
+    "id": "RO",
+    "iso_code": "ROU",
+    "location": "Romania",
+    "continent": "Europe",
+    "population": 19237682,
+    "value": 267088,
+    "total_deaths": 7419,
+    "value_per_million": 13883.58535,
+    "total_deaths_per_million": 385.6493729
+  },
+  {
+    "id": "RU",
+    "iso_code": "RUS",
+    "location": "Russia",
+    "continent": "Europe",
+    "population": 145934460,
+    "value": 1693454,
+    "total_deaths": 29217,
+    "value_per_million": 11604.20918,
+    "total_deaths_per_million": 200.2063118
+  },
+  {
+    "id": "RW",
+    "iso_code": "RWA",
+    "location": "Rwanda",
+    "continent": "Africa",
+    "population": 12952209,
+    "value": 5174,
+    "total_deaths": 35,
+    "value_per_million": 399.4685385,
+    "total_deaths_per_million": 2.702241757
+  },
+  {
+    "id": "SA",
+    "iso_code": "SAU",
+    "location": "Saudi Arabia",
+    "continent": "Asia",
+    "population": 34813867,
+    "value": 348936,
+    "total_deaths": 5471,
+    "value_per_million": 10022.90266,
+    "total_deaths_per_million": 157.150023
+  },
+  {
+    "id": "SD",
+    "iso_code": "SDN",
+    "location": "Sudan",
+    "continent": "Africa",
+    "population": 43849269,
+    "value": 13943,
+    "total_deaths": 837,
+    "value_per_million": 317.9756543,
+    "total_deaths_per_million": 19.08811752
+  },
+  {
+    "id": "SN",
+    "iso_code": "SEN",
+    "location": "Senegal",
+    "continent": "Africa",
+    "population": 16743930,
+    "value": 15640,
+    "total_deaths": 326,
+    "value_per_million": 934.069839,
+    "total_deaths_per_million": 19.46974217
+  },
+  {
+    "id": "SG",
+    "iso_code": "SGP",
+    "location": "Singapore",
+    "continent": "Asia",
+    "population": 5850343,
+    "value": 58036,
+    "total_deaths": 28,
+    "value_per_million": 9920.102121,
+    "total_deaths_per_million": 4.786044169
+  },
+  {
+    "id": "SB",
+    "iso_code": "SLB",
+    "location": "Solomon Islands",
+    "continent": "Oceania",
+    "population": 686878,
+    "value": 13,
+    "total_deaths": 0,
+    "value_per_million": 18.92621397,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "SL",
+    "iso_code": "SLE",
+    "location": "Sierra Leone",
+    "continent": "Africa",
+    "population": 7976985,
+    "value": 2369,
+    "total_deaths": 74,
+    "value_per_million": 296.9793725,
+    "total_deaths_per_million": 9.276687871
+  },
+  {
+    "id": "SV",
+    "iso_code": "SLV",
+    "location": "El Salvador",
+    "continent": "North America",
+    "population": 6486201,
+    "value": 34015,
+    "total_deaths": 997,
+    "value_per_million": 5244.209977,
+    "total_deaths_per_million": 153.7109319
+  },
+  {
+    "id": "SM",
+    "iso_code": "SMR",
+    "location": "San Marino",
+    "continent": "Europe",
+    "population": 33938,
+    "value": 994,
+    "total_deaths": 42,
+    "value_per_million": 29288.70293,
+    "total_deaths_per_million": 1237.550828
+  },
+  {
+    "id": "SO",
+    "iso_code": "SOM",
+    "location": "Somalia",
+    "continent": "Africa",
+    "population": 15893219,
+    "value": 4229,
+    "total_deaths": 107,
+    "value_per_million": 266.0883236,
+    "total_deaths_per_million": 6.732430982
+  },
+  {
+    "id": "RS",
+    "iso_code": "SRB",
+    "location": "Serbia",
+    "continent": "Europe",
+    "population": 6804596,
+    "value": 53495,
+    "total_deaths": 850,
+    "value_per_million": 7861.598249,
+    "total_deaths_per_million": 124.9155718
+  },
+  {
+    "id": "SS",
+    "iso_code": "SSD",
+    "location": "South Sudan",
+    "continent": "Africa",
+    "population": 11193729,
+    "value": 2943,
+    "total_deaths": 59,
+    "value_per_million": 262.9150661,
+    "total_deaths_per_million": 5.270808325
+  },
+  {
+    "id": "ST",
+    "iso_code": "STP",
+    "location": "Sao Tome and Principe",
+    "continent": "Africa",
+    "population": 219161,
+    "value": 958,
+    "total_deaths": 16,
+    "value_per_million": 4371.215682,
+    "total_deaths_per_million": 73.00568988
+  },
+  {
+    "id": "SR",
+    "iso_code": "SUR",
+    "location": "Suriname",
+    "continent": "South America",
+    "population": 586634,
+    "value": 5220,
+    "total_deaths": 112,
+    "value_per_million": 8898.222742,
+    "total_deaths_per_million": 190.9197217
+  },
+  {
+    "id": "SK",
+    "iso_code": "SVK",
+    "location": "Slovakia",
+    "continent": "Europe",
+    "population": 5459643,
+    "value": 66772,
+    "total_deaths": 261,
+    "value_per_million": 12230.10369,
+    "total_deaths_per_million": 47.80532353
+  },
+  {
+    "id": "SI",
+    "iso_code": "SVN",
+    "location": "Slovenia",
+    "continent": "Europe",
+    "population": 2078932,
+    "value": 39408,
+    "total_deaths": 321,
+    "value_per_million": 18955.88697,
+    "total_deaths_per_million": 154.4062047
+  },
+  {
+    "id": "SE",
+    "iso_code": "SWE",
+    "location": "Sweden",
+    "continent": "Europe",
+    "population": 10099270,
+    "value": 137339,
+    "total_deaths": 5970,
+    "value_per_million": 13598.90368,
+    "total_deaths_per_million": 591.1318343
+  },
+  {
+    "id": "SZ",
+    "iso_code": "SWZ",
+    "location": "Swaziland",
+    "continent": "Africa",
+    "population": 1160164,
+    "value": 5955,
+    "total_deaths": 117,
+    "value_per_million": 5132.895004,
+    "total_deaths_per_million": 100.8478112
+  },
+  {
+    "id": "SC",
+    "iso_code": "SYC",
+    "location": "Seychelles",
+    "continent": "Africa",
+    "population": 98340,
+    "value": 157,
+    "total_deaths": 0,
+    "value_per_million": 1596.501932,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "SY",
+    "iso_code": "SYR",
+    "location": "Syria",
+    "continent": "Asia",
+    "population": 17500657,
+    "value": 5964,
+    "total_deaths": 301,
+    "value_per_million": 340.7872059,
+    "total_deaths_per_million": 17.19935429
+  },
+  {
+    "id": "TC",
+    "iso_code": "TCA",
+    "location": "Turks and Caicos Islands",
+    "continent": "North America",
+    "population": 38718,
+    "value": 705,
+    "total_deaths": 6,
+    "value_per_million": 18208.58515,
+    "total_deaths_per_million": 154.9666822
+  },
+  {
+    "id": "TD",
+    "iso_code": "TCD",
+    "location": "Chad",
+    "continent": "Africa",
+    "population": 16425859,
+    "value": 1517,
+    "total_deaths": 99,
+    "value_per_million": 92.35437854,
+    "total_deaths_per_million": 6.027082054
+  },
+  {
+    "id": "TG",
+    "iso_code": "TGO",
+    "location": "Togo",
+    "continent": "Africa",
+    "population": 8278737,
+    "value": 2406,
+    "total_deaths": 57,
+    "value_per_million": 290.6240408,
+    "total_deaths_per_million": 6.885108199
+  },
+  {
+    "id": "TH",
+    "iso_code": "THA",
+    "location": "Thailand",
+    "continent": "Asia",
+    "population": 69799978,
+    "value": 3810,
+    "total_deaths": 59,
+    "value_per_million": 54.58454442,
+    "total_deaths_per_million": 0.845272473
+  },
+  {
+    "id": "TJ",
+    "iso_code": "TJK",
+    "location": "Tajikistan",
+    "continent": "Asia",
+    "population": 9537642,
+    "value": 11180,
+    "total_deaths": 83,
+    "value_per_million": 1172.197489,
+    "total_deaths_per_million": 8.702360604
+  },
+  {
+    "id": "TT",
+    "iso_code": "TTO",
+    "location": "Trinidad and Tobago",
+    "continent": "North America",
+    "population": 1399491,
+    "value": 5764,
+    "total_deaths": 110,
+    "value_per_million": 4118.640277,
+    "total_deaths_per_million": 78.60000529
+  },
+  {
+    "id": "TN",
+    "iso_code": "TUN",
+    "location": "Tunisia",
+    "continent": "Africa",
+    "population": 11818618,
+    "value": 64363,
+    "total_deaths": 1512,
+    "value_per_million": 5445.899004,
+    "total_deaths_per_million": 127.9337398
+  },
+  {
+    "id": "TR",
+    "iso_code": "TUR",
+    "location": "Turkey",
+    "continent": "Asia",
+    "population": 84339067,
+    "value": 384509,
+    "total_deaths": 10558,
+    "value_per_million": 4559.085293,
+    "total_deaths_per_million": 125.1851648
+  },
+  {
+    "id": "TW",
+    "iso_code": "TWN",
+    "location": "Taiwan",
+    "continent": "Asia",
+    "population": 23816775,
+    "value": 569,
+    "total_deaths": 7,
+    "value_per_million": 23.89072408,
+    "total_deaths_per_million": 0.29391049
+  },
+  {
+    "id": "TZ",
+    "iso_code": "TZA",
+    "location": "Tanzania",
+    "continent": "Africa",
+    "population": 59734213,
+    "value": 509,
+    "total_deaths": 21,
+    "value_per_million": 8.521079871,
+    "total_deaths_per_million": 0.351557323
+  },
+  {
+    "id": "UG",
+    "iso_code": "UGA",
+    "location": "Uganda",
+    "continent": "Africa",
+    "population": 45741000,
+    "value": 13351,
+    "total_deaths": 117,
+    "value_per_million": 291.8825561,
+    "total_deaths_per_million": 2.557880239
+  },
+  {
+    "id": "UA",
+    "iso_code": "UKR",
+    "location": "Ukraine",
+    "continent": "Europe",
+    "population": 43733759,
+    "value": 420617,
+    "total_deaths": 7731,
+    "value_per_million": 9617.673157,
+    "total_deaths_per_million": 176.774194
+  },
+  {
+    "id": "UY",
+    "iso_code": "URY",
+    "location": "Uruguay",
+    "continent": "South America",
+    "population": 3473727,
+    "value": 3245,
+    "total_deaths": 61,
+    "value_per_million": 934.1551596,
+    "total_deaths_per_million": 17.56038975
+  },
+  {
+    "id": "US",
+    "iso_code": "USA",
+    "location": "United States",
+    "continent": "North America",
+    "population": 331002647,
+    "value": 9486486,
+    "total_deaths": 233729,
+    "value_per_million": 28659.84936,
+    "total_deaths_per_million": 706.1242625
+  },
+  {
+    "id": "UZ",
+    "iso_code": "UZB",
+    "location": "Uzbekistan",
+    "continent": "Asia",
+    "population": 33469199,
+    "value": 67779,
+    "total_deaths": 577,
+    "value_per_million": 2025.115689,
+    "total_deaths_per_million": 17.23973137
+  },
+  {
+    "id": "VA",
+    "iso_code": "VAT",
+    "location": "Vatican",
+    "continent": "Europe",
+    "population": 809,
+    "value": 26,
+    "total_deaths": 0,
+    "value_per_million": 32138.44252,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "VC",
+    "iso_code": "VCT",
+    "location": "Saint Vincent and the Grenadines",
+    "continent": "North America",
+    "population": 110947,
+    "value": 75,
+    "total_deaths": 0,
+    "value_per_million": 675.9984497,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "VE",
+    "iso_code": "VEN",
+    "location": "Venezuela",
+    "continent": "South America",
+    "population": 28435943,
+    "value": 93100,
+    "total_deaths": 810,
+    "value_per_million": 3274.025412,
+    "total_deaths_per_million": 28.48507609
+  },
+  {
+    "id": "VG",
+    "iso_code": "VGB",
+    "location": "British Virgin Islands",
+    "continent": "North America",
+    "population": 30237,
+    "value": 72,
+    "total_deaths": 1,
+    "value_per_million": 2381.18861,
+    "total_deaths_per_million": 33.07206403
+  },
+  {
+    "id": "VI",
+    "iso_code": "VIR",
+    "location": "United States Virgin Islands",
+    "continent": "North America",
+    "population": 104423,
+    "value": 1388,
+    "total_deaths": 23,
+    "value_per_million": 13292.09082,
+    "total_deaths_per_million": 220.2579891
+  },
+  {
+    "id": "VN",
+    "iso_code": "VNM",
+    "location": "Vietnam",
+    "continent": "Asia",
+    "population": 97338583,
+    "value": 1207,
+    "total_deaths": 35,
+    "value_per_million": 12.40001614,
+    "total_deaths_per_million": 0.359569648
+  },
+  {
+    "id": "WF",
+    "iso_code": "WLF",
+    "location": "Wallis and Futuna",
+    "continent": "Oceania",
+    "population": 11246,
+    "value": 1,
+    "total_deaths": 0,
+    "value_per_million": 88.92050507,
+    "total_deaths_per_million": 0
+  },
+  {
+    "id": "YE",
+    "iso_code": "YEM",
+    "location": "Yemen",
+    "continent": "Asia",
+    "population": 29825968,
+    "value": 2067,
+    "total_deaths": 602,
+    "value_per_million": 69.30202567,
+    "total_deaths_per_million": 20.18375397
+  },
+  {
+    "id": "ZA",
+    "iso_code": "ZAF",
+    "location": "South Africa",
+    "continent": "Africa",
+    "population": 59308690,
+    "value": 730548,
+    "total_deaths": 19585,
+    "value_per_million": 12317.72275,
+    "total_deaths_per_million": 330.2214229
+  },
+  {
+    "id": "ZM",
+    "iso_code": "ZMB",
+    "location": "Zambia",
+    "continent": "Africa",
+    "population": 18383956,
+    "value": 16698,
+    "total_deaths": 349,
+    "value_per_million": 908.2919911,
+    "total_deaths_per_million": 18.98394448
+  },
+  {
+    "id": "ZW",
+    "iso_code": "ZWE",
+    "location": "Zimbabwe",
+    "continent": "Africa",
+    "population": 14862927,
+    "value": 8427,
+    "total_deaths": 248,
+    "value_per_million": 566.9811875,
+    "total_deaths_per_million": 16.68581162
+  }],
+  "death":[
+  {
+    "id": "AW",
+    "iso_code": "ABW",
+    "location": "Aruba",
+    "continent": "North America",
+    "population": 106766,
+    "total_cases": 4553,
+    "value": 39,
+    "total_cases_per_million": 42644.66216,
+    "value_per_million": 365.2848285
+  },
+  {
+    "id": "AF",
+    "iso_code": "AFG",
+    "location": "Afghanistan",
+    "continent": "Asia",
+    "population": 38928341,
+    "total_cases": 41935,
+    "value": 1554,
+    "total_cases_per_million": 1077.235734,
+    "value_per_million": 39.91950235
+  },
+  {
+    "id": "AO",
+    "iso_code": "AGO",
+    "location": "Angola",
+    "continent": "Africa",
+    "population": 32866268,
+    "total_cases": 11577,
+    "value": 291,
+    "total_cases_per_million": 352.245652,
+    "value_per_million": 8.854062773
+  },
+  {
+    "id": "AI",
+    "iso_code": "AIA",
+    "location": "Anguilla",
+    "continent": "North America",
+    "population": 15002,
+    "total_cases": 3,
+    "value": 0,
+    "total_cases_per_million": 199.9733369,
+    "value_per_million": 0
+  },
+  {
+    "id": "AL",
+    "iso_code": "ALB",
+    "location": "Albania",
+    "continent": "Europe",
+    "population": 2877800,
+    "total_cases": 22300,
+    "value": 536,
+    "total_cases_per_million": 7748.974911,
+    "value_per_million": 186.253388
+  },
+  {
+    "id": "AD",
+    "iso_code": "AND",
+    "location": "Andorra",
+    "continent": "Europe",
+    "population": 77265,
+    "total_cases": 5045,
+    "value": 75,
+    "total_cases_per_million": 65294.76477,
+    "value_per_million": 970.6853038
+  },
+  {
+    "id": "AE",
+    "iso_code": "ARE",
+    "location": "United Arab Emirates",
+    "continent": "Asia",
+    "population": 9890400,
+    "total_cases": 137310,
+    "value": 505,
+    "total_cases_per_million": 13883.15943,
+    "value_per_million": 51.05961336
+  },
+  {
+    "id": "AR",
+    "iso_code": "ARG",
+    "location": "Argentina",
+    "continent": "South America",
+    "population": 45195777,
+    "total_cases": 1205915,
+    "value": 32520,
+    "total_cases_per_million": 26682.02828,
+    "value_per_million": 719.5362522
+  },
+  {
+    "id": "AM",
+    "iso_code": "ARM",
+    "location": "Armenia",
+    "continent": "Asia",
+    "population": 2963234,
+    "total_cases": 99563,
+    "value": 1476,
+    "total_cases_per_million": 33599.43899,
+    "value_per_million": 498.1044359
+  },
+  {
+    "id": "AG",
+    "iso_code": "ATG",
+    "location": "Antigua and Barbuda",
+    "continent": "North America",
+    "population": 97928,
+    "total_cases": 130,
+    "value": 3,
+    "total_cases_per_million": 1327.505923,
+    "value_per_million": 30.63475206
+  },
+  {
+    "id": "AU",
+    "iso_code": "AUS",
+    "location": "Australia",
+    "continent": "Oceania",
+    "population": 25499881,
+    "total_cases": 27622,
+    "value": 907,
+    "total_cases_per_million": 1083.220741,
+    "value_per_million": 35.56879344
+  },
+  {
+    "id": "AT",
+    "iso_code": "AUT",
+    "location": "Austria",
+    "continent": "Europe",
+    "population": 9006400,
+    "total_cases": 125229,
+    "value": 1204,
+    "total_cases_per_million": 13904.44573,
+    "value_per_million": 133.6827145
+  },
+  {
+    "id": "AZ",
+    "iso_code": "AZE",
+    "location": "Azerbaijan",
+    "continent": "Asia",
+    "population": 10139175,
+    "total_cases": 59509,
+    "value": 780,
+    "total_cases_per_million": 5869.215197,
+    "value_per_million": 76.92933597
+  },
+  {
+    "id": "BI",
+    "iso_code": "BDI",
+    "location": "Burundi",
+    "continent": "Africa",
+    "population": 11890781,
+    "total_cases": 606,
+    "value": 1,
+    "total_cases_per_million": 50.96385174,
+    "value_per_million": 0.084098765
+  },
+  {
+    "id": "BE",
+    "iso_code": "BEL",
+    "location": "Belgium",
+    "continent": "Europe",
+    "population": 11589616,
+    "total_cases": 461589,
+    "value": 12138,
+    "total_cases_per_million": 39827.80793,
+    "value_per_million": 1047.316839
+  },
+  {
+    "id": "BJ",
+    "iso_code": "BEN",
+    "location": "Benin",
+    "continent": "Africa",
+    "population": 12123198,
+    "total_cases": 2745,
+    "value": 43,
+    "total_cases_per_million": 226.4254036,
+    "value_per_million": 3.546918891
+  },
+  {
+    "id": "BF",
+    "iso_code": "BFA",
+    "location": "Burkina Faso",
+    "continent": "Africa",
+    "population": 20903278,
+    "total_cases": 2539,
+    "value": 67,
+    "total_cases_per_million": 121.4642029,
+    "value_per_million": 3.20523891
+  },
+  {
+    "id": "BD",
+    "iso_code": "BGD",
+    "location": "Bangladesh",
+    "continent": "Asia",
+    "population": 164689383,
+    "total_cases": 414164,
+    "value": 6004,
+    "total_cases_per_million": 2514.819064,
+    "value_per_million": 36.45650916
+  },
+  {
+    "id": "BG",
+    "iso_code": "BGR",
+    "location": "Bulgaria",
+    "continent": "Europe",
+    "population": 6948445,
+    "total_cases": 64591,
+    "value": 1466,
+    "total_cases_per_million": 9295.748905,
+    "value_per_million": 210.9824572
+  },
+  {
+    "id": "BH",
+    "iso_code": "BHR",
+    "location": "Bahrain",
+    "continent": "Asia",
+    "population": 1701583,
+    "total_cases": 82624,
+    "value": 328,
+    "total_cases_per_million": 48557.13768,
+    "value_per_million": 192.7616813
+  },
+  {
+    "id": "BS",
+    "iso_code": "BHS",
+    "location": "Bahamas",
+    "continent": "North America",
+    "population": 393248,
+    "total_cases": 6843,
+    "value": 150,
+    "total_cases_per_million": 17401.23281,
+    "value_per_million": 381.438685
+  },
+  {
+    "id": "BA",
+    "iso_code": "BIH",
+    "location": "Bosnia and Herzegovina",
+    "continent": "Europe",
+    "population": 3280815,
+    "total_cases": 55598,
+    "value": 1358,
+    "total_cases_per_million": 16946.39899,
+    "value_per_million": 413.9215408
+  },
+  {
+    "id": "BY",
+    "iso_code": "BLR",
+    "location": "Belarus",
+    "continent": "Europe",
+    "population": 9449321,
+    "total_cases": 102313,
+    "value": 995,
+    "total_cases_per_million": 10827.55047,
+    "value_per_million": 105.2985712
+  },
+  {
+    "id": "BZ",
+    "iso_code": "BLZ",
+    "location": "Belize",
+    "continent": "North America",
+    "population": 397621,
+    "total_cases": 3905,
+    "value": 64,
+    "total_cases_per_million": 9820.909861,
+    "value_per_million": 160.9572935
+  },
+  {
+    "id": "BM",
+    "iso_code": "BMU",
+    "location": "Bermuda",
+    "continent": "North America",
+    "population": 62273,
+    "total_cases": 206,
+    "value": 9,
+    "total_cases_per_million": 3308.014709,
+    "value_per_million": 144.5249145
+  },
+  {
+    "id": "BO",
+    "iso_code": "BOL",
+    "location": "Bolivia",
+    "continent": "South America",
+    "population": 11673029,
+    "total_cases": 142062,
+    "value": 8758,
+    "total_cases_per_million": 12170.10598,
+    "value_per_million": 750.2765563
+  },
+  {
+    "id": "BR",
+    "iso_code": "BRA",
+    "location": "Brazil",
+    "continent": "South America",
+    "population": 212559409,
+    "total_cases": 5590025,
+    "value": 161106,
+    "total_cases_per_million": 26298.64764,
+    "value_per_million": 757.9339854
+  },
+  {
+    "id": "BB",
+    "iso_code": "BRB",
+    "location": "Barbados",
+    "continent": "North America",
+    "population": 287371,
+    "total_cases": 239,
+    "value": 7,
+    "total_cases_per_million": 831.6775179,
+    "value_per_million": 24.35875575
+  },
+  {
+    "id": "BN",
+    "iso_code": "BRN",
+    "location": "Brunei",
+    "continent": "Asia",
+    "population": 437483,
+    "total_cases": 148,
+    "value": 3,
+    "total_cases_per_million": 338.2988596,
+    "value_per_million": 6.857409316
+  },
+  {
+    "id": "BT",
+    "iso_code": "BTN",
+    "location": "Bhutan",
+    "continent": "Asia",
+    "population": 771612,
+    "total_cases": 358,
+    "value": 0,
+    "total_cases_per_million": 463.9637538,
+    "value_per_million": 0
+  },
+  {
+    "id": "BW",
+    "iso_code": "BWA",
+    "location": "Botswana",
+    "continent": "Africa",
+    "population": 2351625,
+    "total_cases": 6642,
+    "value": 24,
+    "total_cases_per_million": 2824.429915,
+    "value_per_million": 10.20570882
+  },
+  {
+    "id": "CF",
+    "iso_code": "CAF",
+    "location": "Central African Republic",
+    "continent": "Africa",
+    "population": 4829764,
+    "total_cases": 4875,
+    "value": 62,
+    "total_cases_per_million": 1009.366089,
+    "value_per_million": 12.83706616
+  },
+  {
+    "id": "CA",
+    "iso_code": "CAN",
+    "location": "Canada",
+    "continent": "North America",
+    "population": 37742157,
+    "total_cases": 247703,
+    "value": 10331,
+    "total_cases_per_million": 6563.03242,
+    "value_per_million": 273.7257439
+  },
+  {
+    "id": "CH",
+    "iso_code": "CHE",
+    "location": "Switzerland",
+    "continent": "Europe",
+    "population": 8654618,
+    "total_cases": 191703,
+    "value": 2272,
+    "total_cases_per_million": 22150.37105,
+    "value_per_million": 262.5188079
+  },
+  {
+    "id": "CL",
+    "iso_code": "CHL",
+    "location": "Chile",
+    "continent": "South America",
+    "population": 19116209,
+    "total_cases": 515042,
+    "value": 14340,
+    "total_cases_per_million": 26942.68513,
+    "value_per_million": 750.148735
+  },
+  {
+    "id": "CN",
+    "iso_code": "CHN",
+    "location": "China",
+    "continent": "Asia",
+    "population": 1439323774,
+    "total_cases": 91439,
+    "value": 4739,
+    "total_cases_per_million": 63.52913893,
+    "value_per_million": 3.292518393
+  },
+  {
+    "id": "CI",
+    "iso_code": "CIV",
+    "location": "Cote d'Ivoire",
+    "continent": "Africa",
+    "population": 26378275,
+    "total_cases": 20778,
+    "value": 126,
+    "total_cases_per_million": 787.6936608,
+    "value_per_million": 4.776658064
+  },
+  {
+    "id": "CM",
+    "iso_code": "CMR",
+    "location": "Cameroon",
+    "continent": "Africa",
+    "population": 26545864,
+    "total_cases": 22103,
+    "value": 429,
+    "total_cases_per_million": 832.6344172,
+    "value_per_million": 16.16070963
+  },
+  {
+    "id": "CD",
+    "iso_code": "COD",
+    "location": "Democratic Republic of Congo",
+    "continent": "Africa",
+    "population": 89561404,
+    "total_cases": 11449,
+    "value": 314,
+    "total_cases_per_million": 127.8340835,
+    "value_per_million": 3.505974516
+  },
+  {
+    "id": "CG",
+    "iso_code": "COG",
+    "location": "Congo",
+    "continent": "Africa",
+    "population": 5518092,
+    "total_cases": 5379,
+    "value": 92,
+    "total_cases_per_million": 974.7934612,
+    "value_per_million": 16.67242953
+  },
+  {
+    "id": "CO",
+    "iso_code": "COL",
+    "location": "Colombia",
+    "continent": "South America",
+    "population": 50882884,
+    "total_cases": 1108084,
+    "value": 32013,
+    "total_cases_per_million": 21777.14612,
+    "value_per_million": 629.150659
+  },
+  {
+    "id": "KM",
+    "iso_code": "COM",
+    "location": "Comoros",
+    "continent": "Africa",
+    "population": 869595,
+    "total_cases": 554,
+    "value": 7,
+    "total_cases_per_million": 637.0781801,
+    "value_per_million": 8.049724297
+  },
+  {
+    "id": "CV",
+    "iso_code": "CPV",
+    "location": "Cape Verde",
+    "continent": "Africa",
+    "population": 555988,
+    "total_cases": 9053,
+    "value": 95,
+    "total_cases_per_million": 16282.72553,
+    "value_per_million": 170.8669971
+  },
+  {
+    "id": "CR",
+    "iso_code": "CRI",
+    "location": "Costa Rica",
+    "continent": "North America",
+    "population": 5094114,
+    "total_cases": 113261,
+    "value": 1431,
+    "total_cases_per_million": 22233.69952,
+    "value_per_million": 280.9124413
+  },
+  {
+    "id": "CU",
+    "iso_code": "CUB",
+    "location": "Cuba",
+    "continent": "North America",
+    "population": 11326616,
+    "total_cases": 7144,
+    "value": 129,
+    "total_cases_per_million": 630.7267766,
+    "value_per_million": 11.38910333
+  },
+  {
+    "id": "KY",
+    "iso_code": "CYM",
+    "location": "Cayman Islands",
+    "continent": "North America",
+    "population": 65720,
+    "total_cases": 242,
+    "value": 1,
+    "total_cases_per_million": 3682.288497,
+    "value_per_million": 15.21606817
+  },
+  {
+    "id": "CY",
+    "iso_code": "CYP",
+    "location": "Cyprus",
+    "continent": "Europe",
+    "population": 875899,
+    "total_cases": 5100,
+    "value": 27,
+    "total_cases_per_million": 5822.589134,
+    "value_per_million": 30.82547189
+  },
+  {
+    "id": "CZ",
+    "iso_code": "CZE",
+    "location": "Czech Republic",
+    "continent": "Europe",
+    "population": 10708982,
+    "total_cases": 378716,
+    "value": 4133,
+    "total_cases_per_million": 35364.33248,
+    "value_per_million": 385.937711
+  },
+  {
+    "id": "DE",
+    "iso_code": "DEU",
+    "location": "Germany",
+    "continent": "Europe",
+    "population": 83783945,
+    "total_cases": 597583,
+    "value": 10930,
+    "total_cases_per_million": 7132.428534,
+    "value_per_million": 130.4545877
+  },
+  {
+    "id": "DJ",
+    "iso_code": "DJI",
+    "location": "Djibouti",
+    "continent": "Africa",
+    "population": 988002,
+    "total_cases": 5580,
+    "value": 61,
+    "total_cases_per_million": 5647.761847,
+    "value_per_million": 61.74076571
+  },
+  {
+    "id": "DM",
+    "iso_code": "DMA",
+    "location": "Dominica",
+    "continent": "North America",
+    "population": 71991,
+    "total_cases": 42,
+    "value": 0,
+    "total_cases_per_million": 583.4062591,
+    "value_per_million": 0
+  },
+  {
+    "id": "DK",
+    "iso_code": "DNK",
+    "location": "Denmark",
+    "continent": "Europe",
+    "population": 5792203,
+    "total_cases": 50530,
+    "value": 729,
+    "total_cases_per_million": 8723.796455,
+    "value_per_million": 125.8588485
+  },
+  {
+    "id": "DO",
+    "iso_code": "DOM",
+    "location": "Dominican Republic",
+    "continent": "North America",
+    "population": 10847904,
+    "total_cases": 128278,
+    "value": 2257,
+    "total_cases_per_million": 11825.14152,
+    "value_per_million": 208.0586259
+  },
+  {
+    "id": "DZ",
+    "iso_code": "DZA",
+    "location": "Algeria",
+    "continent": "Africa",
+    "population": 43851043,
+    "total_cases": 59527,
+    "value": 1999,
+    "total_cases_per_million": 1357.481965,
+    "value_per_million": 45.5861449
+  },
+  {
+    "id": "EC",
+    "iso_code": "ECU",
+    "location": "Ecuador",
+    "continent": "South America",
+    "population": 17643060,
+    "total_cases": 171433,
+    "value": 12704,
+    "total_cases_per_million": 9716.73848,
+    "value_per_million": 720.0564981
+  },
+  {
+    "id": "EG",
+    "iso_code": "EGY",
+    "location": "Egypt",
+    "continent": "Africa",
+    "population": 102334403,
+    "total_cases": 108329,
+    "value": 6318,
+    "total_cases_per_million": 1058.578511,
+    "value_per_million": 61.73876834
+  },
+  {
+    "id": "ER",
+    "iso_code": "ERI",
+    "location": "Eritrea",
+    "continent": "Africa",
+    "population": 3546427,
+    "total_cases": 480,
+    "value": 0,
+    "total_cases_per_million": 135.347492,
+    "value_per_million": 0
+  },
+  {
+    "id": "EH",
+    "iso_code": "ESH",
+    "location": "Western Sahara",
+    "continent": "Africa",
+    "population": 597330,
+    "total_cases": 766,
+    "value": 1,
+    "total_cases_per_million": 1282.373228,
+    "value_per_million": 1.674116485
+  },
+  {
+    "id": "ES",
+    "iso_code": "ESP",
+    "location": "Spain",
+    "continent": "Europe",
+    "population": 46754783,
+    "total_cases": 1284408,
+    "value": 38118,
+    "total_cases_per_million": 27471.15734,
+    "value_per_million": 815.2748779
+  },
+  {
+    "id": "EE",
+    "iso_code": "EST",
+    "location": "Estonia",
+    "continent": "Europe",
+    "population": 1326539,
+    "total_cases": 5333,
+    "value": 73,
+    "total_cases_per_million": 4020.236118,
+    "value_per_million": 55.03042127
+  },
+  {
+    "id": "ET",
+    "iso_code": "ETH",
+    "location": "Ethiopia",
+    "continent": "Africa",
+    "population": 114963583,
+    "total_cases": 97881,
+    "value": 1503,
+    "total_cases_per_million": 851.4087457,
+    "value_per_million": 13.07370526
+  },
+  {
+    "id": "FI",
+    "iso_code": "FIN",
+    "location": "Finland",
+    "continent": "Europe",
+    "population": 5540718,
+    "total_cases": 16930,
+    "value": 361,
+    "total_cases_per_million": 3055.560669,
+    "value_per_million": 65.15401073
+  },
+  {
+    "id": "FJ",
+    "iso_code": "FJI",
+    "location": "Fiji",
+    "continent": "Oceania",
+    "population": 896444,
+    "total_cases": 34,
+    "value": 2,
+    "total_cases_per_million": 37.92763407,
+    "value_per_million": 2.231037298
+  },
+  {
+    "id": "FK",
+    "iso_code": "FLK",
+    "location": "Falkland Islands",
+    "continent": "South America",
+    "population": 3483,
+    "total_cases": 13,
+    "value": 0,
+    "total_cases_per_million": 3732.414585,
+    "value_per_million": 0
+  },
+  {
+    "id": "FR",
+    "iso_code": "FRA",
+    "location": "France",
+    "continent": "Europe",
+    "population": 65273512,
+    "total_cases": 1543321,
+    "value": 38674,
+    "total_cases_per_million": 23643.90934,
+    "value_per_million": 592.4914841
+  },
+  {
+    "id": "FO",
+    "iso_code": "FRO",
+    "location": "Faeroe Islands",
+    "continent": "Europe",
+    "population": 48865,
+    "total_cases": 495,
+    "value": 0,
+    "total_cases_per_million": 10129.94986,
+    "value_per_million": 0
+  },
+  {
+    "id": "GA",
+    "iso_code": "GAB",
+    "location": "Gabon",
+    "continent": "Africa",
+    "population": 2225728,
+    "total_cases": 9005,
+    "value": 55,
+    "total_cases_per_million": 4045.86724,
+    "value_per_million": 24.7110159
+  },
+  {
+    "id": "GB",
+    "iso_code": "GBR",
+    "location": "United Kingdom",
+    "continent": "Europe",
+    "population": 67886004,
+    "total_cases": 1099059,
+    "value": 47742,
+    "total_cases_per_million": 16189.77308,
+    "value_per_million": 703.2672007
+  },
+  {
+    "id": "GE",
+    "iso_code": "GEO",
+    "location": "Georgia",
+    "continent": "Asia",
+    "population": 3989175,
+    "total_cases": 49218,
+    "value": 401,
+    "total_cases_per_million": 12337.88941,
+    "value_per_million": 100.5220378
+  },
+  {
+    "id": "GG",
+    "iso_code": "GGY",
+    "location": "Guernsey",
+    "continent": "Europe",
+    "population": 67052,
+    "total_cases": 273,
+    "value": 13,
+    "total_cases_per_million": 4071.466921,
+    "value_per_million": 193.8793772
+  },
+  {
+    "id": "GH",
+    "iso_code": "GHA",
+    "location": "Ghana",
+    "continent": "Africa",
+    "population": 31072945,
+    "total_cases": 48643,
+    "value": 320,
+    "total_cases_per_million": 1565.445438,
+    "value_per_million": 10.29834797
+  },
+  {
+    "id": "GI",
+    "iso_code": "GIB",
+    "location": "Gibraltar",
+    "continent": "Europe",
+    "population": 33691,
+    "total_cases": 743,
+    "value": 0,
+    "total_cases_per_million": 22053.36737,
+    "value_per_million": 0
+  },
+  {
+    "id": "GN",
+    "iso_code": "GIN",
+    "location": "Guinea",
+    "continent": "Africa",
+    "population": 13132792,
+    "total_cases": 12331,
+    "value": 73,
+    "total_cases_per_million": 938.9473312,
+    "value_per_million": 5.558604751
+  },
+  {
+    "id": "GM",
+    "iso_code": "GMB",
+    "location": "Gambia",
+    "continent": "Africa",
+    "population": 2416664,
+    "total_cases": 3680,
+    "value": 120,
+    "total_cases_per_million": 1522.760301,
+    "value_per_million": 49.65522721
+  },
+  {
+    "id": "GW",
+    "iso_code": "GNB",
+    "location": "Guinea-Bissau",
+    "continent": "Africa",
+    "population": 1967998,
+    "total_cases": 2413,
+    "value": 41,
+    "total_cases_per_million": 1226.119132,
+    "value_per_million": 20.83335451
+  },
+  {
+    "id": "GQ",
+    "iso_code": "GNQ",
+    "location": "Equatorial Guinea",
+    "continent": "Africa",
+    "population": 1402985,
+    "total_cases": 5089,
+    "value": 83,
+    "total_cases_per_million": 3627.26615,
+    "value_per_million": 59.15957761
+  },
+  {
+    "id": "GR",
+    "iso_code": "GRC",
+    "location": "Greece",
+    "continent": "Europe",
+    "population": 10423056,
+    "total_cases": 46892,
+    "value": 673,
+    "total_cases_per_million": 4498.8725,
+    "value_per_million": 64.5683953
+  },
+  {
+    "id": "GD",
+    "iso_code": "GRD",
+    "location": "Grenada",
+    "continent": "North America",
+    "population": 112519,
+    "total_cases": 30,
+    "value": 0,
+    "total_cases_per_million": 266.6216372,
+    "value_per_million": 0
+  },
+  {
+    "id": "GL",
+    "iso_code": "GRL",
+    "location": "Greenland",
+    "continent": "North America",
+    "population": 56772,
+    "total_cases": 17,
+    "value": 0,
+    "total_cases_per_million": 299.4433876,
+    "value_per_million": 0
+  },
+  {
+    "id": "GT",
+    "iso_code": "GTM",
+    "location": "Guatemala",
+    "continent": "North America",
+    "population": 17915567,
+    "total_cases": 109147,
+    "value": 3752,
+    "total_cases_per_million": 6092.299507,
+    "value_per_million": 209.4268074
+  },
+  {
+    "id": "GU",
+    "iso_code": "GUM",
+    "location": "Guam",
+    "continent": "Oceania",
+    "population": 168783,
+    "total_cases": 4903,
+    "value": 83,
+    "total_cases_per_million": 29049.1341,
+    "value_per_million": 491.7556863
+  },
+  {
+    "id": "GY",
+    "iso_code": "GUY",
+    "location": "Guyana",
+    "continent": "South America",
+    "population": 786559,
+    "total_cases": 4324,
+    "value": 130,
+    "total_cases_per_million": 5497.362563,
+    "value_per_million": 165.2768578
+  },
+  {
+    "id": "HN",
+    "iso_code": "HND",
+    "location": "Honduras",
+    "continent": "North America",
+    "population": 9904608,
+    "total_cases": 99124,
+    "value": 2730,
+    "total_cases_per_million": 10007.86705,
+    "value_per_million": 275.6292829
+  },
+  {
+    "id": "HR",
+    "iso_code": "HRV",
+    "location": "Croatia",
+    "continent": "Europe",
+    "population": 4105268,
+    "total_cases": 56567,
+    "value": 654,
+    "total_cases_per_million": 13779.12477,
+    "value_per_million": 159.3075044
+  },
+  {
+    "id": "HT",
+    "iso_code": "HTI",
+    "location": "Haiti",
+    "continent": "North America",
+    "population": 11402533,
+    "total_cases": 9100,
+    "value": 232,
+    "total_cases_per_million": 798.0682889,
+    "value_per_million": 20.34635638
+  },
+  {
+    "id": "HU",
+    "iso_code": "HUN",
+    "location": "Hungary",
+    "continent": "Europe",
+    "population": 9660350,
+    "total_cases": 94916,
+    "value": 2147,
+    "total_cases_per_million": 9825.316888,
+    "value_per_million": 222.2486763
+  },
+  {
+    "id": "ID",
+    "iso_code": "IDN",
+    "location": "Indonesia",
+    "continent": "Asia",
+    "population": 273523621,
+    "total_cases": 421731,
+    "value": 14259,
+    "total_cases_per_million": 1541.8449,
+    "value_per_million": 52.13078106
+  },
+  {
+    "id": "IM",
+    "iso_code": "IMN",
+    "location": "Isle of Man",
+    "continent": "Europe",
+    "population": 85032,
+    "total_cases": 357,
+    "value": 24,
+    "total_cases_per_million": 4198.419419,
+    "value_per_million": 282.2466836
+  },
+  {
+    "id": "IN",
+    "iso_code": "IND",
+    "location": "India",
+    "continent": "Asia",
+    "population": 1380004385,
+    "total_cases": 8364086,
+    "value": 124315,
+    "total_cases_per_million": 6060.912625,
+    "value_per_million": 90.08304709
+  },
+  {
+    "id": "IE",
+    "iso_code": "IRL",
+    "location": "Ireland",
+    "continent": "Europe",
+    "population": 4937796,
+    "total_cases": 63483,
+    "value": 1930,
+    "total_cases_per_million": 12856.54571,
+    "value_per_million": 390.862644
+  },
+  {
+    "id": "IR",
+    "iso_code": "IRN",
+    "location": "Iran",
+    "continent": "Asia",
+    "population": 83992953,
+    "total_cases": 646164,
+    "value": 36579,
+    "total_cases_per_million": 7693.073965,
+    "value_per_million": 435.5008211
+  },
+  {
+    "id": "IQ",
+    "iso_code": "IRQ",
+    "location": "Iraq",
+    "continent": "Asia",
+    "population": 40222503,
+    "total_cases": 485870,
+    "value": 11128,
+    "total_cases_per_million": 12079.55656,
+    "value_per_million": 276.6610521
+  },
+  {
+    "id": "IS",
+    "iso_code": "ISL",
+    "location": "Iceland",
+    "continent": "Europe",
+    "population": 341250,
+    "total_cases": 4989,
+    "value": 17,
+    "total_cases_per_million": 14619.78022,
+    "value_per_million": 49.81684982
+  },
+  {
+    "id": "IL",
+    "iso_code": "ISR",
+    "location": "Israel",
+    "continent": "Asia",
+    "population": 8655541,
+    "total_cases": 317556,
+    "value": 2597,
+    "total_cases_per_million": 36688.17466,
+    "value_per_million": 300.0390155
+  },
+  {
+    "id": "IT",
+    "iso_code": "ITA",
+    "location": "Italy",
+    "continent": "Europe",
+    "population": 60461828,
+    "total_cases": 790377,
+    "value": 39764,
+    "total_cases_per_million": 13072.33053,
+    "value_per_million": 657.6711508
+  },
+  {
+    "id": "JM",
+    "iso_code": "JAM",
+    "location": "Jamaica",
+    "continent": "North America",
+    "population": 2961161,
+    "total_cases": 9326,
+    "value": 215,
+    "total_cases_per_million": 3149.440372,
+    "value_per_million": 72.60665665
+  },
+  {
+    "id": "JE",
+    "iso_code": "JEY",
+    "location": "Jersey",
+    "continent": "Europe",
+    "population": 101073,
+    "total_cases": 620,
+    "value": 32,
+    "total_cases_per_million": 6134.180246,
+    "value_per_million": 316.6028514
+  },
+  {
+    "id": "JO",
+    "iso_code": "JOR",
+    "location": "Jordan",
+    "continent": "Asia",
+    "population": 10203140,
+    "total_cases": 91234,
+    "value": 1029,
+    "total_cases_per_million": 8941.757145,
+    "value_per_million": 100.8513066
+  },
+  {
+    "id": "JP",
+    "iso_code": "JPN",
+    "location": "Japan",
+    "continent": "Asia",
+    "population": 126476458,
+    "total_cases": 103838,
+    "value": 1794,
+    "total_cases_per_million": 821.0065465,
+    "value_per_million": 14.18445795
+  },
+  {
+    "id": "KZ",
+    "iso_code": "KAZ",
+    "location": "Kazakhstan",
+    "continent": "Asia",
+    "population": 18776707,
+    "total_cases": 152725,
+    "value": 2263,
+    "total_cases_per_million": 8133.74784,
+    "value_per_million": 120.5216655
+  },
+  {
+    "id": "KE",
+    "iso_code": "KEN",
+    "location": "Kenya",
+    "continent": "Africa",
+    "population": 53771300,
+    "total_cases": 58587,
+    "value": 1051,
+    "total_cases_per_million": 1089.558928,
+    "value_per_million": 19.5457428
+  },
+  {
+    "id": "KG",
+    "iso_code": "KGZ",
+    "location": "Kyrgyzstan",
+    "continent": "Asia",
+    "population": 6524191,
+    "total_cases": 61309,
+    "value": 1167,
+    "total_cases_per_million": 9397.180432,
+    "value_per_million": 178.8727522
+  },
+  {
+    "id": "KH",
+    "iso_code": "KHM",
+    "location": "Cambodia",
+    "continent": "Asia",
+    "population": 16718971,
+    "total_cases": 292,
+    "value": 0,
+    "total_cases_per_million": 17.46518969,
+    "value_per_million": 0
+  },
+  {
+    "id": "KN",
+    "iso_code": "KNA",
+    "location": "Saint Kitts and Nevis",
+    "continent": "North America",
+    "population": 53192,
+    "total_cases": 19,
+    "value": 0,
+    "total_cases_per_million": 357.1965709,
+    "value_per_million": 0
+  },
+  {
+    "id": "KR",
+    "iso_code": "KOR",
+    "location": "South Korea",
+    "continent": "Asia",
+    "population": 51269183,
+    "total_cases": 27050,
+    "value": 475,
+    "total_cases_per_million": 527.6073933,
+    "value_per_million": 9.264824836
+  },
+  {
+    "id": "KW",
+    "iso_code": "KWT",
+    "location": "Kuwait",
+    "continent": "Asia",
+    "population": 4270563,
+    "total_cases": 128843,
+    "value": 794,
+    "total_cases_per_million": 30170.02676,
+    "value_per_million": 185.9239637
+  },
+  {
+    "id": "LA",
+    "iso_code": "LAO",
+    "location": "Laos",
+    "continent": "Asia",
+    "population": 7275556,
+    "total_cases": 24,
+    "value": 0,
+    "total_cases_per_million": 3.298716964,
+    "value_per_million": 0
+  },
+  {
+    "id": "LB",
+    "iso_code": "LBN",
+    "location": "Lebanon",
+    "continent": "Asia",
+    "population": 6825442,
+    "total_cases": 87097,
+    "value": 676,
+    "total_cases_per_million": 12760.6388,
+    "value_per_million": 99.04120495
+  },
+  {
+    "id": "LR",
+    "iso_code": "LBR",
+    "location": "Liberia",
+    "continent": "Africa",
+    "population": 5057677,
+    "total_cases": 1438,
+    "value": 82,
+    "total_cases_per_million": 284.3202522,
+    "value_per_million": 16.21297683
+  },
+  {
+    "id": "LY",
+    "iso_code": "LBY",
+    "location": "Libya",
+    "continent": "Africa",
+    "population": 6871287,
+    "total_cases": 64587,
+    "value": 900,
+    "total_cases_per_million": 9399.549167,
+    "value_per_million": 130.9798295
+  },
+  {
+    "id": "LC",
+    "iso_code": "LCA",
+    "location": "Saint Lucia",
+    "continent": "North America",
+    "population": 183629,
+    "total_cases": 105,
+    "value": 0,
+    "total_cases_per_million": 571.805107,
+    "value_per_million": 0
+  },
+  {
+    "id": "LI",
+    "iso_code": "LIE",
+    "location": "Liechtenstein",
+    "continent": "Europe",
+    "population": 38137,
+    "total_cases": 673,
+    "value": 3,
+    "total_cases_per_million": 17646.90458,
+    "value_per_million": 78.66376485
+  },
+  {
+    "id": "LK",
+    "iso_code": "LKA",
+    "location": "Sri Lanka",
+    "continent": "Asia",
+    "population": 21413250,
+    "total_cases": 12187,
+    "value": 24,
+    "total_cases_per_million": 569.1335972,
+    "value_per_million": 1.120801373
+  },
+  {
+    "id": "LS",
+    "iso_code": "LSO",
+    "location": "Lesotho",
+    "continent": "Africa",
+    "population": 2142252,
+    "total_cases": 1963,
+    "value": 44,
+    "total_cases_per_million": 916.325437,
+    "value_per_million": 20.53913358
+  },
+  {
+    "id": "LT",
+    "iso_code": "LTU",
+    "location": "Lithuania",
+    "continent": "Europe",
+    "population": 2722291,
+    "total_cases": 18092,
+    "value": 182,
+    "total_cases_per_million": 6645.872906,
+    "value_per_million": 66.85545373
+  },
+  {
+    "id": "LU",
+    "iso_code": "LUX",
+    "location": "Luxembourg",
+    "continent": "Europe",
+    "population": 625976,
+    "total_cases": 20344,
+    "value": 171,
+    "total_cases_per_million": 32499.64855,
+    "value_per_million": 273.1734124
+  },
+  {
+    "id": "LV",
+    "iso_code": "LVA",
+    "location": "Latvia",
+    "continent": "Europe",
+    "population": 1886202,
+    "total_cases": 6752,
+    "value": 85,
+    "total_cases_per_million": 3579.680225,
+    "value_per_million": 45.06410236
+  },
+  {
+    "id": "MA",
+    "iso_code": "MAR",
+    "location": "Morocco",
+    "continent": "Africa",
+    "population": 36910558,
+    "total_cases": 235310,
+    "value": 3982,
+    "total_cases_per_million": 6375.140685,
+    "value_per_million": 107.8824113
+  },
+  {
+    "id": "MC",
+    "iso_code": "MCO",
+    "location": "Monaco",
+    "continent": "Europe",
+    "population": 39244,
+    "total_cases": 412,
+    "value": 1,
+    "total_cases_per_million": 10498.42014,
+    "value_per_million": 25.48160228
+  },
+  {
+    "id": "MD",
+    "iso_code": "MDA",
+    "location": "Moldova",
+    "continent": "Europe",
+    "population": 4033963,
+    "total_cases": 78507,
+    "value": 1851,
+    "total_cases_per_million": 19461.50721,
+    "value_per_million": 458.8539855
+  },
+  {
+    "id": "MG",
+    "iso_code": "MDG",
+    "location": "Madagascar",
+    "continent": "Africa",
+    "population": 27691019,
+    "total_cases": 17111,
+    "value": 244,
+    "total_cases_per_million": 617.9259781,
+    "value_per_million": 8.811521165
+  },
+  {
+    "id": "MV",
+    "iso_code": "MDV",
+    "location": "Maldives",
+    "continent": "Asia",
+    "population": 540542,
+    "total_cases": 11822,
+    "value": 38,
+    "total_cases_per_million": 21870.64095,
+    "value_per_million": 70.29981019
+  },
+  {
+    "id": "MX",
+    "iso_code": "MEX",
+    "location": "Mexico",
+    "continent": "North America",
+    "population": 128932753,
+    "total_cases": 943630,
+    "value": 93228,
+    "total_cases_per_million": 7318.776479,
+    "value_per_million": 723.0746093
+  },
+  {
+    "id": "MH",
+    "iso_code": "MHL",
+    "location": "Marshall Islands",
+    "continent": "Oceania",
+    "population": 59194,
+    "total_cases": 2,
+    "value": 0,
+    "total_cases_per_million": 33.78720816,
+    "value_per_million": 0
+  },
+  {
+    "id": "MK",
+    "iso_code": "MKD",
+    "location": "Macedonia",
+    "continent": "Europe",
+    "population": 2083380,
+    "total_cases": 35097,
+    "value": 1071,
+    "total_cases_per_million": 16846.18265,
+    "value_per_million": 514.0684849
+  },
+  {
+    "id": "ML",
+    "iso_code": "MLI",
+    "location": "Mali",
+    "continent": "Africa",
+    "population": 20250834,
+    "total_cases": 3609,
+    "value": 137,
+    "total_cases_per_million": 178.2148824,
+    "value_per_million": 6.765153475
+  },
+  {
+    "id": "MT",
+    "iso_code": "MLT",
+    "location": "Malta",
+    "continent": "Europe",
+    "population": 441539,
+    "total_cases": 6590,
+    "value": 65,
+    "total_cases_per_million": 14925.06891,
+    "value_per_million": 147.212364
+  },
+  {
+    "id": "MM",
+    "iso_code": "MMR",
+    "location": "Myanmar",
+    "continent": "Asia",
+    "population": 54409794,
+    "total_cases": 56940,
+    "value": 1330,
+    "total_cases_per_million": 1046.502767,
+    "value_per_million": 24.44412857
+  },
+  {
+    "id": "ME",
+    "iso_code": "MNE",
+    "location": "Montenegro",
+    "continent": "Europe",
+    "population": 628062,
+    "total_cases": 20851,
+    "value": 326,
+    "total_cases_per_million": 33198.9517,
+    "value_per_million": 519.0570358
+  },
+  {
+    "id": "MN",
+    "iso_code": "MNG",
+    "location": "Mongolia",
+    "continent": "Asia",
+    "population": 3278292,
+    "total_cases": 353,
+    "value": 0,
+    "total_cases_per_million": 107.6780226,
+    "value_per_million": 0
+  },
+  {
+    "id": "MP",
+    "iso_code": "MNP",
+    "location": "Northern Mariana Islands",
+    "continent": "Oceania",
+    "population": 57557,
+    "total_cases": 96,
+    "value": 2,
+    "total_cases_per_million": 1667.911809,
+    "value_per_million": 34.74816269
+  },
+  {
+    "id": "MZ",
+    "iso_code": "MOZ",
+    "location": "Mozambique",
+    "continent": "Africa",
+    "population": 31255435,
+    "total_cases": 13283,
+    "value": 95,
+    "total_cases_per_million": 424.9820871,
+    "value_per_million": 3.039471375
+  },
+  {
+    "id": "MR",
+    "iso_code": "MRT",
+    "location": "Mauritania",
+    "continent": "Africa",
+    "population": 4649660,
+    "total_cases": 7744,
+    "value": 164,
+    "total_cases_per_million": 1665.498122,
+    "value_per_million": 35.27139619
+  },
+  {
+    "id": "MS",
+    "iso_code": "MSR",
+    "location": "Montserrat",
+    "continent": "North America",
+    "population": 4999,
+    "total_cases": 13,
+    "value": 1,
+    "total_cases_per_million": 2600.520104,
+    "value_per_million": 200.040008
+  },
+  {
+    "id": "MU",
+    "iso_code": "MUS",
+    "location": "Mauritius",
+    "continent": "Africa",
+    "population": 1271767,
+    "total_cases": 452,
+    "value": 10,
+    "total_cases_per_million": 355.4110148,
+    "value_per_million": 7.863075548
+  },
+  {
+    "id": "MW",
+    "iso_code": "MWI",
+    "location": "Malawi",
+    "continent": "Africa",
+    "population": 19129955,
+    "total_cases": 5934,
+    "value": 184,
+    "total_cases_per_million": 310.1941432,
+    "value_per_million": 9.618423044
+  },
+  {
+    "id": "MY",
+    "iso_code": "MYS",
+    "location": "Malaysia",
+    "continent": "Asia",
+    "population": 32365998,
+    "total_cases": 35425,
+    "value": 271,
+    "total_cases_per_million": 1094.512828,
+    "value_per_million": 8.372984513
+  },
+  {
+    "id": "NA",
+    "iso_code": "NAM",
+    "location": "Namibia",
+    "continent": "Africa",
+    "population": 2540916,
+    "total_cases": 13046,
+    "value": 133,
+    "total_cases_per_million": 5134.368865,
+    "value_per_million": 52.34332815
+  },
+  {
+    "id": "NC",
+    "iso_code": "NCL",
+    "location": "New Caledonia",
+    "continent": "Oceania",
+    "population": 285491,
+    "total_cases": 28,
+    "value": 0,
+    "total_cases_per_million": 98.0766469,
+    "value_per_million": 0
+  },
+  {
+    "id": "NE",
+    "iso_code": "NER",
+    "location": "Niger",
+    "continent": "Africa",
+    "population": 24206636,
+    "total_cases": 1225,
+    "value": 69,
+    "total_cases_per_million": 50.6059578,
+    "value_per_million": 2.850458031
+  },
+  {
+    "id": "NG",
+    "iso_code": "NGA",
+    "location": "Nigeria",
+    "continent": "Africa",
+    "population": 206139587,
+    "total_cases": 63328,
+    "value": 1155,
+    "total_cases_per_million": 307.2093086,
+    "value_per_million": 5.602999486
+  },
+  {
+    "id": "NI",
+    "iso_code": "NIC",
+    "location": "Nicaragua",
+    "continent": "North America",
+    "population": 6624554,
+    "total_cases": 5514,
+    "value": 156,
+    "total_cases_per_million": 832.3579218,
+    "value_per_million": 23.54875513
+  },
+  {
+    "id": "NL",
+    "iso_code": "NLD",
+    "location": "Netherlands",
+    "continent": "Europe",
+    "population": 17134873,
+    "total_cases": 383066,
+    "value": 7672,
+    "total_cases_per_million": 22355.92875,
+    "value_per_million": 447.7418654
+  },
+  {
+    "id": "NO",
+    "iso_code": "NOR",
+    "location": "Norway",
+    "continent": "Europe",
+    "population": 5421242,
+    "total_cases": 21954,
+    "value": 282,
+    "total_cases_per_million": 4049.625529,
+    "value_per_million": 52.01760039
+  },
+  {
+    "id": "NP",
+    "iso_code": "NPL",
+    "location": "Nepal",
+    "continent": "Asia",
+    "population": 29136808,
+    "total_cases": 182923,
+    "value": 1034,
+    "total_cases_per_million": 6278.072739,
+    "value_per_million": 35.4877583
+  },
+  {
+    "id": "NZ",
+    "iso_code": "NZL",
+    "location": "New Zealand",
+    "continent": "Oceania",
+    "population": 4822233,
+    "total_cases": 1617,
+    "value": 25,
+    "total_cases_per_million": 335.3218312,
+    "value_per_million": 5.18432021
+  },
+  {
+    "id": "OM",
+    "iso_code": "OMN",
+    "location": "Oman",
+    "continent": "Asia",
+    "population": 5106622,
+    "total_cases": 116847,
+    "value": 1275,
+    "total_cases_per_million": 22881.46646,
+    "value_per_million": 249.6758131
+  },
+  {
+    "id": "PK",
+    "iso_code": "PAK",
+    "location": "Pakistan",
+    "continent": "Asia",
+    "population": 220892331,
+    "total_cases": 338875,
+    "value": 6893,
+    "total_cases_per_million": 1534.118448,
+    "value_per_million": 31.20524814
+  },
+  {
+    "id": "PA",
+    "iso_code": "PAN",
+    "location": "Panama",
+    "continent": "North America",
+    "population": 4314768,
+    "total_cases": 136024,
+    "value": 2744,
+    "total_cases_per_million": 31525.21758,
+    "value_per_million": 635.9553978
+  },
+  {
+    "id": "PE",
+    "iso_code": "PER",
+    "location": "Peru",
+    "continent": "South America",
+    "population": 32971846,
+    "total_cases": 911787,
+    "value": 34671,
+    "total_cases_per_million": 27653.50172,
+    "value_per_million": 1051.533481
+  },
+  {
+    "id": "PH",
+    "iso_code": "PHL",
+    "location": "Philippines",
+    "continent": "Asia",
+    "population": 109581085,
+    "total_cases": 388137,
+    "value": 7367,
+    "total_cases_per_million": 3542.007273,
+    "value_per_million": 67.22875577
+  },
+  {
+    "id": "PW",
+    "iso_code": "PNG",
+    "location": "Papua New Guinea",
+    "continent": "Oceania",
+    "population": 8947027,
+    "total_cases": 597,
+    "value": 7,
+    "total_cases_per_million": 66.7260756,
+    "value_per_million": 0.782382796
+  },
+  {
+    "id": "PL",
+    "iso_code": "POL",
+    "location": "Poland",
+    "continent": "Europe",
+    "population": 37846605,
+    "total_cases": 439536,
+    "value": 6475,
+    "total_cases_per_million": 11613.61765,
+    "value_per_million": 171.0853589
+  },
+  {
+    "id": "PR",
+    "iso_code": "PRI",
+    "location": "Puerto Rico",
+    "continent": "North America",
+    "population": 2860840,
+    "total_cases": 69020,
+    "value": 850,
+    "total_cases_per_million": 24125.78124,
+    "value_per_million": 297.1155325
+  },
+  {
+    "id": "PT",
+    "iso_code": "PRT",
+    "location": "Portugal",
+    "continent": "Europe",
+    "population": 10196707,
+    "total_cases": 156940,
+    "value": 2694,
+    "total_cases_per_million": 15391.24347,
+    "value_per_million": 264.2029432
+  },
+  {
+    "id": "PY",
+    "iso_code": "PRY",
+    "location": "Paraguay",
+    "continent": "South America",
+    "population": 7132530,
+    "total_cases": 65258,
+    "value": 1454,
+    "total_cases_per_million": 9149.348128,
+    "value_per_million": 203.8547332
+  },
+  {
+    "id": "PS",
+    "iso_code": "PSE",
+    "location": "Palestine",
+    "continent": "Asia",
+    "population": 5101416,
+    "total_cases": 67918,
+    "value": 576,
+    "total_cases_per_million": 13313.55843,
+    "value_per_million": 112.9098274
+  },
+  {
+    "id": "PF",
+    "iso_code": "PYF",
+    "location": "French Polynesia",
+    "continent": "Oceania",
+    "population": 280904,
+    "total_cases": 8949,
+    "value": 38,
+    "total_cases_per_million": 31857.85891,
+    "value_per_million": 135.2775325
+  },
+  {
+    "id": "QA",
+    "iso_code": "QAT",
+    "location": "Qatar",
+    "continent": "Asia",
+    "population": 2881060,
+    "total_cases": 133370,
+    "value": 232,
+    "total_cases_per_million": 46291.98975,
+    "value_per_million": 80.52591754
+  },
+  {
+    "id": "RO",
+    "iso_code": "ROU",
+    "location": "Romania",
+    "continent": "Europe",
+    "population": 19237682,
+    "total_cases": 267088,
+    "value": 7419,
+    "total_cases_per_million": 13883.58535,
+    "value_per_million": 385.6493729
+  },
+  {
+    "id": "RU",
+    "iso_code": "RUS",
+    "location": "Russia",
+    "continent": "Europe",
+    "population": 145934460,
+    "total_cases": 1693454,
+    "value": 29217,
+    "total_cases_per_million": 11604.20918,
+    "value_per_million": 200.2063118
+  },
+  {
+    "id": "RW",
+    "iso_code": "RWA",
+    "location": "Rwanda",
+    "continent": "Africa",
+    "population": 12952209,
+    "total_cases": 5174,
+    "value": 35,
+    "total_cases_per_million": 399.4685385,
+    "value_per_million": 2.702241757
+  },
+  {
+    "id": "SA",
+    "iso_code": "SAU",
+    "location": "Saudi Arabia",
+    "continent": "Asia",
+    "population": 34813867,
+    "total_cases": 348936,
+    "value": 5471,
+    "total_cases_per_million": 10022.90266,
+    "value_per_million": 157.150023
+  },
+  {
+    "id": "SD",
+    "iso_code": "SDN",
+    "location": "Sudan",
+    "continent": "Africa",
+    "population": 43849269,
+    "total_cases": 13943,
+    "value": 837,
+    "total_cases_per_million": 317.9756543,
+    "value_per_million": 19.08811752
+  },
+  {
+    "id": "SN",
+    "iso_code": "SEN",
+    "location": "Senegal",
+    "continent": "Africa",
+    "population": 16743930,
+    "total_cases": 15640,
+    "value": 326,
+    "total_cases_per_million": 934.069839,
+    "value_per_million": 19.46974217
+  },
+  {
+    "id": "SG",
+    "iso_code": "SGP",
+    "location": "Singapore",
+    "continent": "Asia",
+    "population": 5850343,
+    "total_cases": 58036,
+    "value": 28,
+    "total_cases_per_million": 9920.102121,
+    "value_per_million": 4.786044169
+  },
+  {
+    "id": "SB",
+    "iso_code": "SLB",
+    "location": "Solomon Islands",
+    "continent": "Oceania",
+    "population": 686878,
+    "total_cases": 13,
+    "value": 0,
+    "total_cases_per_million": 18.92621397,
+    "value_per_million": 0
+  },
+  {
+    "id": "SL",
+    "iso_code": "SLE",
+    "location": "Sierra Leone",
+    "continent": "Africa",
+    "population": 7976985,
+    "total_cases": 2369,
+    "value": 74,
+    "total_cases_per_million": 296.9793725,
+    "value_per_million": 9.276687871
+  },
+  {
+    "id": "SV",
+    "iso_code": "SLV",
+    "location": "El Salvador",
+    "continent": "North America",
+    "population": 6486201,
+    "total_cases": 34015,
+    "value": 997,
+    "total_cases_per_million": 5244.209977,
+    "value_per_million": 153.7109319
+  },
+  {
+    "id": "SM",
+    "iso_code": "SMR",
+    "location": "San Marino",
+    "continent": "Europe",
+    "population": 33938,
+    "total_cases": 994,
+    "value": 42,
+    "total_cases_per_million": 29288.70293,
+    "value_per_million": 1237.550828
+  },
+  {
+    "id": "SO",
+    "iso_code": "SOM",
+    "location": "Somalia",
+    "continent": "Africa",
+    "population": 15893219,
+    "total_cases": 4229,
+    "value": 107,
+    "total_cases_per_million": 266.0883236,
+    "value_per_million": 6.732430982
+  },
+  {
+    "id": "RS",
+    "iso_code": "SRB",
+    "location": "Serbia",
+    "continent": "Europe",
+    "population": 6804596,
+    "total_cases": 53495,
+    "value": 850,
+    "total_cases_per_million": 7861.598249,
+    "value_per_million": 124.9155718
+  },
+  {
+    "id": "SS",
+    "iso_code": "SSD",
+    "location": "South Sudan",
+    "continent": "Africa",
+    "population": 11193729,
+    "total_cases": 2943,
+    "value": 59,
+    "total_cases_per_million": 262.9150661,
+    "value_per_million": 5.270808325
+  },
+  {
+    "id": "ST",
+    "iso_code": "STP",
+    "location": "Sao Tome and Principe",
+    "continent": "Africa",
+    "population": 219161,
+    "total_cases": 958,
+    "value": 16,
+    "total_cases_per_million": 4371.215682,
+    "value_per_million": 73.00568988
+  },
+  {
+    "id": "SR",
+    "iso_code": "SUR",
+    "location": "Suriname",
+    "continent": "South America",
+    "population": 586634,
+    "total_cases": 5220,
+    "value": 112,
+    "total_cases_per_million": 8898.222742,
+    "value_per_million": 190.9197217
+  },
+  {
+    "id": "SK",
+    "iso_code": "SVK",
+    "location": "Slovakia",
+    "continent": "Europe",
+    "population": 5459643,
+    "total_cases": 66772,
+    "value": 261,
+    "total_cases_per_million": 12230.10369,
+    "value_per_million": 47.80532353
+  },
+  {
+    "id": "SI",
+    "iso_code": "SVN",
+    "location": "Slovenia",
+    "continent": "Europe",
+    "population": 2078932,
+    "total_cases": 39408,
+    "value": 321,
+    "total_cases_per_million": 18955.88697,
+    "value_per_million": 154.4062047
+  },
+  {
+    "id": "SE",
+    "iso_code": "SWE",
+    "location": "Sweden",
+    "continent": "Europe",
+    "population": 10099270,
+    "total_cases": 137339,
+    "value": 5970,
+    "total_cases_per_million": 13598.90368,
+    "value_per_million": 591.1318343
+  },
+  {
+    "id": "SZ",
+    "iso_code": "SWZ",
+    "location": "Swaziland",
+    "continent": "Africa",
+    "population": 1160164,
+    "total_cases": 5955,
+    "value": 117,
+    "total_cases_per_million": 5132.895004,
+    "value_per_million": 100.8478112
+  },
+  {
+    "id": "SC",
+    "iso_code": "SYC",
+    "location": "Seychelles",
+    "continent": "Africa",
+    "population": 98340,
+    "total_cases": 157,
+    "value": 0,
+    "total_cases_per_million": 1596.501932,
+    "value_per_million": 0
+  },
+  {
+    "id": "SY",
+    "iso_code": "SYR",
+    "location": "Syria",
+    "continent": "Asia",
+    "population": 17500657,
+    "total_cases": 5964,
+    "value": 301,
+    "total_cases_per_million": 340.7872059,
+    "value_per_million": 17.19935429
+  },
+  {
+    "id": "TC",
+    "iso_code": "TCA",
+    "location": "Turks and Caicos Islands",
+    "continent": "North America",
+    "population": 38718,
+    "total_cases": 705,
+    "value": 6,
+    "total_cases_per_million": 18208.58515,
+    "value_per_million": 154.9666822
+  },
+  {
+    "id": "TD",
+    "iso_code": "TCD",
+    "location": "Chad",
+    "continent": "Africa",
+    "population": 16425859,
+    "total_cases": 1517,
+    "value": 99,
+    "total_cases_per_million": 92.35437854,
+    "value_per_million": 6.027082054
+  },
+  {
+    "id": "TG",
+    "iso_code": "TGO",
+    "location": "Togo",
+    "continent": "Africa",
+    "population": 8278737,
+    "total_cases": 2406,
+    "value": 57,
+    "total_cases_per_million": 290.6240408,
+    "value_per_million": 6.885108199
+  },
+  {
+    "id": "TH",
+    "iso_code": "THA",
+    "location": "Thailand",
+    "continent": "Asia",
+    "population": 69799978,
+    "total_cases": 3810,
+    "value": 59,
+    "total_cases_per_million": 54.58454442,
+    "value_per_million": 0.845272473
+  },
+  {
+    "id": "TJ",
+    "iso_code": "TJK",
+    "location": "Tajikistan",
+    "continent": "Asia",
+    "population": 9537642,
+    "total_cases": 11180,
+    "value": 83,
+    "total_cases_per_million": 1172.197489,
+    "value_per_million": 8.702360604
+  },
+  {
+    "id": "TT",
+    "iso_code": "TTO",
+    "location": "Trinidad and Tobago",
+    "continent": "North America",
+    "population": 1399491,
+    "total_cases": 5764,
+    "value": 110,
+    "total_cases_per_million": 4118.640277,
+    "value_per_million": 78.60000529
+  },
+  {
+    "id": "TN",
+    "iso_code": "TUN",
+    "location": "Tunisia",
+    "continent": "Africa",
+    "population": 11818618,
+    "total_cases": 64363,
+    "value": 1512,
+    "total_cases_per_million": 5445.899004,
+    "value_per_million": 127.9337398
+  },
+  {
+    "id": "TR",
+    "iso_code": "TUR",
+    "location": "Turkey",
+    "continent": "Asia",
+    "population": 84339067,
+    "total_cases": 384509,
+    "value": 10558,
+    "total_cases_per_million": 4559.085293,
+    "value_per_million": 125.1851648
+  },
+  {
+    "id": "TW",
+    "iso_code": "TWN",
+    "location": "Taiwan",
+    "continent": "Asia",
+    "population": 23816775,
+    "total_cases": 569,
+    "value": 7,
+    "total_cases_per_million": 23.89072408,
+    "value_per_million": 0.29391049
+  },
+  {
+    "id": "TZ",
+    "iso_code": "TZA",
+    "location": "Tanzania",
+    "continent": "Africa",
+    "population": 59734213,
+    "total_cases": 509,
+    "value": 21,
+    "total_cases_per_million": 8.521079871,
+    "value_per_million": 0.351557323
+  },
+  {
+    "id": "UG",
+    "iso_code": "UGA",
+    "location": "Uganda",
+    "continent": "Africa",
+    "population": 45741000,
+    "total_cases": 13351,
+    "value": 117,
+    "total_cases_per_million": 291.8825561,
+    "value_per_million": 2.557880239
+  },
+  {
+    "id": "UA",
+    "iso_code": "UKR",
+    "location": "Ukraine",
+    "continent": "Europe",
+    "population": 43733759,
+    "total_cases": 420617,
+    "value": 7731,
+    "total_cases_per_million": 9617.673157,
+    "value_per_million": 176.774194
+  },
+  {
+    "id": "UY",
+    "iso_code": "URY",
+    "location": "Uruguay",
+    "continent": "South America",
+    "population": 3473727,
+    "total_cases": 3245,
+    "value": 61,
+    "total_cases_per_million": 934.1551596,
+    "value_per_million": 17.56038975
+  },
+  {
+    "id": "US",
+    "iso_code": "USA",
+    "location": "United States",
+    "continent": "North America",
+    "population": 331002647,
+    "total_cases": 9486486,
+    "value": 233729,
+    "total_cases_per_million": 28659.84936,
+    "value_per_million": 706.1242625
+  },
+  {
+    "id": "UZ",
+    "iso_code": "UZB",
+    "location": "Uzbekistan",
+    "continent": "Asia",
+    "population": 33469199,
+    "total_cases": 67779,
+    "value": 577,
+    "total_cases_per_million": 2025.115689,
+    "value_per_million": 17.23973137
+  },
+  {
+    "id": "VA",
+    "iso_code": "VAT",
+    "location": "Vatican",
+    "continent": "Europe",
+    "population": 809,
+    "total_cases": 26,
+    "value": 0,
+    "total_cases_per_million": 32138.44252,
+    "value_per_million": 0
+  },
+  {
+    "id": "VC",
+    "iso_code": "VCT",
+    "location": "Saint Vincent and the Grenadines",
+    "continent": "North America",
+    "population": 110947,
+    "total_cases": 75,
+    "value": 0,
+    "total_cases_per_million": 675.9984497,
+    "value_per_million": 0
+  },
+  {
+    "id": "VE",
+    "iso_code": "VEN",
+    "location": "Venezuela",
+    "continent": "South America",
+    "population": 28435943,
+    "total_cases": 93100,
+    "value": 810,
+    "total_cases_per_million": 3274.025412,
+    "value_per_million": 28.48507609
+  },
+  {
+    "id": "VG",
+    "iso_code": "VGB",
+    "location": "British Virgin Islands",
+    "continent": "North America",
+    "population": 30237,
+    "total_cases": 72,
+    "value": 1,
+    "total_cases_per_million": 2381.18861,
+    "value_per_million": 33.07206403
+  },
+  {
+    "id": "VI",
+    "iso_code": "VIR",
+    "location": "United States Virgin Islands",
+    "continent": "North America",
+    "population": 104423,
+    "total_cases": 1388,
+    "value": 23,
+    "total_cases_per_million": 13292.09082,
+    "value_per_million": 220.2579891
+  },
+  {
+    "id": "VN",
+    "iso_code": "VNM",
+    "location": "Vietnam",
+    "continent": "Asia",
+    "population": 97338583,
+    "total_cases": 1207,
+    "value": 35,
+    "total_cases_per_million": 12.40001614,
+    "value_per_million": 0.359569648
+  },
+  {
+    "id": "WF",
+    "iso_code": "WLF",
+    "location": "Wallis and Futuna",
+    "continent": "Oceania",
+    "population": 11246,
+    "total_cases": 1,
+    "value": 0,
+    "total_cases_per_million": 88.92050507,
+    "value_per_million": 0
+  },
+  {
+    "id": "YE",
+    "iso_code": "YEM",
+    "location": "Yemen",
+    "continent": "Asia",
+    "population": 29825968,
+    "total_cases": 2067,
+    "value": 602,
+    "total_cases_per_million": 69.30202567,
+    "value_per_million": 20.18375397
+  },
+  {
+    "id": "ZA",
+    "iso_code": "ZAF",
+    "location": "South Africa",
+    "continent": "Africa",
+    "population": 59308690,
+    "total_cases": 730548,
+    "value": 19585,
+    "total_cases_per_million": 12317.72275,
+    "value_per_million": 330.2214229
+  },
+  {
+    "id": "ZM",
+    "iso_code": "ZMB",
+    "location": "Zambia",
+    "continent": "Africa",
+    "population": 18383956,
+    "total_cases": 16698,
+    "value": 349,
+    "total_cases_per_million": 908.2919911,
+    "value_per_million": 18.98394448
+  },
+  {
+    "id": "ZW",
+    "iso_code": "ZWE",
+    "location": "Zimbabwe",
+    "continent": "Africa",
+    "population": 14862927,
+    "total_cases": 8427,
+    "value": 248,
+    "total_cases_per_million": 566.9811875,
+    "value_per_million": 16.68581162
+  }
+]
+};
+
 //am4core.useTheme(am4themes_animated);
 // Create map variable
 var map = am4core.create("chartdiv", am4maps.MapChart);
+
 // Load map type from am4geodata
 map.geodata = am4geodata_worldLow;
 // Set map projection type
 map.projection = new am4maps.projections.Miller();
-
 // Create the maps polygon series
 var polygonSeries = map.series.push(new am4maps.MapPolygonSeries());
-
+polygonSeries.data = data.case;
 // Configure the series
 var polygonTemplate = polygonSeries.mapPolygons.template;
 //polygonTemplate.tooltipText = "{name}";
 
+//polygonSeries.dataField.value = "total_deaths";
 polygonTemplate.tooltipText = "{name}: {value}";
-//polygonSeries.dataField = "total_deaths";
-function checkSlider() {
-    var slider = document.getElementById("data_slider");
-    if (slider.checked == true){
-        polygonTemplate.tooltipText = "{name}: {value}";
-        polygonSeries.dataField = "value";
-    } else {
-        polygonTemplate.tooltipText = "{name}: {total_deaths}";
-        polygonSeries.dataField = "total_deaths";
-    }
-}
-
-
-
 //polygonTemplate.tooltipText = "{name}: {value}";
 polygonTemplate.fill = am4core.color("#999");
 // Create hover and fill color for hover
@@ -170,2304 +4641,35 @@ map.zoomControl = new am4maps.ZoomControl();
 map.zoomControl.slider.height = 100;
 map.smallMap = new am4maps.SmallMap();
 map.smallMap.series.push(polygonSeries);
-/*
-polygonSeries.data = [{
-  "id": "US",
-  "name": "United States",
-  "value": 100,
-}, {
-  "id": "FR",
-  "name": "France",
-  "value": 50,
-}];
- */
-// Data set for map
-polygonSeries.data = [
-  {
-    "id": "AW",
-    "iso_code": "ABW",
-    "location": "Aruba",
-    "continent": "North America",
-    "population": 106766,
-    "value": 4553,
-    "total_deaths": 39,
-    "total_cases_per_million": 42644.66216,
-    "total_deaths_per_million": 365.2848285
-  },
-  {
-    "id": "AF",
-    "iso_code": "AFG",
-    "location": "Afghanistan",
-    "continent": "Asia",
-    "population": 38928341,
-    "value": 41935,
-    "total_deaths": 1554,
-    "total_cases_per_million": 1077.235734,
-    "total_deaths_per_million": 39.91950235
-  },
-  {
-    "id": "AO",
-    "iso_code": "AGO",
-    "location": "Angola",
-    "continent": "Africa",
-    "population": 32866268,
-    "value": 11577,
-    "total_deaths": 291,
-    "total_cases_per_million": 352.245652,
-    "total_deaths_per_million": 8.854062773
-  },
-  {
-    "id": "AI",
-    "iso_code": "AIA",
-    "location": "Anguilla",
-    "continent": "North America",
-    "population": 15002,
-    "value": 3,
-    "total_deaths": 0,
-    "total_cases_per_million": 199.9733369,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "AL",
-    "iso_code": "ALB",
-    "location": "Albania",
-    "continent": "Europe",
-    "population": 2877800,
-    "value": 22300,
-    "total_deaths": 536,
-    "total_cases_per_million": 7748.974911,
-    "total_deaths_per_million": 186.253388
-  },
-  {
-    "id": "AD",
-    "iso_code": "AND",
-    "location": "Andorra",
-    "continent": "Europe",
-    "population": 77265,
-    "value": 5045,
-    "total_deaths": 75,
-    "total_cases_per_million": 65294.76477,
-    "total_deaths_per_million": 970.6853038
-  },
-  {
-    "id": "AE",
-    "iso_code": "ARE",
-    "location": "United Arab Emirates",
-    "continent": "Asia",
-    "population": 9890400,
-    "value": 137310,
-    "total_deaths": 505,
-    "total_cases_per_million": 13883.15943,
-    "total_deaths_per_million": 51.05961336
-  },
-  {
-    "id": "AR",
-    "iso_code": "ARG",
-    "location": "Argentina",
-    "continent": "South America",
-    "population": 45195777,
-    "value": 1205915,
-    "total_deaths": 32520,
-    "total_cases_per_million": 26682.02828,
-    "total_deaths_per_million": 719.5362522
-  },
-  {
-    "id": "AM",
-    "iso_code": "ARM",
-    "location": "Armenia",
-    "continent": "Asia",
-    "population": 2963234,
-    "value": 99563,
-    "total_deaths": 1476,
-    "total_cases_per_million": 33599.43899,
-    "total_deaths_per_million": 498.1044359
-  },
-  {
-    "id": "AG",
-    "iso_code": "ATG",
-    "location": "Antigua and Barbuda",
-    "continent": "North America",
-    "population": 97928,
-    "value": 130,
-    "total_deaths": 3,
-    "total_cases_per_million": 1327.505923,
-    "total_deaths_per_million": 30.63475206
-  },
-  {
-    "id": "AU",
-    "iso_code": "AUS",
-    "location": "Australia",
-    "continent": "Oceania",
-    "population": 25499881,
-    "value": 27622,
-    "total_deaths": 907,
-    "total_cases_per_million": 1083.220741,
-    "total_deaths_per_million": 35.56879344
-  },
-  {
-    "id": "AT",
-    "iso_code": "AUT",
-    "location": "Austria",
-    "continent": "Europe",
-    "population": 9006400,
-    "value": 125229,
-    "total_deaths": 1204,
-    "total_cases_per_million": 13904.44573,
-    "total_deaths_per_million": 133.6827145
-  },
-  {
-    "id": "AZ",
-    "iso_code": "AZE",
-    "location": "Azerbaijan",
-    "continent": "Asia",
-    "population": 10139175,
-    "value": 59509,
-    "total_deaths": 780,
-    "total_cases_per_million": 5869.215197,
-    "total_deaths_per_million": 76.92933597
-  },
-  {
-    "id": "BI",
-    "iso_code": "BDI",
-    "location": "Burundi",
-    "continent": "Africa",
-    "population": 11890781,
-    "value": 606,
-    "total_deaths": 1,
-    "total_cases_per_million": 50.96385174,
-    "total_deaths_per_million": 0.084098765
-  },
-  {
-    "id": "BE",
-    "iso_code": "BEL",
-    "location": "Belgium",
-    "continent": "Europe",
-    "population": 11589616,
-    "value": 461589,
-    "total_deaths": 12138,
-    "total_cases_per_million": 39827.80793,
-    "total_deaths_per_million": 1047.316839
-  },
-  {
-    "id": "BJ",
-    "iso_code": "BEN",
-    "location": "Benin",
-    "continent": "Africa",
-    "population": 12123198,
-    "value": 2745,
-    "total_deaths": 43,
-    "total_cases_per_million": 226.4254036,
-    "total_deaths_per_million": 3.546918891
-  },
-  {
-    "id": "BF",
-    "iso_code": "BFA",
-    "location": "Burkina Faso",
-    "continent": "Africa",
-    "population": 20903278,
-    "value": 2539,
-    "total_deaths": 67,
-    "total_cases_per_million": 121.4642029,
-    "total_deaths_per_million": 3.20523891
-  },
-  {
-    "id": "BD",
-    "iso_code": "BGD",
-    "location": "Bangladesh",
-    "continent": "Asia",
-    "population": 164689383,
-    "value": 414164,
-    "total_deaths": 6004,
-    "total_cases_per_million": 2514.819064,
-    "total_deaths_per_million": 36.45650916
-  },
-  {
-    "id": "BG",
-    "iso_code": "BGR",
-    "location": "Bulgaria",
-    "continent": "Europe",
-    "population": 6948445,
-    "value": 64591,
-    "total_deaths": 1466,
-    "total_cases_per_million": 9295.748905,
-    "total_deaths_per_million": 210.9824572
-  },
-  {
-    "id": "BH",
-    "iso_code": "BHR",
-    "location": "Bahrain",
-    "continent": "Asia",
-    "population": 1701583,
-    "value": 82624,
-    "total_deaths": 328,
-    "total_cases_per_million": 48557.13768,
-    "total_deaths_per_million": 192.7616813
-  },
-  {
-    "id": "BS",
-    "iso_code": "BHS",
-    "location": "Bahamas",
-    "continent": "North America",
-    "population": 393248,
-    "value": 6843,
-    "total_deaths": 150,
-    "total_cases_per_million": 17401.23281,
-    "total_deaths_per_million": 381.438685
-  },
-  {
-    "id": "BA",
-    "iso_code": "BIH",
-    "location": "Bosnia and Herzegovina",
-    "continent": "Europe",
-    "population": 3280815,
-    "value": 55598,
-    "total_deaths": 1358,
-    "total_cases_per_million": 16946.39899,
-    "total_deaths_per_million": 413.9215408
-  },
-  {
-    "id": "BY",
-    "iso_code": "BLR",
-    "location": "Belarus",
-    "continent": "Europe",
-    "population": 9449321,
-    "value": 102313,
-    "total_deaths": 995,
-    "total_cases_per_million": 10827.55047,
-    "total_deaths_per_million": 105.2985712
-  },
-  {
-    "id": "BZ",
-    "iso_code": "BLZ",
-    "location": "Belize",
-    "continent": "North America",
-    "population": 397621,
-    "value": 3905,
-    "total_deaths": 64,
-    "total_cases_per_million": 9820.909861,
-    "total_deaths_per_million": 160.9572935
-  },
-  {
-    "id": "BM",
-    "iso_code": "BMU",
-    "location": "Bermuda",
-    "continent": "North America",
-    "population": 62273,
-    "value": 206,
-    "total_deaths": 9,
-    "total_cases_per_million": 3308.014709,
-    "total_deaths_per_million": 144.5249145
-  },
-  {
-    "id": "BO",
-    "iso_code": "BOL",
-    "location": "Bolivia",
-    "continent": "South America",
-    "population": 11673029,
-    "value": 142062,
-    "total_deaths": 8758,
-    "total_cases_per_million": 12170.10598,
-    "total_deaths_per_million": 750.2765563
-  },
-  {
-    "id": "BR",
-    "iso_code": "BRA",
-    "location": "Brazil",
-    "continent": "South America",
-    "population": 212559409,
-    "value": 5590025,
-    "total_deaths": 161106,
-    "total_cases_per_million": 26298.64764,
-    "total_deaths_per_million": 757.9339854
-  },
-  {
-    "id": "BB",
-    "iso_code": "BRB",
-    "location": "Barbados",
-    "continent": "North America",
-    "population": 287371,
-    "value": 239,
-    "total_deaths": 7,
-    "total_cases_per_million": 831.6775179,
-    "total_deaths_per_million": 24.35875575
-  },
-  {
-    "id": "BN",
-    "iso_code": "BRN",
-    "location": "Brunei",
-    "continent": "Asia",
-    "population": 437483,
-    "value": 148,
-    "total_deaths": 3,
-    "total_cases_per_million": 338.2988596,
-    "total_deaths_per_million": 6.857409316
-  },
-  {
-    "id": "BT",
-    "iso_code": "BTN",
-    "location": "Bhutan",
-    "continent": "Asia",
-    "population": 771612,
-    "value": 358,
-    "total_deaths": 0,
-    "total_cases_per_million": 463.9637538,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "BW",
-    "iso_code": "BWA",
-    "location": "Botswana",
-    "continent": "Africa",
-    "population": 2351625,
-    "value": 6642,
-    "total_deaths": 24,
-    "total_cases_per_million": 2824.429915,
-    "total_deaths_per_million": 10.20570882
-  },
-  {
-    "id": "CF",
-    "iso_code": "CAF",
-    "location": "Central African Republic",
-    "continent": "Africa",
-    "population": 4829764,
-    "value": 4875,
-    "total_deaths": 62,
-    "total_cases_per_million": 1009.366089,
-    "total_deaths_per_million": 12.83706616
-  },
-  {
-    "id": "CA",
-    "iso_code": "CAN",
-    "location": "Canada",
-    "continent": "North America",
-    "population": 37742157,
-    "value": 247703,
-    "total_deaths": 10331,
-    "total_cases_per_million": 6563.03242,
-    "total_deaths_per_million": 273.7257439
-  },
-  {
-    "id": "CH",
-    "iso_code": "CHE",
-    "location": "Switzerland",
-    "continent": "Europe",
-    "population": 8654618,
-    "value": 191703,
-    "total_deaths": 2272,
-    "total_cases_per_million": 22150.37105,
-    "total_deaths_per_million": 262.5188079
-  },
-  {
-    "id": "CL",
-    "iso_code": "CHL",
-    "location": "Chile",
-    "continent": "South America",
-    "population": 19116209,
-    "value": 515042,
-    "total_deaths": 14340,
-    "total_cases_per_million": 26942.68513,
-    "total_deaths_per_million": 750.148735
-  },
-  {
-    "id": "CN",
-    "iso_code": "CHN",
-    "location": "China",
-    "continent": "Asia",
-    "population": 1439323774,
-    "value": 91439,
-    "total_deaths": 4739,
-    "total_cases_per_million": 63.52913893,
-    "total_deaths_per_million": 3.292518393
-  },
-  {
-    "id": "CI",
-    "iso_code": "CIV",
-    "location": "Cote d'Ivoire",
-    "continent": "Africa",
-    "population": 26378275,
-    "value": 20778,
-    "total_deaths": 126,
-    "total_cases_per_million": 787.6936608,
-    "total_deaths_per_million": 4.776658064
-  },
-  {
-    "id": "CM",
-    "iso_code": "CMR",
-    "location": "Cameroon",
-    "continent": "Africa",
-    "population": 26545864,
-    "value": 22103,
-    "total_deaths": 429,
-    "total_cases_per_million": 832.6344172,
-    "total_deaths_per_million": 16.16070963
-  },
-  {
-    "id": "CD",
-    "iso_code": "COD",
-    "location": "Democratic Republic of Congo",
-    "continent": "Africa",
-    "population": 89561404,
-    "value": 11449,
-    "total_deaths": 314,
-    "total_cases_per_million": 127.8340835,
-    "total_deaths_per_million": 3.505974516
-  },
-  {
-    "id": "CG",
-    "iso_code": "COG",
-    "location": "Congo",
-    "continent": "Africa",
-    "population": 5518092,
-    "value": 5379,
-    "total_deaths": 92,
-    "total_cases_per_million": 974.7934612,
-    "total_deaths_per_million": 16.67242953
-  },
-  {
-    "id": "CO",
-    "iso_code": "COL",
-    "location": "Colombia",
-    "continent": "South America",
-    "population": 50882884,
-    "value": 1108084,
-    "total_deaths": 32013,
-    "total_cases_per_million": 21777.14612,
-    "total_deaths_per_million": 629.150659
-  },
-  {
-    "id": "KM",
-    "iso_code": "COM",
-    "location": "Comoros",
-    "continent": "Africa",
-    "population": 869595,
-    "value": 554,
-    "total_deaths": 7,
-    "total_cases_per_million": 637.0781801,
-    "total_deaths_per_million": 8.049724297
-  },
-  {
-    "id": "CV",
-    "iso_code": "CPV",
-    "location": "Cape Verde",
-    "continent": "Africa",
-    "population": 555988,
-    "value": 9053,
-    "total_deaths": 95,
-    "total_cases_per_million": 16282.72553,
-    "total_deaths_per_million": 170.8669971
-  },
-  {
-    "id": "CR",
-    "iso_code": "CRI",
-    "location": "Costa Rica",
-    "continent": "North America",
-    "population": 5094114,
-    "value": 113261,
-    "total_deaths": 1431,
-    "total_cases_per_million": 22233.69952,
-    "total_deaths_per_million": 280.9124413
-  },
-  {
-    "id": "CU",
-    "iso_code": "CUB",
-    "location": "Cuba",
-    "continent": "North America",
-    "population": 11326616,
-    "value": 7144,
-    "total_deaths": 129,
-    "total_cases_per_million": 630.7267766,
-    "total_deaths_per_million": 11.38910333
-  },
-  {
-    "id": "KY",
-    "iso_code": "CYM",
-    "location": "Cayman Islands",
-    "continent": "North America",
-    "population": 65720,
-    "value": 242,
-    "total_deaths": 1,
-    "total_cases_per_million": 3682.288497,
-    "total_deaths_per_million": 15.21606817
-  },
-  {
-    "id": "CY",
-    "iso_code": "CYP",
-    "location": "Cyprus",
-    "continent": "Europe",
-    "population": 875899,
-    "value": 5100,
-    "total_deaths": 27,
-    "total_cases_per_million": 5822.589134,
-    "total_deaths_per_million": 30.82547189
-  },
-  {
-    "id": "CZ",
-    "iso_code": "CZE",
-    "location": "Czech Republic",
-    "continent": "Europe",
-    "population": 10708982,
-    "value": 378716,
-    "total_deaths": 4133,
-    "total_cases_per_million": 35364.33248,
-    "total_deaths_per_million": 385.937711
-  },
-  {
-    "id": "DE",
-    "iso_code": "DEU",
-    "location": "Germany",
-    "continent": "Europe",
-    "population": 83783945,
-    "value": 597583,
-    "total_deaths": 10930,
-    "total_cases_per_million": 7132.428534,
-    "total_deaths_per_million": 130.4545877
-  },
-  {
-    "id": "DJ",
-    "iso_code": "DJI",
-    "location": "Djibouti",
-    "continent": "Africa",
-    "population": 988002,
-    "value": 5580,
-    "total_deaths": 61,
-    "total_cases_per_million": 5647.761847,
-    "total_deaths_per_million": 61.74076571
-  },
-  {
-    "id": "DM",
-    "iso_code": "DMA",
-    "location": "Dominica",
-    "continent": "North America",
-    "population": 71991,
-    "value": 42,
-    "total_deaths": 0,
-    "total_cases_per_million": 583.4062591,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "DK",
-    "iso_code": "DNK",
-    "location": "Denmark",
-    "continent": "Europe",
-    "population": 5792203,
-    "value": 50530,
-    "total_deaths": 729,
-    "total_cases_per_million": 8723.796455,
-    "total_deaths_per_million": 125.8588485
-  },
-  {
-    "id": "DO",
-    "iso_code": "DOM",
-    "location": "Dominican Republic",
-    "continent": "North America",
-    "population": 10847904,
-    "value": 128278,
-    "total_deaths": 2257,
-    "total_cases_per_million": 11825.14152,
-    "total_deaths_per_million": 208.0586259
-  },
-  {
-    "id": "DZ",
-    "iso_code": "DZA",
-    "location": "Algeria",
-    "continent": "Africa",
-    "population": 43851043,
-    "value": 59527,
-    "total_deaths": 1999,
-    "total_cases_per_million": 1357.481965,
-    "total_deaths_per_million": 45.5861449
-  },
-  {
-    "id": "EC",
-    "iso_code": "ECU",
-    "location": "Ecuador",
-    "continent": "South America",
-    "population": 17643060,
-    "value": 171433,
-    "total_deaths": 12704,
-    "total_cases_per_million": 9716.73848,
-    "total_deaths_per_million": 720.0564981
-  },
-  {
-    "id": "EG",
-    "iso_code": "EGY",
-    "location": "Egypt",
-    "continent": "Africa",
-    "population": 102334403,
-    "value": 108329,
-    "total_deaths": 6318,
-    "total_cases_per_million": 1058.578511,
-    "total_deaths_per_million": 61.73876834
-  },
-  {
-    "id": "ER",
-    "iso_code": "ERI",
-    "location": "Eritrea",
-    "continent": "Africa",
-    "population": 3546427,
-    "value": 480,
-    "total_deaths": 0,
-    "total_cases_per_million": 135.347492,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "EH",
-    "iso_code": "ESH",
-    "location": "Western Sahara",
-    "continent": "Africa",
-    "population": 597330,
-    "value": 766,
-    "total_deaths": 1,
-    "total_cases_per_million": 1282.373228,
-    "total_deaths_per_million": 1.674116485
-  },
-  {
-    "id": "ES",
-    "iso_code": "ESP",
-    "location": "Spain",
-    "continent": "Europe",
-    "population": 46754783,
-    "value": 1284408,
-    "total_deaths": 38118,
-    "total_cases_per_million": 27471.15734,
-    "total_deaths_per_million": 815.2748779
-  },
-  {
-    "id": "EE",
-    "iso_code": "EST",
-    "location": "Estonia",
-    "continent": "Europe",
-    "population": 1326539,
-    "value": 5333,
-    "total_deaths": 73,
-    "total_cases_per_million": 4020.236118,
-    "total_deaths_per_million": 55.03042127
-  },
-  {
-    "id": "ET",
-    "iso_code": "ETH",
-    "location": "Ethiopia",
-    "continent": "Africa",
-    "population": 114963583,
-    "value": 97881,
-    "total_deaths": 1503,
-    "total_cases_per_million": 851.4087457,
-    "total_deaths_per_million": 13.07370526
-  },
-  {
-    "id": "FI",
-    "iso_code": "FIN",
-    "location": "Finland",
-    "continent": "Europe",
-    "population": 5540718,
-    "value": 16930,
-    "total_deaths": 361,
-    "total_cases_per_million": 3055.560669,
-    "total_deaths_per_million": 65.15401073
-  },
-  {
-    "id": "FJ",
-    "iso_code": "FJI",
-    "location": "Fiji",
-    "continent": "Oceania",
-    "population": 896444,
-    "value": 34,
-    "total_deaths": 2,
-    "total_cases_per_million": 37.92763407,
-    "total_deaths_per_million": 2.231037298
-  },
-  {
-    "id": "FK",
-    "iso_code": "FLK",
-    "location": "Falkland Islands",
-    "continent": "South America",
-    "population": 3483,
-    "value": 13,
-    "total_deaths": 0,
-    "total_cases_per_million": 3732.414585,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "FR",
-    "iso_code": "FRA",
-    "location": "France",
-    "continent": "Europe",
-    "population": 65273512,
-    "value": 1543321,
-    "total_deaths": 38674,
-    "total_cases_per_million": 23643.90934,
-    "total_deaths_per_million": 592.4914841
-  },
-  {
-    "id": "FO",
-    "iso_code": "FRO",
-    "location": "Faeroe Islands",
-    "continent": "Europe",
-    "population": 48865,
-    "value": 495,
-    "total_deaths": 0,
-    "total_cases_per_million": 10129.94986,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "GA",
-    "iso_code": "GAB",
-    "location": "Gabon",
-    "continent": "Africa",
-    "population": 2225728,
-    "value": 9005,
-    "total_deaths": 55,
-    "total_cases_per_million": 4045.86724,
-    "total_deaths_per_million": 24.7110159
-  },
-  {
-    "id": "GB",
-    "iso_code": "GBR",
-    "location": "United Kingdom",
-    "continent": "Europe",
-    "population": 67886004,
-    "value": 1099059,
-    "total_deaths": 47742,
-    "total_cases_per_million": 16189.77308,
-    "total_deaths_per_million": 703.2672007
-  },
-  {
-    "id": "GE",
-    "iso_code": "GEO",
-    "location": "Georgia",
-    "continent": "Asia",
-    "population": 3989175,
-    "value": 49218,
-    "total_deaths": 401,
-    "total_cases_per_million": 12337.88941,
-    "total_deaths_per_million": 100.5220378
-  },
-  {
-    "id": "GG",
-    "iso_code": "GGY",
-    "location": "Guernsey",
-    "continent": "Europe",
-    "population": 67052,
-    "value": 273,
-    "total_deaths": 13,
-    "total_cases_per_million": 4071.466921,
-    "total_deaths_per_million": 193.8793772
-  },
-  {
-    "id": "GH",
-    "iso_code": "GHA",
-    "location": "Ghana",
-    "continent": "Africa",
-    "population": 31072945,
-    "value": 48643,
-    "total_deaths": 320,
-    "total_cases_per_million": 1565.445438,
-    "total_deaths_per_million": 10.29834797
-  },
-  {
-    "id": "GI",
-    "iso_code": "GIB",
-    "location": "Gibraltar",
-    "continent": "Europe",
-    "population": 33691,
-    "value": 743,
-    "total_deaths": 0,
-    "total_cases_per_million": 22053.36737,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "GN",
-    "iso_code": "GIN",
-    "location": "Guinea",
-    "continent": "Africa",
-    "population": 13132792,
-    "value": 12331,
-    "total_deaths": 73,
-    "total_cases_per_million": 938.9473312,
-    "total_deaths_per_million": 5.558604751
-  },
-  {
-    "id": "GM",
-    "iso_code": "GMB",
-    "location": "Gambia",
-    "continent": "Africa",
-    "population": 2416664,
-    "value": 3680,
-    "total_deaths": 120,
-    "total_cases_per_million": 1522.760301,
-    "total_deaths_per_million": 49.65522721
-  },
-  {
-    "id": "GW",
-    "iso_code": "GNB",
-    "location": "Guinea-Bissau",
-    "continent": "Africa",
-    "population": 1967998,
-    "value": 2413,
-    "total_deaths": 41,
-    "total_cases_per_million": 1226.119132,
-    "total_deaths_per_million": 20.83335451
-  },
-  {
-    "id": "GQ",
-    "iso_code": "GNQ",
-    "location": "Equatorial Guinea",
-    "continent": "Africa",
-    "population": 1402985,
-    "value": 5089,
-    "total_deaths": 83,
-    "total_cases_per_million": 3627.26615,
-    "total_deaths_per_million": 59.15957761
-  },
-  {
-    "id": "GR",
-    "iso_code": "GRC",
-    "location": "Greece",
-    "continent": "Europe",
-    "population": 10423056,
-    "value": 46892,
-    "total_deaths": 673,
-    "total_cases_per_million": 4498.8725,
-    "total_deaths_per_million": 64.5683953
-  },
-  {
-    "id": "GD",
-    "iso_code": "GRD",
-    "location": "Grenada",
-    "continent": "North America",
-    "population": 112519,
-    "value": 30,
-    "total_deaths": 0,
-    "total_cases_per_million": 266.6216372,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "GL",
-    "iso_code": "GRL",
-    "location": "Greenland",
-    "continent": "North America",
-    "population": 56772,
-    "value": 17,
-    "total_deaths": 0,
-    "total_cases_per_million": 299.4433876,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "GT",
-    "iso_code": "GTM",
-    "location": "Guatemala",
-    "continent": "North America",
-    "population": 17915567,
-    "value": 109147,
-    "total_deaths": 3752,
-    "total_cases_per_million": 6092.299507,
-    "total_deaths_per_million": 209.4268074
-  },
-  {
-    "id": "GU",
-    "iso_code": "GUM",
-    "location": "Guam",
-    "continent": "Oceania",
-    "population": 168783,
-    "value": 4903,
-    "total_deaths": 83,
-    "total_cases_per_million": 29049.1341,
-    "total_deaths_per_million": 491.7556863
-  },
-  {
-    "id": "GY",
-    "iso_code": "GUY",
-    "location": "Guyana",
-    "continent": "South America",
-    "population": 786559,
-    "value": 4324,
-    "total_deaths": 130,
-    "total_cases_per_million": 5497.362563,
-    "total_deaths_per_million": 165.2768578
-  },
-  {
-    "id": "HN",
-    "iso_code": "HND",
-    "location": "Honduras",
-    "continent": "North America",
-    "population": 9904608,
-    "value": 99124,
-    "total_deaths": 2730,
-    "total_cases_per_million": 10007.86705,
-    "total_deaths_per_million": 275.6292829
-  },
-  {
-    "id": "HR",
-    "iso_code": "HRV",
-    "location": "Croatia",
-    "continent": "Europe",
-    "population": 4105268,
-    "value": 56567,
-    "total_deaths": 654,
-    "total_cases_per_million": 13779.12477,
-    "total_deaths_per_million": 159.3075044
-  },
-  {
-    "id": "HT",
-    "iso_code": "HTI",
-    "location": "Haiti",
-    "continent": "North America",
-    "population": 11402533,
-    "value": 9100,
-    "total_deaths": 232,
-    "total_cases_per_million": 798.0682889,
-    "total_deaths_per_million": 20.34635638
-  },
-  {
-    "id": "HU",
-    "iso_code": "HUN",
-    "location": "Hungary",
-    "continent": "Europe",
-    "population": 9660350,
-    "value": 94916,
-    "total_deaths": 2147,
-    "total_cases_per_million": 9825.316888,
-    "total_deaths_per_million": 222.2486763
-  },
-  {
-    "id": "ID",
-    "iso_code": "IDN",
-    "location": "Indonesia",
-    "continent": "Asia",
-    "population": 273523621,
-    "value": 421731,
-    "total_deaths": 14259,
-    "total_cases_per_million": 1541.8449,
-    "total_deaths_per_million": 52.13078106
-  },
-  {
-    "id": "IM",
-    "iso_code": "IMN",
-    "location": "Isle of Man",
-    "continent": "Europe",
-    "population": 85032,
-    "value": 357,
-    "total_deaths": 24,
-    "total_cases_per_million": 4198.419419,
-    "total_deaths_per_million": 282.2466836
-  },
-  {
-    "id": "IN",
-    "iso_code": "IND",
-    "location": "India",
-    "continent": "Asia",
-    "population": 1380004385,
-    "value": 8364086,
-    "total_deaths": 124315,
-    "total_cases_per_million": 6060.912625,
-    "total_deaths_per_million": 90.08304709
-  },
-  {
-    "id": "IE",
-    "iso_code": "IRL",
-    "location": "Ireland",
-    "continent": "Europe",
-    "population": 4937796,
-    "value": 63483,
-    "total_deaths": 1930,
-    "total_cases_per_million": 12856.54571,
-    "total_deaths_per_million": 390.862644
-  },
-  {
-    "id": "IR",
-    "iso_code": "IRN",
-    "location": "Iran",
-    "continent": "Asia",
-    "population": 83992953,
-    "value": 646164,
-    "total_deaths": 36579,
-    "total_cases_per_million": 7693.073965,
-    "total_deaths_per_million": 435.5008211
-  },
-  {
-    "id": "IQ",
-    "iso_code": "IRQ",
-    "location": "Iraq",
-    "continent": "Asia",
-    "population": 40222503,
-    "value": 485870,
-    "total_deaths": 11128,
-    "total_cases_per_million": 12079.55656,
-    "total_deaths_per_million": 276.6610521
-  },
-  {
-    "id": "IS",
-    "iso_code": "ISL",
-    "location": "Iceland",
-    "continent": "Europe",
-    "population": 341250,
-    "value": 4989,
-    "total_deaths": 17,
-    "total_cases_per_million": 14619.78022,
-    "total_deaths_per_million": 49.81684982
-  },
-  {
-    "id": "IL",
-    "iso_code": "ISR",
-    "location": "Israel",
-    "continent": "Asia",
-    "population": 8655541,
-    "value": 317556,
-    "total_deaths": 2597,
-    "total_cases_per_million": 36688.17466,
-    "total_deaths_per_million": 300.0390155
-  },
-  {
-    "id": "IT",
-    "iso_code": "ITA",
-    "location": "Italy",
-    "continent": "Europe",
-    "population": 60461828,
-    "value": 790377,
-    "total_deaths": 39764,
-    "total_cases_per_million": 13072.33053,
-    "total_deaths_per_million": 657.6711508
-  },
-  {
-    "id": "JM",
-    "iso_code": "JAM",
-    "location": "Jamaica",
-    "continent": "North America",
-    "population": 2961161,
-    "value": 9326,
-    "total_deaths": 215,
-    "total_cases_per_million": 3149.440372,
-    "total_deaths_per_million": 72.60665665
-  },
-  {
-    "id": "JE",
-    "iso_code": "JEY",
-    "location": "Jersey",
-    "continent": "Europe",
-    "population": 101073,
-    "value": 620,
-    "total_deaths": 32,
-    "total_cases_per_million": 6134.180246,
-    "total_deaths_per_million": 316.6028514
-  },
-  {
-    "id": "JO",
-    "iso_code": "JOR",
-    "location": "Jordan",
-    "continent": "Asia",
-    "population": 10203140,
-    "value": 91234,
-    "total_deaths": 1029,
-    "total_cases_per_million": 8941.757145,
-    "total_deaths_per_million": 100.8513066
-  },
-  {
-    "id": "JP",
-    "iso_code": "JPN",
-    "location": "Japan",
-    "continent": "Asia",
-    "population": 126476458,
-    "value": 103838,
-    "total_deaths": 1794,
-    "total_cases_per_million": 821.0065465,
-    "total_deaths_per_million": 14.18445795
-  },
-  {
-    "id": "KZ",
-    "iso_code": "KAZ",
-    "location": "Kazakhstan",
-    "continent": "Asia",
-    "population": 18776707,
-    "value": 152725,
-    "total_deaths": 2263,
-    "total_cases_per_million": 8133.74784,
-    "total_deaths_per_million": 120.5216655
-  },
-  {
-    "id": "KE",
-    "iso_code": "KEN",
-    "location": "Kenya",
-    "continent": "Africa",
-    "population": 53771300,
-    "value": 58587,
-    "total_deaths": 1051,
-    "total_cases_per_million": 1089.558928,
-    "total_deaths_per_million": 19.5457428
-  },
-  {
-    "id": "KG",
-    "iso_code": "KGZ",
-    "location": "Kyrgyzstan",
-    "continent": "Asia",
-    "population": 6524191,
-    "value": 61309,
-    "total_deaths": 1167,
-    "total_cases_per_million": 9397.180432,
-    "total_deaths_per_million": 178.8727522
-  },
-  {
-    "id": "KH",
-    "iso_code": "KHM",
-    "location": "Cambodia",
-    "continent": "Asia",
-    "population": 16718971,
-    "value": 292,
-    "total_deaths": 0,
-    "total_cases_per_million": 17.46518969,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "KN",
-    "iso_code": "KNA",
-    "location": "Saint Kitts and Nevis",
-    "continent": "North America",
-    "population": 53192,
-    "value": 19,
-    "total_deaths": 0,
-    "total_cases_per_million": 357.1965709,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "KR",
-    "iso_code": "KOR",
-    "location": "South Korea",
-    "continent": "Asia",
-    "population": 51269183,
-    "value": 27050,
-    "total_deaths": 475,
-    "total_cases_per_million": 527.6073933,
-    "total_deaths_per_million": 9.264824836
-  },
-  {
-    "id": "KW",
-    "iso_code": "KWT",
-    "location": "Kuwait",
-    "continent": "Asia",
-    "population": 4270563,
-    "value": 128843,
-    "total_deaths": 794,
-    "total_cases_per_million": 30170.02676,
-    "total_deaths_per_million": 185.9239637
-  },
-  {
-    "id": "LA",
-    "iso_code": "LAO",
-    "location": "Laos",
-    "continent": "Asia",
-    "population": 7275556,
-    "value": 24,
-    "total_deaths": 0,
-    "total_cases_per_million": 3.298716964,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "LB",
-    "iso_code": "LBN",
-    "location": "Lebanon",
-    "continent": "Asia",
-    "population": 6825442,
-    "value": 87097,
-    "total_deaths": 676,
-    "total_cases_per_million": 12760.6388,
-    "total_deaths_per_million": 99.04120495
-  },
-  {
-    "id": "LR",
-    "iso_code": "LBR",
-    "location": "Liberia",
-    "continent": "Africa",
-    "population": 5057677,
-    "value": 1438,
-    "total_deaths": 82,
-    "total_cases_per_million": 284.3202522,
-    "total_deaths_per_million": 16.21297683
-  },
-  {
-    "id": "LY",
-    "iso_code": "LBY",
-    "location": "Libya",
-    "continent": "Africa",
-    "population": 6871287,
-    "value": 64587,
-    "total_deaths": 900,
-    "total_cases_per_million": 9399.549167,
-    "total_deaths_per_million": 130.9798295
-  },
-  {
-    "id": "LC",
-    "iso_code": "LCA",
-    "location": "Saint Lucia",
-    "continent": "North America",
-    "population": 183629,
-    "value": 105,
-    "total_deaths": 0,
-    "total_cases_per_million": 571.805107,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "LI",
-    "iso_code": "LIE",
-    "location": "Liechtenstein",
-    "continent": "Europe",
-    "population": 38137,
-    "value": 673,
-    "total_deaths": 3,
-    "total_cases_per_million": 17646.90458,
-    "total_deaths_per_million": 78.66376485
-  },
-  {
-    "id": "LK",
-    "iso_code": "LKA",
-    "location": "Sri Lanka",
-    "continent": "Asia",
-    "population": 21413250,
-    "value": 12187,
-    "total_deaths": 24,
-    "total_cases_per_million": 569.1335972,
-    "total_deaths_per_million": 1.120801373
-  },
-  {
-    "id": "LS",
-    "iso_code": "LSO",
-    "location": "Lesotho",
-    "continent": "Africa",
-    "population": 2142252,
-    "value": 1963,
-    "total_deaths": 44,
-    "total_cases_per_million": 916.325437,
-    "total_deaths_per_million": 20.53913358
-  },
-  {
-    "id": "LT",
-    "iso_code": "LTU",
-    "location": "Lithuania",
-    "continent": "Europe",
-    "population": 2722291,
-    "value": 18092,
-    "total_deaths": 182,
-    "total_cases_per_million": 6645.872906,
-    "total_deaths_per_million": 66.85545373
-  },
-  {
-    "id": "LU",
-    "iso_code": "LUX",
-    "location": "Luxembourg",
-    "continent": "Europe",
-    "population": 625976,
-    "value": 20344,
-    "total_deaths": 171,
-    "total_cases_per_million": 32499.64855,
-    "total_deaths_per_million": 273.1734124
-  },
-  {
-    "id": "LV",
-    "iso_code": "LVA",
-    "location": "Latvia",
-    "continent": "Europe",
-    "population": 1886202,
-    "value": 6752,
-    "total_deaths": 85,
-    "total_cases_per_million": 3579.680225,
-    "total_deaths_per_million": 45.06410236
-  },
-  {
-    "id": "MA",
-    "iso_code": "MAR",
-    "location": "Morocco",
-    "continent": "Africa",
-    "population": 36910558,
-    "value": 235310,
-    "total_deaths": 3982,
-    "total_cases_per_million": 6375.140685,
-    "total_deaths_per_million": 107.8824113
-  },
-  {
-    "id": "MC",
-    "iso_code": "MCO",
-    "location": "Monaco",
-    "continent": "Europe",
-    "population": 39244,
-    "value": 412,
-    "total_deaths": 1,
-    "total_cases_per_million": 10498.42014,
-    "total_deaths_per_million": 25.48160228
-  },
-  {
-    "id": "MD",
-    "iso_code": "MDA",
-    "location": "Moldova",
-    "continent": "Europe",
-    "population": 4033963,
-    "value": 78507,
-    "total_deaths": 1851,
-    "total_cases_per_million": 19461.50721,
-    "total_deaths_per_million": 458.8539855
-  },
-  {
-    "id": "MG",
-    "iso_code": "MDG",
-    "location": "Madagascar",
-    "continent": "Africa",
-    "population": 27691019,
-    "value": 17111,
-    "total_deaths": 244,
-    "total_cases_per_million": 617.9259781,
-    "total_deaths_per_million": 8.811521165
-  },
-  {
-    "id": "MV",
-    "iso_code": "MDV",
-    "location": "Maldives",
-    "continent": "Asia",
-    "population": 540542,
-    "value": 11822,
-    "total_deaths": 38,
-    "total_cases_per_million": 21870.64095,
-    "total_deaths_per_million": 70.29981019
-  },
-  {
-    "id": "MX",
-    "iso_code": "MEX",
-    "location": "Mexico",
-    "continent": "North America",
-    "population": 128932753,
-    "value": 943630,
-    "total_deaths": 93228,
-    "total_cases_per_million": 7318.776479,
-    "total_deaths_per_million": 723.0746093
-  },
-  {
-    "id": "MH",
-    "iso_code": "MHL",
-    "location": "Marshall Islands",
-    "continent": "Oceania",
-    "population": 59194,
-    "value": 2,
-    "total_deaths": 0,
-    "total_cases_per_million": 33.78720816,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "MK",
-    "iso_code": "MKD",
-    "location": "Macedonia",
-    "continent": "Europe",
-    "population": 2083380,
-    "value": 35097,
-    "total_deaths": 1071,
-    "total_cases_per_million": 16846.18265,
-    "total_deaths_per_million": 514.0684849
-  },
-  {
-    "id": "ML",
-    "iso_code": "MLI",
-    "location": "Mali",
-    "continent": "Africa",
-    "population": 20250834,
-    "value": 3609,
-    "total_deaths": 137,
-    "total_cases_per_million": 178.2148824,
-    "total_deaths_per_million": 6.765153475
-  },
-  {
-    "id": "MT",
-    "iso_code": "MLT",
-    "location": "Malta",
-    "continent": "Europe",
-    "population": 441539,
-    "value": 6590,
-    "total_deaths": 65,
-    "total_cases_per_million": 14925.06891,
-    "total_deaths_per_million": 147.212364
-  },
-  {
-    "id": "MM",
-    "iso_code": "MMR",
-    "location": "Myanmar",
-    "continent": "Asia",
-    "population": 54409794,
-    "value": 56940,
-    "total_deaths": 1330,
-    "total_cases_per_million": 1046.502767,
-    "total_deaths_per_million": 24.44412857
-  },
-  {
-    "id": "ME",
-    "iso_code": "MNE",
-    "location": "Montenegro",
-    "continent": "Europe",
-    "population": 628062,
-    "value": 20851,
-    "total_deaths": 326,
-    "total_cases_per_million": 33198.9517,
-    "total_deaths_per_million": 519.0570358
-  },
-  {
-    "id": "MN",
-    "iso_code": "MNG",
-    "location": "Mongolia",
-    "continent": "Asia",
-    "population": 3278292,
-    "value": 353,
-    "total_deaths": 0,
-    "total_cases_per_million": 107.6780226,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "MP",
-    "iso_code": "MNP",
-    "location": "Northern Mariana Islands",
-    "continent": "Oceania",
-    "population": 57557,
-    "value": 96,
-    "total_deaths": 2,
-    "total_cases_per_million": 1667.911809,
-    "total_deaths_per_million": 34.74816269
-  },
-  {
-    "id": "MZ",
-    "iso_code": "MOZ",
-    "location": "Mozambique",
-    "continent": "Africa",
-    "population": 31255435,
-    "value": 13283,
-    "total_deaths": 95,
-    "total_cases_per_million": 424.9820871,
-    "total_deaths_per_million": 3.039471375
-  },
-  {
-    "id": "MR",
-    "iso_code": "MRT",
-    "location": "Mauritania",
-    "continent": "Africa",
-    "population": 4649660,
-    "value": 7744,
-    "total_deaths": 164,
-    "total_cases_per_million": 1665.498122,
-    "total_deaths_per_million": 35.27139619
-  },
-  {
-    "id": "MS",
-    "iso_code": "MSR",
-    "location": "Montserrat",
-    "continent": "North America",
-    "population": 4999,
-    "value": 13,
-    "total_deaths": 1,
-    "total_cases_per_million": 2600.520104,
-    "total_deaths_per_million": 200.040008
-  },
-  {
-    "id": "MU",
-    "iso_code": "MUS",
-    "location": "Mauritius",
-    "continent": "Africa",
-    "population": 1271767,
-    "value": 452,
-    "total_deaths": 10,
-    "total_cases_per_million": 355.4110148,
-    "total_deaths_per_million": 7.863075548
-  },
-  {
-    "id": "MW",
-    "iso_code": "MWI",
-    "location": "Malawi",
-    "continent": "Africa",
-    "population": 19129955,
-    "value": 5934,
-    "total_deaths": 184,
-    "total_cases_per_million": 310.1941432,
-    "total_deaths_per_million": 9.618423044
-  },
-  {
-    "id": "MY",
-    "iso_code": "MYS",
-    "location": "Malaysia",
-    "continent": "Asia",
-    "population": 32365998,
-    "value": 35425,
-    "total_deaths": 271,
-    "total_cases_per_million": 1094.512828,
-    "total_deaths_per_million": 8.372984513
-  },
-  {
-    "id": "NA",
-    "iso_code": "NAM",
-    "location": "Namibia",
-    "continent": "Africa",
-    "population": 2540916,
-    "value": 13046,
-    "total_deaths": 133,
-    "total_cases_per_million": 5134.368865,
-    "total_deaths_per_million": 52.34332815
-  },
-  {
-    "id": "NC",
-    "iso_code": "NCL",
-    "location": "New Caledonia",
-    "continent": "Oceania",
-    "population": 285491,
-    "value": 28,
-    "total_deaths": 0,
-    "total_cases_per_million": 98.0766469,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "NE",
-    "iso_code": "NER",
-    "location": "Niger",
-    "continent": "Africa",
-    "population": 24206636,
-    "value": 1225,
-    "total_deaths": 69,
-    "total_cases_per_million": 50.6059578,
-    "total_deaths_per_million": 2.850458031
-  },
-  {
-    "id": "NG",
-    "iso_code": "NGA",
-    "location": "Nigeria",
-    "continent": "Africa",
-    "population": 206139587,
-    "value": 63328,
-    "total_deaths": 1155,
-    "total_cases_per_million": 307.2093086,
-    "total_deaths_per_million": 5.602999486
-  },
-  {
-    "id": "NI",
-    "iso_code": "NIC",
-    "location": "Nicaragua",
-    "continent": "North America",
-    "population": 6624554,
-    "value": 5514,
-    "total_deaths": 156,
-    "total_cases_per_million": 832.3579218,
-    "total_deaths_per_million": 23.54875513
-  },
-  {
-    "id": "NL",
-    "iso_code": "NLD",
-    "location": "Netherlands",
-    "continent": "Europe",
-    "population": 17134873,
-    "value": 383066,
-    "total_deaths": 7672,
-    "total_cases_per_million": 22355.92875,
-    "total_deaths_per_million": 447.7418654
-  },
-  {
-    "id": "NO",
-    "iso_code": "NOR",
-    "location": "Norway",
-    "continent": "Europe",
-    "population": 5421242,
-    "value": 21954,
-    "total_deaths": 282,
-    "total_cases_per_million": 4049.625529,
-    "total_deaths_per_million": 52.01760039
-  },
-  {
-    "id": "NP",
-    "iso_code": "NPL",
-    "location": "Nepal",
-    "continent": "Asia",
-    "population": 29136808,
-    "value": 182923,
-    "total_deaths": 1034,
-    "total_cases_per_million": 6278.072739,
-    "total_deaths_per_million": 35.4877583
-  },
-  {
-    "id": "NZ",
-    "iso_code": "NZL",
-    "location": "New Zealand",
-    "continent": "Oceania",
-    "population": 4822233,
-    "value": 1617,
-    "total_deaths": 25,
-    "total_cases_per_million": 335.3218312,
-    "total_deaths_per_million": 5.18432021
-  },
-  {
-    "id": "OM",
-    "iso_code": "OMN",
-    "location": "Oman",
-    "continent": "Asia",
-    "population": 5106622,
-    "value": 116847,
-    "total_deaths": 1275,
-    "total_cases_per_million": 22881.46646,
-    "total_deaths_per_million": 249.6758131
-  },
-  {
-    "id": "PK",
-    "iso_code": "PAK",
-    "location": "Pakistan",
-    "continent": "Asia",
-    "population": 220892331,
-    "value": 338875,
-    "total_deaths": 6893,
-    "total_cases_per_million": 1534.118448,
-    "total_deaths_per_million": 31.20524814
-  },
-  {
-    "id": "PA",
-    "iso_code": "PAN",
-    "location": "Panama",
-    "continent": "North America",
-    "population": 4314768,
-    "value": 136024,
-    "total_deaths": 2744,
-    "total_cases_per_million": 31525.21758,
-    "total_deaths_per_million": 635.9553978
-  },
-  {
-    "id": "PE",
-    "iso_code": "PER",
-    "location": "Peru",
-    "continent": "South America",
-    "population": 32971846,
-    "value": 911787,
-    "total_deaths": 34671,
-    "total_cases_per_million": 27653.50172,
-    "total_deaths_per_million": 1051.533481
-  },
-  {
-    "id": "PH",
-    "iso_code": "PHL",
-    "location": "Philippines",
-    "continent": "Asia",
-    "population": 109581085,
-    "value": 388137,
-    "total_deaths": 7367,
-    "total_cases_per_million": 3542.007273,
-    "total_deaths_per_million": 67.22875577
-  },
-  {
-    "id": "PW",
-    "iso_code": "PNG",
-    "location": "Papua New Guinea",
-    "continent": "Oceania",
-    "population": 8947027,
-    "value": 597,
-    "total_deaths": 7,
-    "total_cases_per_million": 66.7260756,
-    "total_deaths_per_million": 0.782382796
-  },
-  {
-    "id": "PL",
-    "iso_code": "POL",
-    "location": "Poland",
-    "continent": "Europe",
-    "population": 37846605,
-    "value": 439536,
-    "total_deaths": 6475,
-    "total_cases_per_million": 11613.61765,
-    "total_deaths_per_million": 171.0853589
-  },
-  {
-    "id": "PR",
-    "iso_code": "PRI",
-    "location": "Puerto Rico",
-    "continent": "North America",
-    "population": 2860840,
-    "value": 69020,
-    "total_deaths": 850,
-    "total_cases_per_million": 24125.78124,
-    "total_deaths_per_million": 297.1155325
-  },
-  {
-    "id": "PT",
-    "iso_code": "PRT",
-    "location": "Portugal",
-    "continent": "Europe",
-    "population": 10196707,
-    "value": 156940,
-    "total_deaths": 2694,
-    "total_cases_per_million": 15391.24347,
-    "total_deaths_per_million": 264.2029432
-  },
-  {
-    "id": "PY",
-    "iso_code": "PRY",
-    "location": "Paraguay",
-    "continent": "South America",
-    "population": 7132530,
-    "value": 65258,
-    "total_deaths": 1454,
-    "total_cases_per_million": 9149.348128,
-    "total_deaths_per_million": 203.8547332
-  },
-  {
-    "id": "PS",
-    "iso_code": "PSE",
-    "location": "Palestine",
-    "continent": "Asia",
-    "population": 5101416,
-    "value": 67918,
-    "total_deaths": 576,
-    "total_cases_per_million": 13313.55843,
-    "total_deaths_per_million": 112.9098274
-  },
-  {
-    "id": "PF",
-    "iso_code": "PYF",
-    "location": "French Polynesia",
-    "continent": "Oceania",
-    "population": 280904,
-    "value": 8949,
-    "total_deaths": 38,
-    "total_cases_per_million": 31857.85891,
-    "total_deaths_per_million": 135.2775325
-  },
-  {
-    "id": "QA",
-    "iso_code": "QAT",
-    "location": "Qatar",
-    "continent": "Asia",
-    "population": 2881060,
-    "value": 133370,
-    "total_deaths": 232,
-    "total_cases_per_million": 46291.98975,
-    "total_deaths_per_million": 80.52591754
-  },
-  {
-    "id": "RO",
-    "iso_code": "ROU",
-    "location": "Romania",
-    "continent": "Europe",
-    "population": 19237682,
-    "value": 267088,
-    "total_deaths": 7419,
-    "total_cases_per_million": 13883.58535,
-    "total_deaths_per_million": 385.6493729
-  },
-  {
-    "id": "RU",
-    "iso_code": "RUS",
-    "location": "Russia",
-    "continent": "Europe",
-    "population": 145934460,
-    "value": 1693454,
-    "total_deaths": 29217,
-    "total_cases_per_million": 11604.20918,
-    "total_deaths_per_million": 200.2063118
-  },
-  {
-    "id": "RW",
-    "iso_code": "RWA",
-    "location": "Rwanda",
-    "continent": "Africa",
-    "population": 12952209,
-    "value": 5174,
-    "total_deaths": 35,
-    "total_cases_per_million": 399.4685385,
-    "total_deaths_per_million": 2.702241757
-  },
-  {
-    "id": "SA",
-    "iso_code": "SAU",
-    "location": "Saudi Arabia",
-    "continent": "Asia",
-    "population": 34813867,
-    "value": 348936,
-    "total_deaths": 5471,
-    "total_cases_per_million": 10022.90266,
-    "total_deaths_per_million": 157.150023
-  },
-  {
-    "id": "SD",
-    "iso_code": "SDN",
-    "location": "Sudan",
-    "continent": "Africa",
-    "population": 43849269,
-    "value": 13943,
-    "total_deaths": 837,
-    "total_cases_per_million": 317.9756543,
-    "total_deaths_per_million": 19.08811752
-  },
-  {
-    "id": "SN",
-    "iso_code": "SEN",
-    "location": "Senegal",
-    "continent": "Africa",
-    "population": 16743930,
-    "value": 15640,
-    "total_deaths": 326,
-    "total_cases_per_million": 934.069839,
-    "total_deaths_per_million": 19.46974217
-  },
-  {
-    "id": "SG",
-    "iso_code": "SGP",
-    "location": "Singapore",
-    "continent": "Asia",
-    "population": 5850343,
-    "value": 58036,
-    "total_deaths": 28,
-    "total_cases_per_million": 9920.102121,
-    "total_deaths_per_million": 4.786044169
-  },
-  {
-    "id": "SB",
-    "iso_code": "SLB",
-    "location": "Solomon Islands",
-    "continent": "Oceania",
-    "population": 686878,
-    "value": 13,
-    "total_deaths": 0,
-    "total_cases_per_million": 18.92621397,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "SL",
-    "iso_code": "SLE",
-    "location": "Sierra Leone",
-    "continent": "Africa",
-    "population": 7976985,
-    "value": 2369,
-    "total_deaths": 74,
-    "total_cases_per_million": 296.9793725,
-    "total_deaths_per_million": 9.276687871
-  },
-  {
-    "id": "SV",
-    "iso_code": "SLV",
-    "location": "El Salvador",
-    "continent": "North America",
-    "population": 6486201,
-    "value": 34015,
-    "total_deaths": 997,
-    "total_cases_per_million": 5244.209977,
-    "total_deaths_per_million": 153.7109319
-  },
-  {
-    "id": "SM",
-    "iso_code": "SMR",
-    "location": "San Marino",
-    "continent": "Europe",
-    "population": 33938,
-    "value": 994,
-    "total_deaths": 42,
-    "total_cases_per_million": 29288.70293,
-    "total_deaths_per_million": 1237.550828
-  },
-  {
-    "id": "SO",
-    "iso_code": "SOM",
-    "location": "Somalia",
-    "continent": "Africa",
-    "population": 15893219,
-    "value": 4229,
-    "total_deaths": 107,
-    "total_cases_per_million": 266.0883236,
-    "total_deaths_per_million": 6.732430982
-  },
-  {
-    "id": "RS",
-    "iso_code": "SRB",
-    "location": "Serbia",
-    "continent": "Europe",
-    "population": 6804596,
-    "value": 53495,
-    "total_deaths": 850,
-    "total_cases_per_million": 7861.598249,
-    "total_deaths_per_million": 124.9155718
-  },
-  {
-    "id": "SS",
-    "iso_code": "SSD",
-    "location": "South Sudan",
-    "continent": "Africa",
-    "population": 11193729,
-    "value": 2943,
-    "total_deaths": 59,
-    "total_cases_per_million": 262.9150661,
-    "total_deaths_per_million": 5.270808325
-  },
-  {
-    "id": "ST",
-    "iso_code": "STP",
-    "location": "Sao Tome and Principe",
-    "continent": "Africa",
-    "population": 219161,
-    "value": 958,
-    "total_deaths": 16,
-    "total_cases_per_million": 4371.215682,
-    "total_deaths_per_million": 73.00568988
-  },
-  {
-    "id": "SR",
-    "iso_code": "SUR",
-    "location": "Suriname",
-    "continent": "South America",
-    "population": 586634,
-    "value": 5220,
-    "total_deaths": 112,
-    "total_cases_per_million": 8898.222742,
-    "total_deaths_per_million": 190.9197217
-  },
-  {
-    "id": "SK",
-    "iso_code": "SVK",
-    "location": "Slovakia",
-    "continent": "Europe",
-    "population": 5459643,
-    "value": 66772,
-    "total_deaths": 261,
-    "total_cases_per_million": 12230.10369,
-    "total_deaths_per_million": 47.80532353
-  },
-  {
-    "id": "SI",
-    "iso_code": "SVN",
-    "location": "Slovenia",
-    "continent": "Europe",
-    "population": 2078932,
-    "value": 39408,
-    "total_deaths": 321,
-    "total_cases_per_million": 18955.88697,
-    "total_deaths_per_million": 154.4062047
-  },
-  {
-    "id": "SE",
-    "iso_code": "SWE",
-    "location": "Sweden",
-    "continent": "Europe",
-    "population": 10099270,
-    "value": 137339,
-    "total_deaths": 5970,
-    "total_cases_per_million": 13598.90368,
-    "total_deaths_per_million": 591.1318343
-  },
-  {
-    "id": "SZ",
-    "iso_code": "SWZ",
-    "location": "Swaziland",
-    "continent": "Africa",
-    "population": 1160164,
-    "value": 5955,
-    "total_deaths": 117,
-    "total_cases_per_million": 5132.895004,
-    "total_deaths_per_million": 100.8478112
-  },
-  {
-    "id": "SC",
-    "iso_code": "SYC",
-    "location": "Seychelles",
-    "continent": "Africa",
-    "population": 98340,
-    "value": 157,
-    "total_deaths": 0,
-    "total_cases_per_million": 1596.501932,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "SY",
-    "iso_code": "SYR",
-    "location": "Syria",
-    "continent": "Asia",
-    "population": 17500657,
-    "value": 5964,
-    "total_deaths": 301,
-    "total_cases_per_million": 340.7872059,
-    "total_deaths_per_million": 17.19935429
-  },
-  {
-    "id": "TC",
-    "iso_code": "TCA",
-    "location": "Turks and Caicos Islands",
-    "continent": "North America",
-    "population": 38718,
-    "value": 705,
-    "total_deaths": 6,
-    "total_cases_per_million": 18208.58515,
-    "total_deaths_per_million": 154.9666822
-  },
-  {
-    "id": "TD",
-    "iso_code": "TCD",
-    "location": "Chad",
-    "continent": "Africa",
-    "population": 16425859,
-    "value": 1517,
-    "total_deaths": 99,
-    "total_cases_per_million": 92.35437854,
-    "total_deaths_per_million": 6.027082054
-  },
-  {
-    "id": "TG",
-    "iso_code": "TGO",
-    "location": "Togo",
-    "continent": "Africa",
-    "population": 8278737,
-    "value": 2406,
-    "total_deaths": 57,
-    "total_cases_per_million": 290.6240408,
-    "total_deaths_per_million": 6.885108199
-  },
-  {
-    "id": "TH",
-    "iso_code": "THA",
-    "location": "Thailand",
-    "continent": "Asia",
-    "population": 69799978,
-    "value": 3810,
-    "total_deaths": 59,
-    "total_cases_per_million": 54.58454442,
-    "total_deaths_per_million": 0.845272473
-  },
-  {
-    "id": "TJ",
-    "iso_code": "TJK",
-    "location": "Tajikistan",
-    "continent": "Asia",
-    "population": 9537642,
-    "value": 11180,
-    "total_deaths": 83,
-    "total_cases_per_million": 1172.197489,
-    "total_deaths_per_million": 8.702360604
-  },
-  {
-    "id": "TT",
-    "iso_code": "TTO",
-    "location": "Trinidad and Tobago",
-    "continent": "North America",
-    "population": 1399491,
-    "value": 5764,
-    "total_deaths": 110,
-    "total_cases_per_million": 4118.640277,
-    "total_deaths_per_million": 78.60000529
-  },
-  {
-    "id": "TN",
-    "iso_code": "TUN",
-    "location": "Tunisia",
-    "continent": "Africa",
-    "population": 11818618,
-    "value": 64363,
-    "total_deaths": 1512,
-    "total_cases_per_million": 5445.899004,
-    "total_deaths_per_million": 127.9337398
-  },
-  {
-    "id": "TR",
-    "iso_code": "TUR",
-    "location": "Turkey",
-    "continent": "Asia",
-    "population": 84339067,
-    "value": 384509,
-    "total_deaths": 10558,
-    "total_cases_per_million": 4559.085293,
-    "total_deaths_per_million": 125.1851648
-  },
-  {
-    "id": "TW",
-    "iso_code": "TWN",
-    "location": "Taiwan",
-    "continent": "Asia",
-    "population": 23816775,
-    "value": 569,
-    "total_deaths": 7,
-    "total_cases_per_million": 23.89072408,
-    "total_deaths_per_million": 0.29391049
-  },
-  {
-    "id": "TZ",
-    "iso_code": "TZA",
-    "location": "Tanzania",
-    "continent": "Africa",
-    "population": 59734213,
-    "value": 509,
-    "total_deaths": 21,
-    "total_cases_per_million": 8.521079871,
-    "total_deaths_per_million": 0.351557323
-  },
-  {
-    "id": "UG",
-    "iso_code": "UGA",
-    "location": "Uganda",
-    "continent": "Africa",
-    "population": 45741000,
-    "value": 13351,
-    "total_deaths": 117,
-    "total_cases_per_million": 291.8825561,
-    "total_deaths_per_million": 2.557880239
-  },
-  {
-    "id": "UA",
-    "iso_code": "UKR",
-    "location": "Ukraine",
-    "continent": "Europe",
-    "population": 43733759,
-    "value": 420617,
-    "total_deaths": 7731,
-    "total_cases_per_million": 9617.673157,
-    "total_deaths_per_million": 176.774194
-  },
-  {
-    "id": "UY",
-    "iso_code": "URY",
-    "location": "Uruguay",
-    "continent": "South America",
-    "population": 3473727,
-    "value": 3245,
-    "total_deaths": 61,
-    "total_cases_per_million": 934.1551596,
-    "total_deaths_per_million": 17.56038975
-  },
-  {
-    "id": "US",
-    "iso_code": "USA",
-    "location": "United States",
-    "continent": "North America",
-    "population": 331002647,
-    "value": 9486486,
-    "total_deaths": 233729,
-    "total_cases_per_million": 28659.84936,
-    "total_deaths_per_million": 706.1242625
-  },
-  {
-    "id": "UZ",
-    "iso_code": "UZB",
-    "location": "Uzbekistan",
-    "continent": "Asia",
-    "population": 33469199,
-    "value": 67779,
-    "total_deaths": 577,
-    "total_cases_per_million": 2025.115689,
-    "total_deaths_per_million": 17.23973137
-  },
-  {
-    "id": "VA",
-    "iso_code": "VAT",
-    "location": "Vatican",
-    "continent": "Europe",
-    "population": 809,
-    "value": 26,
-    "total_deaths": 0,
-    "total_cases_per_million": 32138.44252,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "VC",
-    "iso_code": "VCT",
-    "location": "Saint Vincent and the Grenadines",
-    "continent": "North America",
-    "population": 110947,
-    "value": 75,
-    "total_deaths": 0,
-    "total_cases_per_million": 675.9984497,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "VE",
-    "iso_code": "VEN",
-    "location": "Venezuela",
-    "continent": "South America",
-    "population": 28435943,
-    "value": 93100,
-    "total_deaths": 810,
-    "total_cases_per_million": 3274.025412,
-    "total_deaths_per_million": 28.48507609
-  },
-  {
-    "id": "VG",
-    "iso_code": "VGB",
-    "location": "British Virgin Islands",
-    "continent": "North America",
-    "population": 30237,
-    "value": 72,
-    "total_deaths": 1,
-    "total_cases_per_million": 2381.18861,
-    "total_deaths_per_million": 33.07206403
-  },
-  {
-    "id": "VI",
-    "iso_code": "VIR",
-    "location": "United States Virgin Islands",
-    "continent": "North America",
-    "population": 104423,
-    "value": 1388,
-    "total_deaths": 23,
-    "total_cases_per_million": 13292.09082,
-    "total_deaths_per_million": 220.2579891
-  },
-  {
-    "id": "VN",
-    "iso_code": "VNM",
-    "location": "Vietnam",
-    "continent": "Asia",
-    "population": 97338583,
-    "value": 1207,
-    "total_deaths": 35,
-    "total_cases_per_million": 12.40001614,
-    "total_deaths_per_million": 0.359569648
-  },
-  {
-    "id": "WF",
-    "iso_code": "WLF",
-    "location": "Wallis and Futuna",
-    "continent": "Oceania",
-    "population": 11246,
-    "value": 1,
-    "total_deaths": 0,
-    "total_cases_per_million": 88.92050507,
-    "total_deaths_per_million": 0
-  },
-  {
-    "id": "YE",
-    "iso_code": "YEM",
-    "location": "Yemen",
-    "continent": "Asia",
-    "population": 29825968,
-    "value": 2067,
-    "total_deaths": 602,
-    "total_cases_per_million": 69.30202567,
-    "total_deaths_per_million": 20.18375397
-  },
-  {
-    "id": "ZA",
-    "iso_code": "ZAF",
-    "location": "South Africa",
-    "continent": "Africa",
-    "population": 59308690,
-    "value": 730548,
-    "total_deaths": 19585,
-    "total_cases_per_million": 12317.72275,
-    "total_deaths_per_million": 330.2214229
-  },
-  {
-    "id": "ZM",
-    "iso_code": "ZMB",
-    "location": "Zambia",
-    "continent": "Africa",
-    "population": 18383956,
-    "value": 16698,
-    "total_deaths": 349,
-    "total_cases_per_million": 908.2919911,
-    "total_deaths_per_million": 18.98394448
-  },
-  {
-    "id": "ZW",
-    "iso_code": "ZWE",
-    "location": "Zimbabwe",
-    "continent": "Africa",
-    "population": 14862927,
-    "value": 8427,
-    "total_deaths": 248,
-    "total_cases_per_million": 566.9811875,
-    "total_deaths_per_million": 16.68581162
-  }
-];
 
 
-
+function selectData (set) {
+    polygonSeries.data = data[set];
+    if (set == "death") {
+        polygonSeries.heatRules.push({
+            property: "fill",
+            target: polygonSeries.mapPolygons.template,
+            min: am4core.color("#BDADAD"),
+            max: am4core.color("#4B2A2A")
+        });
+    } else {
+        polygonSeries.heatRules.push({
+            property: "fill",
+            target: polygonSeries.mapPolygons.template,
+            min: map.colors.getIndex(1).brighten(1),
+            max: map.colors.getIndex(1).brighten(-0.3),
+            logarithmic: true,
+        });
+    }
+}
 
 </script>
-
-
+<div class="centerDiv">
+<select onchange="selectData(this.options[this.selectedIndex].value);">
+  <option value="case">Total Cases on the World Map</option>
+  <option value="death">Total Deaths on the World Map</option>
+</select>
+    </div>
 <div id="chartdiv"></div>
 
 
