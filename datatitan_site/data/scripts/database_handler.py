@@ -64,7 +64,7 @@ def initialize_table() -> None:
     # %%
     raw_data = (
         pd.read_csv(
-            os.getenv("INPUT_FILE"),
+            "https://covid.ourworldindata.org/data/owid-covid-data.csv",
             usecols=[
                 "iso_code",
                 "continent",
