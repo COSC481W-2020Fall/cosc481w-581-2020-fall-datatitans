@@ -13,6 +13,10 @@ def blog(request):
     )
     return render(request, "blog/blog.html", {"posts": posts})
 
+def blog_author(request, blog_author):
+    blog_posts = Post.objects.filter(author=blog_author).order_by("-published_date")
+
+    return render(request, "blog/blog.html", {"posts": blog_posts})
 
 def blog_detail(request, blog_id):
     blog_post = Post.objects.get(pk=blog_id)
