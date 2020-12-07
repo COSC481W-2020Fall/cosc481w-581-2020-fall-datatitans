@@ -36,14 +36,10 @@ def gen_graph(
     )
 
     data: pd.DataFrame = (
-        pd.read_csv(
+        pd.read_parquet(
             os.getenv("INPUT_FILE"),
-            usecols=["iso_code", "date", category_name],
-            dtype={"iso_code": "category"},
-            index_col=["iso_code", "date"],
-            parse_dates=["date"],
+            columns=["date", category_name],
         )
-        .sort_index()
         .round(decimals=3)
         .loc[list(iso_codes)]
     )
@@ -68,8 +64,7 @@ def gen_graph(
                 #         y=Cast(F(category_name.lower()), IntegerField()),
                 #     )
                 # ),
-                "data": data.loc[code][[category_name]]
-                .reset_index()
+                "data": data.loc[code]
                 .dropna()
                 .rename(columns={"date": "x", category_name: "y"})
                 .to_dict("records"),
@@ -94,8 +89,7 @@ def gen_graph(
                 #         ),
                 #     )
                 # ),
-                "data": data.loc[code][[category_name]]
-                .reset_index()
+                "data": data.loc[code]
                 .groupby(pd.Grouper(key="date", freq="M"))
                 .agg(y=pd.NamedAgg(category_name, "sum"))
                 .reset_index()
