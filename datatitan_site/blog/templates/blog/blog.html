@@ -13,7 +13,7 @@
                     <img src="{% static 'img/fred_flintstone.jpg' %}" alt="Blog Image" class="img-thumbnail">
                 </div>
                 <div class="col-md-8">
-                    <h3><a href="{% url 'blog_detail' post.id %}">{{ post.title }}</a></h3>
+                    <h3><a href="{% url 'blog:blog_detail' post.id %}">{{ post.title }}</a></h3>
                     <p>{{ post.text|truncatechars:20 }}</p>
                     <p>published: {{ post.published_date }}</p>
                 </div>
