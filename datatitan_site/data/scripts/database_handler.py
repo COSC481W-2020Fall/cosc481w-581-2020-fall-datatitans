@@ -1,11 +1,7 @@
-#
-
 # %%
 from datetime import date
 from pathlib import Path
 import pandas as pd
-from django.db.models import Avg, Sum, RowRange, Window, F, FloatField, CharField
-from django.db.models.functions import Coalesce, Cast, Concat, TruncMonth
 from data.models import Country, CountryStats
 from django.db import connections, transaction
 from backoff import on_exception, expo
@@ -64,7 +60,7 @@ def initialize_table() -> None:
     # %%
     raw_data = (
         pd.read_csv(
-            os.getenv("INPUT_FILE"),
+            "https://covid.ourworldindata.org/data/owid-covid-data.csv",
             usecols=[
                 "iso_code",
                 "continent",

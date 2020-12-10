@@ -122,7 +122,7 @@ elif APP_ENV == "google-app-engine":
             "ENGINE": "django.db.backends.postgresql",
             "NAME": os.getenv("DATABASE_NAME"),
             "HOST": os.getenv("POSTGRES_HOST"),
-            "PORT": os.getenv("POSTGRES_PORT"),
+            "PORT": os.getenv("POSTGRES_PORT", "5432"),
             **account,
         }
     }
@@ -140,7 +140,7 @@ else:
                 "HOST": os.getenv("POSTGRES_HOST"),
                 "USER": POSTGRES_USER if POSTGRES_USER else "DataTitans",
                 "PASSWORD": file.read(),
-                "PORT": os.getenv("POSTGRES_PORT"),
+                "PORT": os.getenv("POSTGRES_PORT", "5432"),
             }
         }
 

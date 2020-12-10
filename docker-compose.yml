@@ -9,12 +9,15 @@ services:
       - backend
     secrets:
       - postgres_password
+    volumes:
+    - ./datatitan_site:/app/DataTitans/datatitan_site:ro
     depends_on:
       db:
         condition: service_healthy
       memcached:
         condition: service_started
     environment:
+      POSTGRES_HOST: db
       POSTGRES_USER: DataTitans
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       APP_ENV: docker-compose
