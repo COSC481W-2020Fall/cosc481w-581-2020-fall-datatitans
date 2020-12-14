@@ -6,7 +6,7 @@
     <div class="blog-container col-md-8 shadow p-3 mb-5 bg-white rounded">
         <h2>{{ post.title }}</h2>
         <div>
-            <p>{{ post.text }}</p>
+            <p>{{ post.text |linebreaksbr }}</p>
             <p>published: {{ post.published_date }}</p>
         </div>
     {% if user.is_authenticated %}
