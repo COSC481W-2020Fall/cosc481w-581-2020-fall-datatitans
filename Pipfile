@@ -9,6 +9,7 @@ coverage = "*"
 selenium = "*"
 pre-commit = "*"
 dask = {extras = ["complete"], version = "*"}
+bokeh = "*"
 
 [packages]
 Django = "*"
