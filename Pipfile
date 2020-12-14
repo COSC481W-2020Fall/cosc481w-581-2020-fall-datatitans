@@ -10,6 +10,7 @@ selenium = "*"
 pre-commit = "*"
 dask = {extras = ["complete"], version = "*"}
 bokeh = "*"
+pandas-bokeh = "*"
 
 [packages]
 Django = "*"

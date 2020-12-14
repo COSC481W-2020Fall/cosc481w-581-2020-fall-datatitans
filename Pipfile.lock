@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0ac3946e9369808a3e61fc273e6810894b9b7c859999cecde587e9b45434975f"
+            "sha256": "14906e49654cbd2135287aed8301fea5e8ce7304c77d01fc61aa078c203b43a7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -244,11 +244,11 @@
         },
         "fastparquet": {
             "hashes": [
-                "sha256:39dbbef2fea7d330254b00a67e053a7db94287573bb6e298cb87313d795bc6a6",
-                "sha256:a0829019d47c248bc64395e81ec3beb4cb2ee5099bce8724acfac9b237c36620"
+                "sha256:a6501352c875416471c875ace0ff702a7889e14eeda4c12eaaed8307fd485f6a",
+                "sha256:c231110272c28d681a3cadbbe81a20f74c0a382c4b983107b3e7b625e8fd7251"
             ],
             "index": "pypi",
-            "version": "==0.4.2"
+            "version": "==0.4.1"
         },
         "fsspec": {
             "hashes": [
@@ -1555,6 +1555,14 @@
             ],
             "index": "pypi",
             "version": "==1.1.5"
+        },
+        "pandas-bokeh": {
+            "hashes": [
+                "sha256:5d5b26b9842996b7be5accefb152a01157644986ef9944a01e586a2393882dd4",
+                "sha256:dc01566321d5b2949cbf0ce0db47c1766f3c5af495ada23f865ba985e93153b8"
+            ],
+            "index": "pypi",
+            "version": "==0.5.2"
         },
         "partd": {
             "hashes": [
