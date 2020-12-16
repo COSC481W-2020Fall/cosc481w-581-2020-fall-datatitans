@@ -75,42 +75,10 @@
                 <!-- Chart -->
                 <div class="col-md-9 card" style="padding:15px;margin-left:0" id="graph_container">
                     {# TODO: Try generating graph asynchronously? #}
-                    <canvas id="graph"></canvas>
+                    {{ chart|safe }}
                 </div>
-                {{ chart|json_script:"graph_data" }}
-                <script>
-                    const data = JSON.parse(document.getElementById("graph_data").textContent)
-                    let myChart;
-                    jQuery(function($){
-                        const ctx = document.getElementById("graph").getContext("2d")
-                        myChart = new Chart(ctx, data)
-                    })
-                </script>
             </div>
-        {% if country_table %}
-        <div>
-        {% cache 500 country_table request.GET %}
-            <table>
-                <thead>
-                <tr>
-                    {% for field in fields %}
-                        <th>{{ field }}</th>
-                    {% endfor %}
-                </tr>
-                </thead>
-                <tbody>
-                {% for country in country_table %}
-                    <tr>
-                        {% for field in country %}
-                            <td>{{ field }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endcache %}
-        </div>
-        {% endif %}
+        {{ country_table|safe }}
         </div>
 	</div>
 

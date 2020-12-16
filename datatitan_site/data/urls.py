@@ -4,7 +4,7 @@ import blog.views
 from data import views
 
 urlpatterns = [
-    path("", views.data, name="data"),
+    path("", views.CovidDataView.as_view(), name="data"),
     path("testing_map/", views.testing_map, name="testing_map"),
     # path('about/', views.about, name='about'),
     # path('blog/', blog.views.blog, name='blog'),
