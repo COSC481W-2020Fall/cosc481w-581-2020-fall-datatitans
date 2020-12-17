@@ -1,27 +1,24 @@
 from django.core.management.base import BaseCommand, CommandError
-import pandas as pd
-from pathlib import Path
 from datatitan_site.settings import BASE_DIR
+import dask.dataframe as dd
 
 
 class Command(BaseCommand):
     help = "Generates a parquet file from the source data."
 
     def handle(self, *args, **options):
-        df = (
-            pd.read_csv(
+        ddf: dd.DataFrame = (
+            dd.read_csv(
                 "https://covid.ourworldindata.org/data/owid-covid-data.csv",
                 parse_dates=["date"],
+                dtype={"tests_units": "object"},
             )
-            .sort_values(["iso_code", "date"])
-            .astype(
-                {
-                    "iso_code": "category",
-                    "continent": "category",
-                    "location": "category",
-                    "tests_units": "category",
-                }
-            )
-            .set_index(["iso_code", "date"], drop=False)
+            .dropna(subset=["iso_code", "continent"])
+            .set_index("date")
         )
-        df.to_parquet(BASE_DIR / "data/input/owid-covid-data.parquet")
+        ddf.to_parquet(
+            BASE_DIR / "data/input/owid-covid-data",
+            engine="pyarrow",
+            overwrite=True,
+            partition_on=["continent", "iso_code"],
+        )
