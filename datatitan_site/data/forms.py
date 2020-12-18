@@ -1,5 +1,6 @@
 from django import forms
-from data.models import Country
+import dask.dataframe as dd
+import os
 
 
 class CountrySelect(forms.CheckboxSelectMultiple):
@@ -40,10 +41,18 @@ class ChartSelector(forms.Form):
         choices=(("LINE", "Line Chart"), ("BAR", "Bar Graph")),
         widget=forms.Select(attrs={"class": "custom-select form-control"}),
     )
-    iso_code = forms.ModelMultipleChoiceField(
-        Country.objects.all(),
+    iso_code = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(attrs={"class": "custom-checkbox"}),
         label="Country:",
+        choices=dd.read_parquet(
+            os.environ["INPUT_FILE"],
+            engine="pyarrow-dataset",
+            columns=["location"],
+            index="iso_code",
+        )
+        .groupby("iso_code")
+        .first()
+        .itertuples(name=None),
     )
     data_type = forms.ChoiceField(
         choices=(("CASES", "Cases"), ("DEATHS", "Deaths"), ("TESTS", "Tests")),
