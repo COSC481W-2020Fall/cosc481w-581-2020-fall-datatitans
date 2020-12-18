@@ -9,7 +9,7 @@ env_variables:
   ALLOWED_HOSTS: '["data-titans.uc.r.appspot.com"]'
   POSTGRES_HOST: "/cloudsql/data-titans:us-central1:datatitans-test"
   DATABASE_NAME: "DataTitans"
-  INPUT_FILE: "gs://data-titans.appspot.com/input/owid-covid-data.parquet"
+  INPUT_FILE: "gs://data-titans.appspot.com/input/owid-covid-data"
 
 instance_class: F2
 
