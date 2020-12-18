@@ -8,6 +8,8 @@ from data.forms import ChartSelector
 from django.views.decorators.cache import cache_page
 from django.db.models import F
 from django.views import View
+import dask.dataframe as dd
+import dask
 import pandas as pd
 import numpy as np
 import os
@@ -88,13 +90,20 @@ def data(request):
 class CovidDataView(View):
     template_name = "data/data.html"
 
-    country_names = (
-        pd.read_parquet(os.environ["INPUT_FILE"], columns=["location"])
-        .droplevel("date")
-        .drop_duplicates()
+    country_names: pd.DataFrame = (
+        dd.read_parquet(
+            os.environ["INPUT_FILE"],
+            engine="pyarrow-dataset",
+            index=["iso_code"],
+            columns=["location"],
+        )
+        .groupby("iso_code")
+        .first()
+        .compute()
     )
 
     table_columns = (
+        "iso_code",
         "location",
         "population",
         "total_cases",
@@ -108,7 +117,7 @@ class CovidDataView(View):
     def get(self, request, *args, **kwargs):
         form = ChartSelector(request.GET)
         if form.is_valid():
-            countries = form.cleaned_data["iso_code"].values_list("iso_code", flat=True)
+            countries = form.cleaned_data["iso_code"]
             data_category: str = form.cleaned_data["data_type"].lower()
             chart_type = form.cleaned_data["chart_type"].lower()
             metric = form.cleaned_data["metric"].lower()
@@ -117,23 +126,22 @@ class CovidDataView(View):
                 category_name += (
                     f"""_per_{"thousand" if data_category == "tests" else "million"}"""
                 )
-            df: pd.DataFrame = pd.read_parquet(
+            ddf: dd.DataFrame = dd.read_parquet(
                 os.environ["INPUT_FILE"],
+                engine="pyarrow-dataset",
                 columns=list(np.unique([*self.table_columns, category_name])),
-            ).loc[list(countries)]
-            country_stats: pd.DataFrame = (
-                df[list(self.table_columns)]
-                .groupby(level="iso_code", observed=True)
-                .last()
-                .copy()
             )
-            df = df[[category_name]]
-            df = df.loc[df.index.dropna()]
+            ddf = ddf[ddf.iso_code.isin(countries)]
             title = (
                 category_name.replace("_", " ").title()
                 + " in "
                 + ", ".join(self.country_names.loc[list(countries)]["location"])
             )
+            df, country_stats = dask.compute(
+                ddf[["iso_code", category_name]],
+                ddf[list(self.table_columns)].groupby("iso_code", observed=True).last(),
+            )
+            df: pd.DataFrame = df.set_index(["iso_code", df.index])
             if chart_type == "bar":
                 df = (
                     df.groupby(
@@ -163,7 +171,7 @@ class CovidDataView(View):
                         ).figure
                     ),
                     "country_selector": form.as_p(),
-                    "country_table": country_stats.to_html(),
+                    "country_table": country_stats.reset_index().to_html(index=False),
                 },
             )
         else:
