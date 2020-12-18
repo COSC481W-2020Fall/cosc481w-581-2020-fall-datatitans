@@ -84,7 +84,7 @@ matplotlib==3.3.3
 
 mpld3==0.5.2
 
-msgpack==1.0.1
+msgpack==1.0.2
 
 multidict==5.1.0; python_version >= '3.6'
 
