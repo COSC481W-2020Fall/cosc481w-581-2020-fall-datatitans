@@ -14,8 +14,13 @@ class Command(BaseCommand):
                 dtype={"tests_units": "object"},
             )
             .dropna(subset=["iso_code", "continent"])
+            .categorize()
             .set_index("date")
         )
+        for column in ddf.select_dtypes("category").columns:
+            ddf[column] = ddf[column].cat.reorder_categories(
+                ddf[column].cat.categories.sort_values(), ordered=True
+            )
         ddf.to_parquet(
             BASE_DIR / "data/input/owid-covid-data",
             engine="pyarrow",
