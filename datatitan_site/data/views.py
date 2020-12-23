@@ -103,7 +103,6 @@ class CovidDataView(View):
     )
 
     table_columns = (
-        "iso_code",
         "location",
         "population",
         "total_cases",
@@ -129,19 +128,18 @@ class CovidDataView(View):
             ddf: dd.DataFrame = dd.read_parquet(
                 os.environ["INPUT_FILE"],
                 engine="pyarrow-dataset",
-                columns=list(np.unique([*self.table_columns, category_name])),
-            )
-            ddf = ddf[ddf.iso_code.isin(countries)]
-            title = (
-                category_name.replace("_", " ").title()
-                + " in "
-                + ", ".join(self.country_names.loc[list(countries)]["location"])
+                filters=[[("iso_code", "in", tuple(countries))]],
             )
             df, country_stats = dask.compute(
                 ddf[["iso_code", category_name]],
-                ddf[list(self.table_columns)].groupby("iso_code", observed=True).last(),
+                ddf.groupby("iso_code", observed=True).last()[list(self.table_columns)],
             )
             df: pd.DataFrame = df.set_index(["iso_code", df.index])
+            title = (
+                category_name.replace("_", " ").capitalize()
+                + " in "
+                + ", ".join(country_stats.loc[countries, "location"])
+            )
             if chart_type == "bar":
                 df = (
                     df.groupby(
