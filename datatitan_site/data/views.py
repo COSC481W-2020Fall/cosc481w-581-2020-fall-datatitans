@@ -94,12 +94,12 @@ class CovidDataView(View):
         dd.read_parquet(
             os.environ["INPUT_FILE"],
             engine="pyarrow-dataset",
-            index=["iso_code"],
-            columns=["location"],
+            columns=["iso_code", "location"],
         )
         .groupby("iso_code")
         .first()
         .compute()
+        .location
     )
 
     table_columns = (
