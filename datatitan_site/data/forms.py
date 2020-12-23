@@ -44,15 +44,16 @@ class ChartSelector(forms.Form):
     iso_code = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(attrs={"class": "custom-checkbox"}),
         label="Country:",
-        choices=dd.read_parquet(
-            os.environ["INPUT_FILE"],
-            engine="pyarrow-dataset",
-            columns=["location"],
-            index="iso_code",
-        )
-        .groupby("iso_code")
-        .first()
-        .itertuples(name=None),
+        choices=(
+            dd.read_parquet(
+                os.environ["INPUT_FILE"],
+                engine="pyarrow-dataset",
+                columns=["iso_code", "location"],
+            )
+            .groupby("iso_code")
+            .first()
+            .location.iteritems()
+        ),
     )
     data_type = forms.ChoiceField(
         choices=(("cases", "Cases"), ("deaths", "Deaths"), ("tests", "Tests")),
