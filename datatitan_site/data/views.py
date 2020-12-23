@@ -116,7 +116,7 @@ class CovidDataView(View):
     def get(self, request, *args, **kwargs):
         form = ChartSelector(request.GET)
         if form.is_valid():
-            countries = form.cleaned_data["iso_code"]
+            countries = np.array(form.cleaned_data["iso_code"])
             data_category: str = form.cleaned_data["data_type"].lower()
             chart_type = form.cleaned_data["chart_type"].lower()
             metric = form.cleaned_data["metric"].lower()
